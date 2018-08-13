@@ -9,15 +9,39 @@ $connection->addColumn(
     ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
     'ID'
 )->addColumn(
-    'currency',
+    'stock',
     \classes\Db\Connection::TYPE_TEXT,
-    10,
+    20,
     ['nullable' => false],
-    'Currency'
+    'Stock'
 )->addColumn(
-    'coefficient',
+    'source',
+    \classes\Db\Connection::TYPE_TEXT,
+    20,
+    [],
+    'Source'
+)->addColumn(
+    'sum',
     \classes\Db\Connection::TYPE_FLOAT,
     null,
     [],
-    'Coefficient'
-)->createTable('rate');
+    'Sum'
+)->addColumn(
+    'currency',
+    \classes\Db\Connection::TYPE_TEXT,
+    10,
+    [],
+    'Currency'
+)->addColumn(
+    'active',
+    \classes\Db\Connection::TYPE_BOOLEAN,
+    null,
+    [],
+    'Is active'
+)->addColumn(
+    'date',
+    \classes\Db\Connection::TYPE_DATE,
+    null,
+    [],
+    'Date'
+)->createTable('finance');

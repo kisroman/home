@@ -1,6 +1,6 @@
 <body>
 <?php
-$connection = new \classes\ClassCreator(\classes\Db\Connection::class);
+$connection = \classes\ClassCreator::includeClass(\classes\Db\Connection::class);
 include 'header.phtml';
 include 'main.phtml';
 include 'footer.phtml';
