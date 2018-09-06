@@ -11,9 +11,9 @@ $rates = $rate->getRates();
         <th>Coefficient</th>
     </tr>
     </thead>
-    <tr>
     <?php
     foreach ($rates as $rate) {
+        echo '<tr>';
         echo '<td>';
         echo $rate['id'];
         echo '</td>';
@@ -23,7 +23,7 @@ $rates = $rate->getRates();
         echo '<td>';
         echo $rate['coefficient'];
         echo '</td>';
+        echo '</tr>';
     }
     ?>
-    </tr>
 </table>

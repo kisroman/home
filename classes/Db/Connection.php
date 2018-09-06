@@ -103,6 +103,22 @@ class Connection
                 $columnQuery .= '(' . $column['size'] .')';
             }
 
+            if (isset($column['options']['nullable']) && $column['options']['nullable'] == false) {
+                $columnQuery .= ' NOT NULL';
+            }
+
+            if (isset($column['options']['identity']) && $column['options']['identity'] == true) {
+                $columnQuery .= ' IDENTITY';
+            }
+
+            if (isset($column['options']['auto_increment']) && $column['options']['auto_increment'] == true) {
+                $columnQuery .= ' AUTO_INCREMENT';
+            }
+
+            if (isset($column['options']['primary']) && $column['options']['primary'] == true) {
+                $columnQuery .= ' PRIMARY KEY';
+            }
+
             $columnQuery .= ', ';
             $query .= $columnQuery;
         }

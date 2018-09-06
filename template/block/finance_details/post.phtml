@@ -1,0 +1,9 @@
+<?php
+if (!empty($_POST)) {
+    /** @var \classes\Model\FinanceDetails $financeDetails */
+    $financeDetails = \classes\ClassCreator::includeClass(\classes\Model\FinanceDetails::class);
+    $financeDetails->save($_POST);
+}
+
+header('Location: ' . $_SERVER["HTTP_REFERER"], true, 302);
+die();
