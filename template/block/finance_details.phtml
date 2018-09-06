@@ -19,7 +19,7 @@ $financeDetails = $financeDetail->getFinanceDetailsByDate($date);
 list($sumUah, $activeSumUah) = $financeDetail->getSumsUahByDate($date);
 
 $sumUsd = $rate->getUsdSumByCurrency($sumUah, 'UAH');
-$activeSumUsd = $rate->getUsdSumByCurrency($sumUah, 'UAH');
+$activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
 
 ?>
 <h1>Finance details for the date: <?php echo $date?></h1>

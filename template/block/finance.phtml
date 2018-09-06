@@ -3,18 +3,24 @@
 $finance = \classes\ClassCreator::includeClass(\classes\Model\Finance::class);
 $finances = $finance->getFinances();
 
-
+/** @var \classes\Model\Rate $rate */
+$rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
 ?>
 
 <table class="full-part">
     <thead>
     <tr>
         <th>Date</th>
-        <th>Sum Uah</th>
-        <th>Active Sum Uah</th>
+        <th>Sum UAH</th>
+        <th>Active Sum UAH</th>
+        <th>Sum USD</th>
+        <th>Active Sum USD</th>
+        <th>Watch Details</th>
+        <th>Diff with last</th>
     </tr>
     </thead>
     <?php
+    $lastSum = 0;
     foreach ($finances as $date => $sums) {
         echo '<tr>';
         echo '<td>';
@@ -26,8 +32,24 @@ $finances = $finance->getFinances();
         echo '<td>';
         echo $sums['activeSumUah'];
         echo '</td>';
-
+        echo '<td>';
+        echo $rate->getUsdSumByCurrency($sums['sumUah'], 'UAH');
+        echo '</td>';
+        echo '<td>';
+        echo $rate->getUsdSumByCurrency($sums['activeSumUah'], 'UAH');
+        echo '</td>';
+        ?>
+        <td>
+            <a href="/finance_details?date=<?php echo $date; ?>">
+                <img src="media/watch-action.png" alt="watch action" width="20px">
+            </a>
+        </td>
+    <?php
+        echo '<td>';
+        echo $sums['sumUah'] - $lastSum;
+        echo '</td>';
         echo '</tr>';
+        $lastSum = $sums['sumUah'];
     }
     ?>
 </table>
