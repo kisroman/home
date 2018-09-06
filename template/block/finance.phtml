@@ -1,0 +1,33 @@
+<?php
+/** @var \classes\Model\Finance $finance */
+$finance = \classes\ClassCreator::includeClass(\classes\Model\Finance::class);
+$finances = $finance->getFinances();
+
+
+?>
+
+<table class="full-part">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Sum Uah</th>
+        <th>Active Sum Uah</th>
+    </tr>
+    </thead>
+    <?php
+    foreach ($finances as $date => $sums) {
+        echo '<tr>';
+        echo '<td>';
+        echo $date;
+        echo '</td>';
+        echo '<td>';
+        echo $sums['sumUah'];
+        echo '</td>';
+        echo '<td>';
+        echo $sums['activeSumUah'];
+        echo '</td>';
+
+        echo '</tr>';
+    }
+    ?>
+</table>

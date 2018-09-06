@@ -3,10 +3,11 @@
         <?php
 
         if ($_SERVER["REQUEST_URI"] != '/') {
-            include 'template/block' . $_SERVER["REQUEST_URI"] . '.phtml';
-        } else{
+            $requestUri = str_replace(stristr($_SERVER["REQUEST_URI"], '?'), '', $_SERVER["REQUEST_URI"]);
+            include 'template/block' . $requestUri . '.phtml';
+        } else {
+            include 'template/block/finance.phtml';
         ?>
-
         <?php
         }
         ?>

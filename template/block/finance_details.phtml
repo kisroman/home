@@ -7,15 +7,24 @@ $stocks = $stock->getStocks();
 $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
 $rates = $rate->getRates();
 
-$date = '2018-08-30';
+$date = $_GET['date'];
+if (!$date) {
+    header('Location: ' . $_SERVER["HTTP_REFERER"], true, 302);
+    die();
+}
 /** @var \classes\Model\FinanceDetails $financeDetail */
 $financeDetail = \classes\ClassCreator::includeClass(\classes\Model\FinanceDetails::class);
-$financeDetails = $financeDetail->getFinanceDetails($date);
+$financeDetails = $financeDetail->getFinanceDetailsByDate($date);
+
+list($sumUah, $activeSumUah) = $financeDetail->getSumsUahByDate($date);
+
+$sumUsd = $rate->getUsdSumByCurrency($sumUah, 'UAH');
+$activeSumUsd = $rate->getUsdSumByCurrency($sumUah, 'UAH');
 
 ?>
-<h1>Finance details for the date: <?php $date?></h1>
+<h1>Finance details for the date: <?php echo $date?></h1>
 
-<table>
+<table class="full-part">
     <thead>
     <tr>
         <th>ID</th>
@@ -56,6 +65,26 @@ $financeDetails = $financeDetail->getFinanceDetails($date);
     ?>
 </table>
 
+<table class="third-part">
+    <thead>
+    <tr>
+        <th>Sum</th>
+        <th>Currency</th>
+    </tr>
+    </thead>
+    <tr>
+        <td><?php echo $sumUah; ?></td><td>UAH</td>
+    </tr>
+    <tr>
+        <td><?php echo $sumUsd; ?></td><td>USD</td>
+    </tr>
+    <tr>
+        <td><?php echo $activeSumUah; ?></td><td>UAH-active</td>
+    </tr>
+    <tr>
+        <td><?php echo $activeSumUsd; ?></td><td>USD-active</td>
+    </tr>
+</table>
 <div></div>
 <form action="finance_details/post" method="post" id="finance_details">
     <div>
