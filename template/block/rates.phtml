@@ -3,6 +3,7 @@
 $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
 $rates = $rate->getRates();
 ?>
+<div>
 <table align="center">
     <thead>
     <tr>
@@ -27,3 +28,22 @@ $rates = $rate->getRates();
     }
     ?>
 </table>
+</div>
+
+<div class="add-rate-form" align="center">
+    <form action="rates/post" method="post" id="rate">
+        <div>
+            <label for="currency">Currency:</label>
+            <select name="currency" id="currency">
+                <option value="UAH">UAH</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+            </select>
+        </div>
+        <div>
+            <label class="required" for="coefficient">Coefficient:</label>
+            <input type="text" id="coefficient" name="coefficient" required>
+        </div>
+        <input type="submit" value="Add or Update">
+    </form>
+</div>

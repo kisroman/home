@@ -8,16 +8,31 @@
 .logo {
     float: left;
 }
+
+header {
+    color: #544738;
+    font-family: helvetica, sans-serif;
+}
+
 nav {
     float: right;
 }
-nav ul {
-    margin: 0;
-    padding: 0;
+nav ul li {
+    float: left;
     list-style: none;
+    margin-right: 1em;
 }
-nav li {
-    display: inline-block;
+
+nav li a {
+    color: #544738;
+    text-decoration: none;
+    float: left;
+    font-size: 25px;
+    padding: 12px;
+}
+
+nav li a:hover {
+    color: #7eb9be;
 }
 
 .container:after {
@@ -29,7 +44,6 @@ nav li {
 .container {
     width: 100%;
     max-width: 1024px;
-    padding: 15px;
     margin: 0 auto;
 }
 
@@ -90,4 +104,16 @@ tr:hover {background-color: #f5f5f5;}
 
 .full-part {
     width: 100%
+}
+
+.clickable-row{
+    cursor: hand;
+}
+
+.right {
+    float: right;
+}
+
+.left {
+    float: left;
 }

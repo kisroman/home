@@ -87,4 +87,25 @@ class Rate
 
         return $resultRate;
     }
+
+    public function save($data)
+    {
+        /** @var Connection $connection */
+        $connection = ClassCreator::includeClass(Connection::class);
+        $ifExist = $connection->select('rate', '*', 'currency = "' . $data['currency'] . '"');
+
+        if ($ifExist) {
+            $connection->update(
+                'rate',
+                'coefficient = ' . $data['coefficient'],
+                'currency = "' . $data['currency'] . '"'
+            );
+        } else {
+            $connection->insert(
+                'rate',
+                '"' . $data['coefficient'] . '", "' . $data['currency'] . '"',
+                'coefficient, currency'
+            );
+        }
+    }
 }

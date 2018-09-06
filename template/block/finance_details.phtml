@@ -7,11 +7,9 @@ $stocks = $stock->getStocks();
 $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
 $rates = $rate->getRates();
 
-$date = $_GET['date'];
-if (!$date) {
-    header('Location: ' . $_SERVER["HTTP_REFERER"], true, 302);
-    die();
-}
+$date = isset($_GET['date']) ? $_GET['date'] : null;
+if ($date):
+
 /** @var \classes\Model\FinanceDetails $financeDetail */
 $financeDetail = \classes\ClassCreator::includeClass(\classes\Model\FinanceDetails::class);
 $financeDetails = $financeDetail->getFinanceDetailsByDate($date);
@@ -22,109 +20,119 @@ $sumUsd = $rate->getUsdSumByCurrency($sumUah, 'UAH');
 $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
 
 ?>
-<h1>Finance details for the date: <?php echo $date?></h1>
+<h1>Finance details for the date: <?php echo $date ?></h1>
 
-<table class="full-part">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Stock</th>
-        <th>Source</th>
-        <th>Sum</th>
-        <th>Currency</th>
-        <th>Active</th>
-        <th>Date</th>
-    </tr>
-    </thead>
-    <?php
-    foreach ($financeDetails as $financeDetail) {
-        echo '<tr>';
-        echo '<td>';
-        echo $financeDetail['id'];
-        echo '</td>';
-        echo '<td>';
-        echo $financeDetail['stock'];
-        echo '</td>';
-        echo '<td>';
-        echo $financeDetail['source'];
-        echo '</td>';
-        echo '<td>';
-        echo $financeDetail['sum'];
-        echo '</td>';
-        echo '<td>';
-        echo $financeDetail['currency'];
-        echo '</td>';
-        echo '<td>';
-        echo $financeDetail['active'];
-        echo '</td>';
-        echo '<td>';
-        echo $financeDetail['date'];
-        echo '</td>';
-        echo '</tr>';
-    }
-    ?>
-</table>
+<div>
+    <table class="full-part">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Stock</th>
+            <th>Source</th>
+            <th>Sum</th>
+            <th>Currency</th>
+            <th>Active</th>
+            <th>Date</th>
+        </tr>
+        </thead>
+        <?php
+        foreach ($financeDetails as $financeDetail) {
+            echo '<tr>';
+            echo '<td>';
+            echo $financeDetail['id'];
+            echo '</td>';
+            echo '<td>';
+            echo $financeDetail['stock'];
+            echo '</td>';
+            echo '<td>';
+            echo $financeDetail['source'];
+            echo '</td>';
+            echo '<td>';
+            echo $financeDetail['sum'];
+            echo '</td>';
+            echo '<td>';
+            echo $financeDetail['currency'];
+            echo '</td>';
+            echo '<td>';
+            echo $financeDetail['active'];
+            echo '</td>';
+            echo '<td>';
+            echo $financeDetail['date'];
+            echo '</td>';
+            echo '</tr>';
+        }
+        ?>
+    </table>
+</div>
 
-<table class="third-part">
-    <thead>
-    <tr>
-        <th>Sum</th>
-        <th>Currency</th>
-    </tr>
-    </thead>
-    <tr>
-        <td><?php echo $sumUah; ?></td><td>UAH</td>
-    </tr>
-    <tr>
-        <td><?php echo $sumUsd; ?></td><td>USD</td>
-    </tr>
-    <tr>
-        <td><?php echo $activeSumUah; ?></td><td>UAH-active</td>
-    </tr>
-    <tr>
-        <td><?php echo $activeSumUsd; ?></td><td>USD-active</td>
-    </tr>
-</table>
-<div></div>
-<form action="finance_details/post" method="post" id="finance_details">
-    <div>
-        <label for="stock">Stock:</label>
-        <select name="stock" id="stock">
-            <?php foreach ($stocks as $stock): ?>
-                <option value="<?php echo $stock['name']; ?>"><?php echo $stock['name']; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div>
-        <label class="required" for="source">Source:</label>
-        <input  type="text" id="source" name="source" required>
-    </div>
-    <div>
-        <label class="required" for="sum">Sum:</label>
-        <input type="number" id="sum" name="sum" min="0" required>
-    </div>
-    <div>
-        <label for="currency">Currency</label>
-        <select name="currency" id="currency">
-            <?php foreach ($rates as $rate): ?>
-                <option><?php echo $rate['currency']; ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-    <div>
-        <label class="required" for="date">Date:</label>
-        <input type="text" id="datepicker" value="<?php echo date('m/d/o'); ?>" name="date" required>
-    </div>
-    <div>
-        <label for="date">Is Active</label>
-        <input type="checkbox" name="active" checked="checked">
-    </div>
+<div class="third-part right">
+    <table>
+        <thead>
+        <tr>
+            <th>Sum</th>
+            <th>Currency</th>
+        </tr>
+        </thead>
+        <tr>
+            <td><?php echo $sumUah; ?></td>
+            <td>UAH</td>
+        </tr>
+        <tr>
+            <td><?php echo $sumUsd; ?></td>
+            <td>USD</td>
+        </tr>
+        <tr>
+            <td><?php echo $activeSumUah; ?></td>
+            <td>UAH-active</td>
+        </tr>
+        <tr>
+            <td><?php echo $activeSumUsd; ?></td>
+            <td>USD-active</td>
+        </tr>
+    </table>
+</div>
 
-    <input type="submit" value="Add">
-</form>
+<?php endif; ?>
+<div class="left add-finance-details-form">
+    <form action="finance_details/post" method="post" id="finance_details">
+        <div>
+            <label for="stock">Stock:</label>
+            <select name="stock" id="stock">
+                <?php foreach ($stocks as $stock): ?>
+                    <option value="<?php echo $stock['name']; ?>"><?php echo $stock['name']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div>
+            <label class="required" for="source">Source:</label>
+            <input type="text" id="source" name="source" required>
+        </div>
+        <div>
+            <label class="required" for="sum">Sum:</label>
+            <input type="number" id="sum" name="sum" min="0" required>
+        </div>
+        <div>
+            <label for="currency">Currency</label>
+            <select name="currency" id="currency">
+                <?php foreach ($rates as $rate): ?>
+                    <option><?php echo $rate['currency']; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div>
+            <label class="required" for="date">Date:</label>
+            <input type="text" id="datepicker" value="<?php echo date('m/d/o'); ?>" name="date" required>
+        </div>
+        <div>
+            <label for="date">Is Active</label>
+            <input type="checkbox" name="active" checked="checked">
+        </div>
 
+        <input type="submit" value="Add">
+    </form>
+</div>
 <script>
-    $( function() {
-        $( "#datepicker" ).datepicker();
-    } );
+    $(function () {
+        $("#datepicker").datepicker();
+    });
 </script>

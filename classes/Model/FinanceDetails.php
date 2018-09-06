@@ -63,4 +63,19 @@ class FinanceDetails
 
         return [$sumUah, $activeSumUah];
     }
+
+    public function createDuplicateForDate($date)
+    {
+        /** @var Connection $connection */
+        $connection = ClassCreator::includeClass(Connection::class);
+        $maxDate = array_pop($connection->selectMax('finance', 'date')->fetch_row());
+
+        $financeDetails = $this->getFinanceDetailsByDate($maxDate);
+
+        foreach ($financeDetails as $financeDetail) {
+            unset($financeDetail['id']);
+            $financeDetail['date'] = $date;
+            $this->save($financeDetail);
+        }
+    }
 }

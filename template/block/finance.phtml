@@ -15,14 +15,13 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
         <th>Active Sum UAH</th>
         <th>Sum USD</th>
         <th>Active Sum USD</th>
-        <th>Watch Details</th>
         <th>Diff with last</th>
     </tr>
     </thead>
     <?php
     $lastSum = 0;
     foreach ($finances as $date => $sums) {
-        echo '<tr>';
+        echo '<tr class="clickable-row" data-href="/finance_details?date=' . $date . '">';
         echo '<td>';
         echo $date;
         echo '</td>';
@@ -39,11 +38,6 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
         echo $rate->getUsdSumByCurrency($sums['activeSumUah'], 'UAH');
         echo '</td>';
         ?>
-        <td>
-            <a href="/finance_details?date=<?php echo $date; ?>">
-                <img src="media/watch-action.png" alt="watch action" width="20px">
-            </a>
-        </td>
     <?php
         echo '<td>';
         echo $sums['sumUah'] - $lastSum;
@@ -53,3 +47,26 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
     }
     ?>
 </table>
+
+<div class="left add-finance-details-form">
+    <form action="finance/post" method="post" id="finance_details">
+        <div>
+            <label for="date">Date:</label>
+            <input type="text" id="datepicker" value="<?php echo date('m/d/o'); ?>" name="date" required>
+        </div>
+
+        <input type="submit" value="Add for the date">
+    </form>
+</div>
+
+<script>
+    $(function () {
+        $("#datepicker").datepicker();
+    });
+
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function() {
+            window.location = $(this).data("href");
+        });
+    });
+</script>

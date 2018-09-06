@@ -1,0 +1,9 @@
+<?php
+if (!empty($_POST)) {
+    /** @var \classes\Model\Rate $rate */
+    $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
+    $rate->save($_POST);
+}
+
+header('Location: ' . $_SERVER["HTTP_REFERER"], true, 302);
+die();

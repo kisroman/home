@@ -74,6 +74,13 @@ class Connection
         return $this->connection->query($query);
     }
 
+    public function selectMax($table, $field)
+    {
+        $query = 'SELECT MAX(' . $field . ') FROM ' . $table;
+
+        return $this->connection->query($query);
+    }
+
     public function update($table, $columnsValues, $whereCondition)
     {
         $query = 'UPDATE ' . $table . ' SET ' . $columnsValues . ' WHERE ' . $whereCondition;
