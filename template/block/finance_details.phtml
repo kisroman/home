@@ -49,7 +49,11 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
             echo $financeDetail['source'];
             echo '</td>';
             echo '<td>';
-            echo $financeDetail['sum'];
+            ?> <input type="text" id="<?php echo $financeDetail['id']; ?>" value="<?php
+            echo $financeDetail['sum']; ?> ">
+            <img class="update_value" id="<?php echo $financeDetail['id']; ?>" src="media/update-icon.png"
+                 alt="Update" width="20px">
+            <?php
             echo '</td>';
             echo '<td>';
             echo $financeDetail['currency'];
@@ -64,7 +68,7 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
             <td style="text-align: center;">
                 <a href="<?php echo '/finance_details/delete?id=' . $financeDetail['id']
                 ?>">
-                    <img src="media/delete_icon.png" alt="Delete" width="20px">
+                    <img src="media/delete-icon.png" alt="Delete" width="20px">
                 </a>
             </td>
             <?php
@@ -134,7 +138,7 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
             if ($date) {
                 echo $date;
             } else {
-                echo date('m/d/o');
+                echo date('o-m-d');
             }
             ?>" name="date" required>
         </div>
@@ -148,6 +152,13 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
 </div>
 <script>
     $(function () {
-        $("#datepicker").datepicker();
+        $("#datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
     });
+
+    $('.update_value').click(function (e) {
+        var id = e.currentTarget.id,
+        sum = $('input#' + id).val();
+
+        location.href = '/finance_details/update?id=' + id + '&sum=' + sum;
+    })
 </script>

@@ -1,11 +1,30 @@
 <?php
+$financesLimit = 10;
+
 /** @var \classes\Model\Finance $finance */
 $finance = \classes\ClassCreator::includeClass(\classes\Model\Finance::class);
 $finances = $finance->getFinances();
+$reverseFinance = array_reverse($finances, true);
+$lastSum = 0;
+$diff = [];
+foreach ($finances as $date => $sums) {
+    $diff[$date] = $sums['sumUah'] - $lastSum;
+    $lastSum = $sums['sumUah'];
+}
 
 /** @var \classes\Model\Rate $rate */
 $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
 ?>
+
+<div class="left add-finance-details-form">
+    <form action="finance/post" method="post" id="finance_details">
+        <div>
+            <label for="date">Date:</label>
+            <input type="text" id="datepicker" value="<?php echo date('o-m-d'); ?>" name="date" required>
+            <input type="submit" value="Add">
+        </div>
+    </form>
+</div>
 
 <table class="full-part">
     <thead>
@@ -19,8 +38,8 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
     </tr>
     </thead>
     <?php
-    $lastSum = 0;
-    foreach ($finances as $date => $sums) {
+$i = 0;
+    foreach ($reverseFinance as $date => $sums) {
         echo '<tr class="clickable-row" data-href="/finance_details?date=' . $date . '">';
         echo '<td>';
         echo $date;
@@ -37,27 +56,17 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
         echo '<td>';
         echo $rate->getUsdSumByCurrency($sums['activeSumUah'], 'UAH');
         echo '</td>';
-        ?>
-    <?php
         echo '<td>';
-        echo $sums['sumUah'] - $lastSum;
+        echo $diff[$date];
         echo '</td>';
         echo '</tr>';
-        $lastSum = $sums['sumUah'];
+        if ($i == $financesLimit) {
+            break;
+        }
+        $i++;
     }
     ?>
 </table>
-
-<div class="left add-finance-details-form">
-    <form action="finance/post" method="post" id="finance_details">
-        <div>
-            <label for="date">Date:</label>
-            <input type="text" id="datepicker" value="<?php echo date('m/d/o'); ?>" name="date" required>
-        </div>
-
-        <input type="submit" value="Add for the date">
-    </form>
-</div>
 
 <script>
     $(function () {

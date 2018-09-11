@@ -3,7 +3,10 @@ if (!empty($_POST)) {
     /** @var \classes\Model\FinanceDetails $financeDetails */
     $financeDetails = \classes\ClassCreator::includeClass(\classes\Model\FinanceDetails::class);
     $financeDetails->createDuplicateForDate($_POST['date']);
-}
 
-header('Location: ' . $_SERVER["HTTP_REFERER"], true, 302);
-die();
+    header('Location: ' . '/finance_details?date=' . $_POST['date'], true, 302);
+    die();
+} else {
+    header('Location: ' . $_SERVER["HTTP_REFERER"], true, 302);
+    die();
+}

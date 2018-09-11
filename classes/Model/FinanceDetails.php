@@ -12,7 +12,13 @@ class FinanceDetails
         /** @var Connection $connection */
         $connection = ClassCreator::includeClass(Connection::class);
         $data['date'] = date('o-m-d', strtotime($data['date']));
-        $data['active'] = isset($data['active']) ? 1 : 0;
+        if (!isset($data['active'])) {
+            $data['active'] = 0;
+        } else {
+            if ($data['active'] != 0 && $data['active'] != 1) {
+                $data['active'] = 1;
+            }
+        }
         $preparedData = [];
         foreach ($data as $key => $datum) {
             $preparedData['`' . $key . '`'] = '"' . $datum . '"';
@@ -84,5 +90,12 @@ class FinanceDetails
         /** @var Connection $connection */
         $connection = ClassCreator::includeClass(Connection::class);
         $connection->delete('finance', '`id`=' . $id);
+    }
+
+    public function update($request)
+    {
+        /** @var Connection $connection */
+        $connection = ClassCreator::includeClass(Connection::class);
+        $connection->update('finance', 'sum = ' . $request['sum'], '`id`=' . $request['id']);
     }
 }
