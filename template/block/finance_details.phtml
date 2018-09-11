@@ -33,6 +33,7 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
             <th>Currency</th>
             <th>Active</th>
             <th>Date</th>
+            <th class="delete">Delete</th>
         </tr>
         </thead>
         <?php
@@ -59,6 +60,14 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
             echo '<td>';
             echo $financeDetail['date'];
             echo '</td>';
+            ?>
+            <td style="text-align: center;">
+                <a href="<?php echo '/finance_details/delete?id=' . $financeDetail['id']
+                ?>">
+                    <img src="media/delete_icon.png" alt="Delete" width="20px">
+                </a>
+            </td>
+            <?php
             echo '</tr>';
         }
         ?>
@@ -121,7 +130,13 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
         </div>
         <div>
             <label class="required" for="date">Date:</label>
-            <input type="text" id="datepicker" value="<?php echo date('m/d/o'); ?>" name="date" required>
+            <input type="text" id="datepicker" value="<?php
+            if ($date) {
+                echo $date;
+            } else {
+                echo date('m/d/o');
+            }
+            ?>" name="date" required>
         </div>
         <div>
             <label for="date">Is Active</label>

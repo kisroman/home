@@ -54,7 +54,7 @@ class Connection
         $db = 'home';
         $testDb = 'home_test';
 
-        $this->connection = mysqli_connect($servername, $username, $password, $testDb);
+        $this->connection = mysqli_connect($servername, $username, $password, $db);
         if ($this->connection->connect_error) {
             throw new \Exception("Connection failed: " . $this->connection->connect_error);
         } elseif (!$this->connection) {
@@ -88,6 +88,13 @@ class Connection
         return $this->connection->query($query);
     }
 
+    public function delete($table, $whereCondition)
+    {
+        $query = 'DELETE FROM ' . $table . ' WHERE ' . $whereCondition;
+
+        return $this->connection->query($query);
+    }
+
     public function insert($tableName, $values, $columns = null)
     {
         $query = 'INSERT INTO ' . $tableName;
@@ -112,10 +119,6 @@ class Connection
 
             if (isset($column['options']['nullable']) && $column['options']['nullable'] == false) {
                 $columnQuery .= ' NOT NULL';
-            }
-
-            if (isset($column['options']['identity']) && $column['options']['identity'] == true) {
-                $columnQuery .= ' IDENTITY';
             }
 
             if (isset($column['options']['auto_increment']) && $column['options']['auto_increment'] == true) {

@@ -6,7 +6,7 @@ $connection->addColumn(
     'id',
     \classes\Db\Connection::TYPE_SMALLINT,
     null,
-    ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
+    ['auto_increment' => true, 'identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
     'ID'
 )->addColumn(
     'name',

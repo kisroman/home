@@ -78,4 +78,11 @@ class FinanceDetails
             $this->save($financeDetail);
         }
     }
+
+    public function delete($id)
+    {
+        /** @var Connection $connection */
+        $connection = ClassCreator::includeClass(Connection::class);
+        $connection->delete('finance', '`id`=' . $id);
+    }
 }

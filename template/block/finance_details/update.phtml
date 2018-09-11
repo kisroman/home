@@ -1,0 +1,9 @@
+<?php
+if (!empty($_GET['id'])) {
+    /** @var \classes\Model\FinanceDetails $financeDetails */
+    $financeDetails = \classes\ClassCreator::includeClass(\classes\Model\FinanceDetails::class);
+    $financeDetails->update($_GET);
+}
+
+header('Location: ' . $_SERVER["HTTP_REFERER"], true, 302);
+die();

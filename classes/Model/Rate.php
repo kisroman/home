@@ -94,7 +94,7 @@ class Rate
         $connection = ClassCreator::includeClass(Connection::class);
         $ifExist = $connection->select('rate', '*', 'currency = "' . $data['currency'] . '"');
 
-        if ($ifExist) {
+        if ($ifExist->fetch_row()) {
             $connection->update(
                 'rate',
                 'coefficient = ' . $data['coefficient'],
