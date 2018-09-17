@@ -1,0 +1,85 @@
+<script src="js/lib/canvasjs-2.2/jquery.canvasjs.min.js"></script>
+
+<?php
+/** @var \classes\Model\Finance $finance */
+$finance = \classes\ClassCreator::includeClass(\classes\Model\Finance::class);
+$finances = $finance->getFinances();
+
+/** @var \classes\Model\Rate $rate */
+$rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
+?>
+
+<div id="UahContainer" style="height: 300px; width: 100%;"></div>
+<div id="UsdContainer" style="height: 300px; width: 100%;"></div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var chartUah = new CanvasJS.Chart("UahContainer",
+            {
+                title:{
+                    text: "Diagram UAH"
+                },
+                axisX:{
+                    valueFormatString: "MMM"
+                },
+                data: [
+                    {
+                        type: "line",
+                        dataPoints: [
+                            <?php
+                            foreach ($finances as $date => $data):
+                            echo '{ x: new Date(' . date('y', strtotime($date)) . ', ' . date('m', strtotime($date))
+                            . ', ' . date('d', strtotime($date)) . '), y: ' . $data['activeSumUah'] . '},'; ?>
+                            <?php endforeach; ?>
+                        ]
+                    },
+                    {
+                        type: "line",
+                        dataPoints: [
+                            <?php
+                            foreach ($finances as $date => $data):
+                            echo '{ x: new Date(' . date('y', strtotime($date)) . ', ' . date('m', strtotime($date))
+                                . ', ' . date('d', strtotime($date)) . '), y: ' . $data['sumUah'] . '},'; ?>
+                            <?php endforeach; ?>
+                        ]
+                    }
+                ]
+            });
+
+        chartUah.render();
+
+        var chartUsd = new CanvasJS.Chart("UsdContainer",
+            {
+                title:{
+                    text: "Diagram USD"
+                },
+                axisX:{
+                    valueFormatString: "MMM"
+                },
+                data: [
+                    {
+                        type: "line",
+                        dataPoints: [
+                            <?php
+                            foreach ($finances as $date => $data):
+                            echo '{ x: new Date(' . date('y', strtotime($date)) . ', ' . date('m', strtotime($date))
+                                . ', ' . date('d', strtotime($date)) . '), y: ' . $rate->getUsdSumByCurrency($data['activeSumUah'], 'UAH') . '},'; ?>
+                            <?php endforeach; ?>
+                        ]
+                    },
+                    {
+                        type: "line",
+                        dataPoints: [
+                            <?php
+                            foreach ($finances as $date => $data):
+                            echo '{ x: new Date(' . date('y', strtotime($date)) . ', ' . date('m', strtotime($date))
+                                . ', ' . date('d', strtotime($date)) . '), y: ' . $rate->getUsdSumByCurrency($data['sumUah'], 'UAH') . '},'; ?>
+                            <?php endforeach; ?>
+                        ]
+                    }
+                ]
+            });
+
+        chartUsd.render();
+    }
+</script>

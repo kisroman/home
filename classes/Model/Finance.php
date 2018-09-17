@@ -28,4 +28,30 @@ class Finance
 
         return $sumByDate;
     }
+
+    public function getFinancesByMonth()
+    {
+        $financesByMonth = [];
+        $financesByDate = $this->getFinances();
+
+        foreach ($financesByDate as $date => $finance) {
+            $month = date('m', strtotime($date));
+            if (!isset($financesByMonth[$month]))
+            {
+                $financesByMonth[$month] = [
+                    'min' => $finance,
+                    'max' => $finance
+                ];
+            } else {
+                if ($financesByMonth[$month]['min']['sumUah'] > $finance['sumUah']) {
+                    $financesByMonth[$month]['min'] = $finance;
+                }
+                if ($financesByMonth[$month]['max']['sumUah'] < $finance['sumUah']) {
+                    $financesByMonth[$month]['max'] = $finance;
+                }
+            }
+        }
+
+        return $financesByMonth;
+    }
 }
