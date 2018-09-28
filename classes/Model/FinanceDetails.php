@@ -70,6 +70,22 @@ class FinanceDetails
         return [$sumUah, $activeSumUah];
     }
 
+    public function getCommentByDate($date)
+    {
+        $financeDetails = $this->getFinanceDetailsByDate($date);
+
+        $comment = '';
+        foreach ($financeDetails as $financeDetail) {
+            if ($financeDetail['comment']) {
+                $comment .= $financeDetail['comment']. ', ';
+            }
+        }
+
+        $comment =  substr($comment, 0, -2);
+
+        return $comment;
+    }
+
     public function createDuplicateForDate($date)
     {
         /** @var Connection $connection */
@@ -96,6 +112,13 @@ class FinanceDetails
     {
         /** @var Connection $connection */
         $connection = ClassCreator::includeClass(Connection::class);
-        $connection->update('finance', 'sum = ' . $request['sum'], '`id`=' . $request['id']);
+
+        if (isset($request['sum'])) {
+            $connection->update('finance', '`sum` = ' . $request['sum'], '`id`=' . $request['id']);
+        }
+
+        if (isset($request['comment'])) {
+            $connection->update('finance', '`comment` = "' . $request['comment'] . '"', '`id`=' . $request['id']);
+        }
     }
 }

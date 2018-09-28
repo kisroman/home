@@ -44,4 +44,10 @@ $connection->addColumn(
     null,
     [],
     'Date'
+)->addColumn(
+    'comment',
+    \classes\Db\Connection::TYPE_TEXT,
+    256,
+    [],
+    'Comment'
 )->createTable('finance');

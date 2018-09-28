@@ -28,8 +28,11 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
                         dataPoints: [
                             <?php
                             foreach ($finances as $date => $data):
-                            echo '{ x: new Date(' . date('y', strtotime($date)) . ', ' . date('m', strtotime($date))
-                            . ', ' . date('d', strtotime($date)) . '), y: ' . $data['activeSumUah'] . '},'; ?>
+                            $year = date('y', strtotime($date));
+                            $month = '0' . date('m', strtotime($date)) - 1;
+                            $day = date('d', strtotime($date));
+                            echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
+                                . $data['activeSumUah'] . '},'; ?>
                             <?php endforeach; ?>
                         ]
                     },
@@ -38,8 +41,11 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
                         dataPoints: [
                             <?php
                             foreach ($finances as $date => $data):
-                            echo '{ x: new Date(' . date('y', strtotime($date)) . ', ' . date('m', strtotime($date))
-                                . ', ' . date('d', strtotime($date)) . '), y: ' . $data['sumUah'] . '},'; ?>
+                            $year = date('y', strtotime($date));
+                            $month = '0' . date('m', strtotime($date)) - 1;
+                            $day = date('d', strtotime($date));
+                            echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
+                                . $data['sumUah'] . '},'; ?>
                             <?php endforeach; ?>
                         ]
                     }
@@ -62,8 +68,11 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
                         dataPoints: [
                             <?php
                             foreach ($finances as $date => $data):
-                            echo '{ x: new Date(' . date('y', strtotime($date)) . ', ' . date('m', strtotime($date))
-                                . ', ' . date('d', strtotime($date)) . '), y: ' . $rate->getUsdSumByCurrency($data['activeSumUah'], 'UAH') . '},'; ?>
+                            $year = date('y', strtotime($date));
+                            $month = '0' . date('m', strtotime($date)) - 1;
+                            $day = date('d', strtotime($date));
+                            echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
+                                . $rate->getUsdSumByCurrency($data['activeSumUah'], 'UAH') . '},'; ?>
                             <?php endforeach; ?>
                         ]
                     },
@@ -72,8 +81,11 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
                         dataPoints: [
                             <?php
                             foreach ($finances as $date => $data):
-                            echo '{ x: new Date(' . date('y', strtotime($date)) . ', ' . date('m', strtotime($date))
-                                . ', ' . date('d', strtotime($date)) . '), y: ' . $rate->getUsdSumByCurrency($data['sumUah'], 'UAH') . '},'; ?>
+                            $year = date('y', strtotime($date));
+                            $month = '0' . date('m', strtotime($date)) - 1;
+                            $day = date('d', strtotime($date));
+                            echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
+                                . $rate->getUsdSumByCurrency($data['sumUah'], 'UAH') . '},'; ?>
                             <?php endforeach; ?>
                         ]
                     }

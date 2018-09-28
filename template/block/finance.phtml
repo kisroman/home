@@ -35,6 +35,7 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
         <th>Sum USD</th>
         <th>Active Sum USD</th>
         <th>Diff with last</th>
+        <th>Comment</th>
     </tr>
     </thead>
     <?php
@@ -58,6 +59,9 @@ $i = 0;
         echo '</td>';
         echo '<td>';
         echo $diff[$date];
+        echo '</td>';
+        echo '<td>';
+        echo $sums['comment'];
         echo '</td>';
         echo '</tr>';
         if ($i == $financesLimit) {

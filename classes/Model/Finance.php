@@ -17,16 +17,19 @@ class Finance
         foreach ($financeDetails as $financeDetail) {
             $dates[] = $financeDetail['date'];
         }
-        $sumByDate = [];
+        $infoByDate = [];
         foreach ($dates as $date) {
             list($sumUah, $activeSumUah) = $financeDetailsModel->getSumsUahByDate($date);
-            $sumByDate[$date] = [
+            $comment = $financeDetailsModel->getCommentByDate($date);
+
+            $infoByDate[$date] = [
                 'sumUah' => $sumUah,
                 'activeSumUah' => $activeSumUah,
+                'comment' => $comment
             ];
         }
 
-        return $sumByDate;
+        return $infoByDate;
     }
 
     public function getFinancesByMonth()

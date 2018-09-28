@@ -33,6 +33,7 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
             <th>Currency</th>
             <th>Active</th>
             <th>Date</th>
+            <th>Comment</th>
             <th class="delete">Delete</th>
         </tr>
         </thead>
@@ -49,9 +50,9 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
             echo $financeDetail['source'];
             echo '</td>';
             echo '<td>';
-            ?> <input type="text" id="<?php echo $financeDetail['id']; ?>" value="<?php
+            ?> <input type="text" id="<?php echo $financeDetail['id'] . '_sum'; ?>" value="<?php
             echo $financeDetail['sum']; ?> ">
-            <img class="update_value" id="<?php echo $financeDetail['id']; ?>" src="media/update-icon.png"
+            <img class="update_value" id="<?php echo $financeDetail['id'] . '_sum'; ?>" src="media/update-icon.png"
                  alt="Update" width="20px">
             <?php
             echo '</td>';
@@ -63,6 +64,13 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
             echo '</td>';
             echo '<td>';
             echo $financeDetail['date'];
+            echo '</td>';
+            echo '<td>';
+            ?> <input type="text" id="<?php echo $financeDetail['id'] . '_comment'; ?>" value="<?php
+            echo $financeDetail['comment']; ?> ">
+            <img class="update_value" id="<?php echo $financeDetail['id'] . '_comment'; ?>" src="media/update-icon.png"
+                 alt="Update" width="20px">
+            <?php
             echo '</td>';
             ?>
             <td style="text-align: center;">
@@ -156,9 +164,11 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
     });
 
     $('.update_value').click(function (e) {
-        var id = e.currentTarget.id,
-        sum = $('input#' + id).val();
+        var elementId = e.currentTarget.id,
+            value = $('input#' + elementId).val(),
+            id = elementId.split('_')[0],
+            fieldToUpdate = elementId.split('_')[1];
 
-        location.href = '/finance_details/update?id=' + id + '&sum=' + sum;
+        location.href = '/finance_details/update?id=' + id + '&' + fieldToUpdate + '=' + value;
     })
 </script>
