@@ -1,0 +1,14 @@
+<div id="income" class="left">
+    <span>Income:</span>
+    <?php
+
+    echo '</br>';
+    foreach ($incomeByMonthAndYear as $year => $incomeByMonth) {
+        foreach ($incomeByMonth as $month => $income) {
+            echo $month . '.' . $year . ': ' . $income;
+            echo '</br>';
+        }
+    }
+
+    ?>
+</div>

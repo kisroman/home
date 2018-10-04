@@ -126,3 +126,16 @@ tr:hover {
 th.delete {
     width: 20px
 }
+
+#income {
+    padding-left: 5%;
+}
+
+#spending-income {
+    padding-top: 2%;
+}
+
+form#password {
+    text-align: center;
+    padding-top: 5%;
+}

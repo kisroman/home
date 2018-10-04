@@ -1,0 +1,27 @@
+<?php
+$spendingByMonthAndYear = [];
+$incomeByMonthAndYear = [];
+//drop first income
+array_shift($differenceByDate);
+foreach ($differenceByDate as $date => $sum) {
+    $year = date('y', strtotime($date));
+    $month = date('m', strtotime($date));
+    if ($sum < 0) {
+        if (!isset($spendingByMonthAndYear[$year][$month])) {
+            $spendingByMonthAndYear[$year][$month] = 0;
+        }
+        $spendingByMonthAndYear[$year][$month] += $sum;
+    } else {
+        if (!isset($incomeByMonthAndYear[$year][$month])) {
+            $incomeByMonthAndYear[$year][$month] = 0;
+        }
+        $incomeByMonthAndYear[$year][$month] += $sum;
+    }
+}
+?>
+<div id="spending-income">
+<?php
+include 'spending.phtml';
+include 'income.phtml';
+?>
+</div>

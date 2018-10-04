@@ -1,4 +1,14 @@
 <?php
+if (!isset($_POST['password'])) {
+    include 'password.phtml';
+    return;
+} else {
+    if ($_POST['password'] != 'zxc') {
+        include 'password.phtml';
+        return;
+    }
+}
+
 $financesLimit = 10;
 
 /** @var \classes\Model\Finance $finance */
@@ -6,9 +16,9 @@ $finance = \classes\ClassCreator::includeClass(\classes\Model\Finance::class);
 $finances = $finance->getFinances();
 $reverseFinance = array_reverse($finances, true);
 $lastSum = 0;
-$diff = [];
+$differenceByDate = [];
 foreach ($finances as $date => $sums) {
-    $diff[$date] = $sums['sumUah'] - $lastSum;
+    $differenceByDate[$date] = $sums['sumUah'] - $lastSum;
     $lastSum = $sums['sumUah'];
 }
 
@@ -58,7 +68,7 @@ $i = 0;
         echo $rate->getUsdSumByCurrency($sums['activeSumUah'], 'UAH');
         echo '</td>';
         echo '<td>';
-        echo $diff[$date];
+        echo $differenceByDate[$date];
         echo '</td>';
         echo '<td>';
         echo $sums['comment'];
@@ -71,6 +81,9 @@ $i = 0;
     }
     ?>
 </table>
+<?php
+include 'finance/spending-income.phtml';
+?>
 
 <script>
     $(function () {

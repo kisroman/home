@@ -1,0 +1,13 @@
+<div class="left">
+    <span>Spending:</span>
+    <?php
+    echo '</br>';
+    foreach ($spendingByMonthAndYear as $year => $spendingByMonth) {
+        foreach ($spendingByMonth as $month => $spending) {
+            echo $month . '.' . $year . ': ' . $spending;
+            echo '</br>';
+        }
+    }
+
+    ?>
+</div>

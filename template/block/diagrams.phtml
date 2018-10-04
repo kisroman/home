@@ -1,6 +1,16 @@
 <script src="js/lib/canvasjs-2.2/jquery.canvasjs.min.js"></script>
 
 <?php
+if (!isset($_POST['password'])) {
+    include 'password.phtml';
+    return;
+} else {
+    if ($_POST['password'] != 'zxc') {
+        include 'password.phtml';
+        return;
+    }
+}
+
 /** @var \classes\Model\Finance $finance */
 $finance = \classes\ClassCreator::includeClass(\classes\Model\Finance::class);
 $finances = $finance->getFinances();
