@@ -14,7 +14,7 @@ header {
     font-family: helvetica, sans-serif;
 }
 
-nav {
+header .menu {
     float: right;
 }
 
@@ -138,4 +138,19 @@ th.delete {
 form#password {
     text-align: center;
     padding-top: 5%;
+}
+
+#menu ul ul{
+    display:none;
+    position:absolute;
+    margin-top:60px;
+    padding-left: 0;
+}
+
+#menu ul li:hover>ul{
+    display:block;
+}
+
+#menu ul li ul li{
+    float:none;
 }
