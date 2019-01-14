@@ -1,0 +1,14 @@
+<div id="income" class="left">
+    <span>Diff:</span>
+    <?php
+
+    echo '</br>';
+    foreach ($incomeByMonthAndYear as $year => $incomeByMonth) {
+        foreach ($incomeByMonth as $month => $income) {
+            echo $income + $spendingByMonthAndYear[$year][$month];
+            echo '</br>';
+        }
+    }
+
+    ?>
+</div>

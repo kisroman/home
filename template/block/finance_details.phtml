@@ -8,8 +8,8 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
 $rates = $rate->getRates();
 
 $date = isset($_GET['date']) ? $_GET['date'] : null;
-if ($date):
 
+if ($date):
 /** @var \classes\Model\FinanceDetails $financeDetail */
 $financeDetail = \classes\ClassCreator::includeClass(\classes\Model\FinanceDetails::class);
 $financeDetails = $financeDetail->getFinanceDetailsByDate($date);
@@ -112,10 +112,10 @@ $activeSumUsd = $rate->getUsdSumByCurrency($activeSumUah, 'UAH');
         </tr>
     </table>
 </div>
-
 <?php endif; ?>
+
 <div class="left add-finance-details-form">
-    <form action="finance_details/post" method="post" id="finance_details">
+    <form id="stock-on-details-form" action="finance_details/post" method="post" id="finance_details">
         <div>
             <label for="stock">Stock:</label>
             <select name="stock" id="stock">

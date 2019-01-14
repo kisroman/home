@@ -1,13 +1,13 @@
 <?php
-if (!isset($_POST['password'])) {
-    include 'password.phtml';
-    return;
-} else {
-    if ($_POST['password'] != 'zxc') {
-        include 'password.phtml';
-        return;
-    }
-}
+//if (!isset($_POST['password'])) {
+//    include 'password.phtml';
+//    return;
+//} else {
+//    if ($_POST['password'] != 'zxc') {
+//        include 'password.phtml';
+//        return;
+//    }
+//}
 
 $financesLimit = 10;
 
@@ -28,11 +28,9 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
 
 <div class="left add-finance-details-form">
     <form action="finance/post" method="post" id="finance_details">
-        <div>
-            <label for="date">Date:</label>
-            <input type="text" id="datepicker" value="<?php echo date('o-m-d'); ?>" name="date" required>
-            <input type="submit" value="Add">
-        </div>
+        <label for="date">Date:</label>
+        <input type="text" id="datepicker" value="<?php echo date('o-m-d'); ?>" name="date" required>
+        <input type="submit" value="Add">
     </form>
 </div>
 
@@ -49,7 +47,7 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
     </tr>
     </thead>
     <?php
-$i = 0;
+    $i = 0;
     foreach ($reverseFinance as $date => $sums) {
         echo '<tr class="clickable-row" data-href="/finance_details?date=' . $date . '">';
         echo '<td>';

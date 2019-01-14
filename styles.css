@@ -129,6 +129,7 @@ th.delete {
 
 #income {
     padding-left: 5%;
+    margin-left: 10px;
 }
 
 #spending-income {
@@ -140,17 +141,27 @@ form#password {
     padding-top: 5%;
 }
 
-#menu ul ul{
-    display:none;
-    position:absolute;
-    margin-top:60px;
+#menu ul ul {
+    display: none;
+    position: absolute;
+    margin-top: 60px;
     padding-left: 0;
 }
 
-#menu ul li:hover>ul{
-    display:block;
+#menu ul li:hover > ul {
+    display: block;
 }
 
-#menu ul li ul li{
-    float:none;
+#menu ul li ul li {
+    float: none;
+}
+
+#stock-on-details-form, #spending, #income {
+    padding-left: 10px;
+    border-style: dashed;
+    border-left-width: 7px;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 0;
+    border-color: #19AED3;
 }

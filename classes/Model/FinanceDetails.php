@@ -15,7 +15,7 @@ class FinanceDetails
         if (!isset($data['active'])) {
             $data['active'] = 0;
         } else {
-            if ($data['active'] != 0 && $data['active'] != 1) {
+            if ($data['active'] == 1 || $data['active'] === 'on') {
                 $data['active'] = 1;
             }
         }
@@ -37,6 +37,8 @@ class FinanceDetails
     {
         /** @var Connection $connection */
         $connection = ClassCreator::includeClass(Connection::class);
+        $date = date('o-m-d', strtotime($date));
+
         $financeDetails = $connection->select('finance', '*', '`date` = "' . $date . '"');
 
         return $financeDetails;
@@ -76,7 +78,7 @@ class FinanceDetails
 
         $comment = '';
         foreach ($financeDetails as $financeDetail) {
-            if ($financeDetail['comment']) {
+            if (isset($financeDetail['comment']) && $financeDetail['comment']) {
                 $comment .= $financeDetail['comment']. ', ';
             }
         }
@@ -96,6 +98,7 @@ class FinanceDetails
 
         foreach ($financeDetails as $financeDetail) {
             unset($financeDetail['id']);
+            unset($financeDetail['comment']);
             $financeDetail['date'] = $date;
             $this->save($financeDetail);
         }

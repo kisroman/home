@@ -3,6 +3,7 @@ $spendingByMonthAndYear = [];
 $incomeByMonthAndYear = [];
 //drop first income
 array_shift($differenceByDate);
+krsort($differenceByDate);
 foreach ($differenceByDate as $date => $sum) {
     $year = date('y', strtotime($date));
     $month = date('m', strtotime($date));
@@ -23,5 +24,6 @@ foreach ($differenceByDate as $date => $sum) {
 <?php
 include 'spending.phtml';
 include 'income.phtml';
+include 'diff.phtml';
 ?>
 </div>
