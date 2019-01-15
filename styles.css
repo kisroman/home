@@ -1,3 +1,7 @@
+:root {
+    --main-color: #19AED3;
+}
+
 .container {
     width: 100%;
     max-width: 1024px;
@@ -80,19 +84,19 @@ table, th, td {
     border: 1px solid black;
 }
 
-th {
+.full-part th {
     height: 20px;
     text-align: left;
-    background-color: #19AED3;
+    background-color: var(--main-color);
     color: white;
 }
 
-td {
+.full-part td {
     height: 20px;
     vertical-align: bottom;
 }
 
-th, td {
+.full-part th, .full-part td {
     padding: 10px;
     text-align: left;
     border-bottom: 1px solid #ddd;
@@ -156,12 +160,28 @@ form#password {
     float: none;
 }
 
-#stock-on-details-form, #spending, #income {
+#stock-on-details-form {
     padding-left: 10px;
     border-style: dashed;
     border-left-width: 7px;
     border-right-width: 0;
     border-top-width: 0;
     border-bottom-width: 0;
-    border-color: #19AED3;
+    border-color: var(--main-color);
+}
+
+table {
+margin-top: 20px;
+}
+
+table th {
+    height: 20px;
+    text-align: left;
+    background-color: var(--main-color);
+    color: white;
+}
+
+table td {
+    height: 30px;
+    padding-left: 10px;
 }

@@ -54,7 +54,7 @@ class Connection
         $db = 'home';
         $testDb = 'home_test';
 
-        $this->connection = mysqli_connect($servername, $username, $password, $testDb);
+        $this->connection = mysqli_connect($servername, $username, $password, $db);
         if ($this->connection->connect_error) {
             throw new \Exception("Connection failed: " . $this->connection->connect_error);
         } elseif (!$this->connection) {

@@ -29,7 +29,7 @@ $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
 <div class="left add-finance-details-form">
     <form action="finance/post" method="post" id="finance_details">
         <label for="date">Date:</label>
-        <input type="text" id="datepicker" value="<?php echo date('o-m-d'); ?>" name="date" required>
+        <input type="text" id="datepicker" value="<?php echo date('Y-m-d'); ?>" name="date" required>
         <input type="submit" value="Add">
     </form>
 </div>

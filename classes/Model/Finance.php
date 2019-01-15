@@ -18,7 +18,7 @@ class Finance
             $dates[] = $financeDetail['date'];
         }
         $infoByDate = [];
-        foreach ($dates as $date) {
+        foreach (array_unique($dates) as $date) {
             list($sumUah, $activeSumUah) = $financeDetailsModel->getSumsUahByDate($date);
             $comment = $financeDetailsModel->getCommentByDate($date);
 

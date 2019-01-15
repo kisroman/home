@@ -11,7 +11,7 @@ class FinanceDetails
     {
         /** @var Connection $connection */
         $connection = ClassCreator::includeClass(Connection::class);
-        $data['date'] = date('o-m-d', strtotime($data['date']));
+        $data['date'] = date('Y-m-d', strtotime($data['date']));
         if (!isset($data['active'])) {
             $data['active'] = 0;
         } else {
@@ -37,7 +37,7 @@ class FinanceDetails
     {
         /** @var Connection $connection */
         $connection = ClassCreator::includeClass(Connection::class);
-        $date = date('o-m-d', strtotime($date));
+        $date = date('Y-m-d', strtotime($date));
 
         $financeDetails = $connection->select('finance', '*', '`date` = "' . $date . '"');
 
