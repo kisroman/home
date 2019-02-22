@@ -44,7 +44,7 @@ class Connection
     /**
      * @var array
      */
-    private $columns;
+    private $columns = [];
 
     public function __construct()
     {
@@ -85,7 +85,9 @@ class Connection
     {
         $query = 'UPDATE ' . $table . ' SET ' . $columnsValues . ' WHERE ' . $whereCondition;
 
-        return $this->connection->query($query);
+        $this->connection->query($query, MYSQLI_USE_RESULT);
+
+        return $this->connection->insert_id;
     }
 
     public function delete($table, $whereCondition)
@@ -104,7 +106,9 @@ class Connection
         }
         $query .= ' VALUES (' . $values . ');';
 
-        return $this->connection->query($query, MYSQLI_USE_RESULT);
+        $this->connection->query($query, MYSQLI_USE_RESULT);
+
+        return $this->connection->insert_id;
     }
 
     public function createTable($tableName)
@@ -135,6 +139,7 @@ class Connection
         $query = substr($query, 0, -2);
         $query .= ')';
         $this->connection->query($query);
+
     }
 
     public function addColumn($name, $type, $size = null, $options = [], $comment = null)

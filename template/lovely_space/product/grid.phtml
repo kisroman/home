@@ -1,0 +1,27 @@
+<?php
+/** @var \LovelySpace\Model\ProductRepository $productRepository */
+$productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
+$products = $productRepository->getList();
+?>
+
+<table class="full-part">
+    <thead>
+    <tr>
+        <th>Ім'я продукта</th>
+        <th>Ціна</th>
+    </tr>
+    </thead>
+    <?php
+    /** @var \LovelySpace\Model\Product $product */
+    foreach ($products as $product) {
+        echo '<tr class="clickable-row" data-href="'. $productUrl . '/edit?id=' . $product->getId() . '">';
+        echo '<td>';
+        echo $product->getName();
+        echo '</td>';
+        echo '<td>';
+        echo $product->getPrice();
+        echo '</td>';
+        echo '</tr>';
+    }
+    ?>
+</table>

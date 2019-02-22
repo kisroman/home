@@ -1,0 +1,54 @@
+<?php
+/** @var \LovelySpace\Model\ProductRepository $productRepository */
+$productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
+$productId = null;
+
+if (!empty($_POST)) {
+    $productRepository->save($_POST);
+
+    header('Location: '. $serverUrl . '/lovely_space/product');
+    die;
+}
+
+if (!empty($_GET)) {
+    $productId = isset($_GET['id']) ? $_GET['id'] : null;
+}
+
+/** @var \LovelySpace\Model\Product $product */
+$product = $productRepository->get($productId);
+
+/** @var \LovelySpace\Model\Resource\ArrivalItem $arrivalItem */
+$arrivalItem = \ClassCreator::get(\LovelySpace\Model\Resource\ArrivalItem::class);
+$lastCost = $arrivalItem->getLastCostForProductByProductId($productId);
+?>
+<div class="edit-product-form" align="left">
+    <div><span class="title">Сторінка редагування продукту</span></div>
+    <form action="" method="post" id="edit">
+        <div style="display: none">
+            <label for="id">ID:</label>
+            <input type="number" id="id" name="id" value="<?= $productId; ?>">
+        </div>
+        <div>
+            <label class="required" for="name">Назва:</label>
+            <input type="text" id="name" name="name" value="<?= $product->getName(); ?>" required>
+        </div>
+        <div>
+            <label class="required" for="price">Ціна:</label>
+            <input type="number" id="price" name="price" value="<?= $product->getPrice(); ?>" required>
+        </div>
+        <?php if ($productId): ?>
+        <div>
+            <label class="required" for="cost">Остання собівартість:</label>
+            <input type="number" id="cost" name="cost" value="<?= $lastCost; ?>" disabled>
+        </div>
+        <div>
+            <label class="required" for="qty">Наявна кількість:</label>
+            <input type="number" id="qty" name="qty" disabled>
+        </div>
+        <?php endif; ?>
+        <div>
+            <button onclick="location.href = <?= $_SERVER['HTTP_REFERER']?>;" id="back-button">Назад</button>
+            <input type="submit" value="Зберегти">
+        </div>
+    </form>
+</div>

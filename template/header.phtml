@@ -1,29 +1,77 @@
+<?php
+if (strpos($requestUrl, 'lovely') !== false) {
+    $menuPoints =
+        [
+            [
+                'url' => $serverUrl . '/lovely_space/product',
+                'label' => 'Продукти',
+            ],
+            [
+                'url' => $serverUrl . '/lovely_space/arrival',
+                'label' => 'Прибуття',
+            ],
+            [
+                'url' => $serverUrl . '/lovely_space/order',
+                'label' => 'Замовлення',
+            ],
+            [
+                'url' => $serverUrl . '/lovely_space/client',
+                'label' => 'Клієнти',
+            ],
+        ];
+} else {
+    $menuPoints =
+        [
+            [
+                'url' => $serverUrl . '/finance_management/finance',
+                'label' => 'Finances',
+            ],
+            [
+                'url' => $serverUrl . '/finance_management/rates',
+                'label' => 'Rates',
+            ],
+            [
+                'url' => $serverUrl . '/finance_management/finance_details',
+                'label' => 'Details add',
+            ],
+            [
+                'url' => $serverUrl . '/finance_management/diagrams',
+                'label' => 'Diagrams',
+            ],
+        ];
+}
+?>
 <head>
-    <link href="../styles.css" rel="stylesheet">
+    <link href="<?php echo $serverUrl; ?>/styles.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <title>Finance</title>
 </head>
 <header>
+    <div class="left">
+        <div id="menu2">
+            <nav>
+                <ul>
+                    <li><a href="<?php echo $serverUrl; ?>/finance_management/finance">Finances</a></li>
+                    <li><a href="<?php echo $serverUrl; ?>/lovely_space/product">Lovely space</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
     <div class="container">
         <a href="/" class="logo">
-            <img src="media/cool-monkey.jpeg" alt="Cool Monkey" width="150px">
+            <img src="<?php echo $serverUrl; ?>/media/cool-monkey.jpeg" alt="Cool Monkey" width="150px">
         </a>
         <div id="menu">
-        <nav>
-            <ul>
-                <li><a href="/rates">Rates</a></li>
-                <li><a href="/finance">Finances</a></li>
-                <li><a href="/finance_details">Details add</a></li>
-                <li><a href="/diagrams">Diagrams</a></li>
-                <li><a href="#">Additional</a>
-                    <ul>
-                        <li><a href="/vacation">Vacations</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
+            <nav>
+                <ul>
+                    <?php foreach ($menuPoints as $menuPoint): ?>
+                        <li><a href="<?php echo $menuPoint['url']; ?>"><?php echo $menuPoint['label']; ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
         </div>
     </div>
 </header>

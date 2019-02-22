@@ -1,0 +1,47 @@
+<?php
+/** @var \LovelySpace\Model\ArrivalRepository $arrivalRepository */
+$arrivalRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalRepository::class);
+$arrivals = $arrivalRepository->getList();
+
+/** @var \LovelySpace\Model\ArrivalItemRepository $arrivalItemRepository */
+$arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemRepository::class);
+
+?>
+
+<table class="full-part">
+    <thead>
+    <tr>
+        <th>Ідентифікатор</th>
+        <th>Доставка</th>
+        <th>Сума</th>
+        <th>Сума разом з доставкою</th>
+        <th>Дата</th>
+        <th>Отримані продукти</th>
+    </tr>
+    </thead>
+    <?php
+    /** @var \LovelySpace\Model\Arrival $arrival */
+    foreach ($arrivals as $arrival) {
+        echo '<tr class="clickable-row" data-href="'. $arrivalUrl . '/edit?id=' . $arrival->getId() . '">';
+        echo '<td>';
+        echo $arrival->getId();
+        echo '</td>';
+        echo '<td>';
+        echo $arrival->getShipment() . ' грн';
+        echo '</td>';
+        echo '<td>';
+        echo $arrival->getTotal() . ' грн';
+        echo '</td>';
+        echo '<td>';
+        echo $arrival->getGrandTotal() . ' грн';
+        echo '</td>';
+        echo '<td>';
+        echo $arrival->getDate();
+        echo '</td>';
+        echo '<td>';
+        echo $arrivalItemRepository->getProductNamesByArrivalId($arrival->getId());
+        echo '</td>';
+        echo '</tr>';
+    }
+    ?>
+</table>

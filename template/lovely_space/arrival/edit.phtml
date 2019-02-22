@@ -1,0 +1,115 @@
+<?php
+/** @var \LovelySpace\Model\ProductRepository $productRepository */
+$productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
+$products = $productRepository->getList();
+
+/** @var \LovelySpace\Model\ArrivalRepository $arrivalRepository */
+$arrivalRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalRepository::class);
+
+if (!empty($_POST)) {
+    $arrivalRepository->save($_POST);
+
+    header('Location: '. $serverUrl . '/lovely_space/arrival');
+    die;
+}
+
+$arrivalId = null;
+if (!empty($_GET)) {
+    $arrivalId = isset($_GET['id']) ? $_GET['id'] : null;
+}
+
+/** @var \LovelySpace\Model\Arrival $arrival */
+$arrival = $arrivalRepository->get($arrivalId);
+
+/** @var \LovelySpace\Model\ArrivalItemRepository $arrivalItemRepository */
+$arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemRepository::class);
+$arrivalsItems = $arrivalItemRepository->getListByArrivalId($arrivalId);
+?>
+<div><span class="title">Сторінка редагування замовлення прибуття</span></div>
+
+<div id="add-product-to-arrival">
+    <div>
+        <label for="products"><span>Оберіть продукт і додайте його до замовлення.<span></label>
+    </div>
+    <div>
+        <select id="products" name="products">
+            <?php foreach ($products as $product): ?>
+                <option value="<?= $product->getId(); ?>" price="<?= $product->getPrice(); ?>"><?= $product->getName(); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <button id="add-product-button">Додати</button>
+    </div>
+</div>
+
+<form action="" method="post" id="dddd">
+    <table id="arrival-items-grid" class="full-part">
+        <thead>
+        <tr>
+            <th>Імя продукта</th>
+            <th>Собівартість за одиницю</th>
+            <th>Кількість одиниць</th>
+            <th>Видалити</th>
+        </tr>
+            <?php
+            /** @var \LovelySpace\Model\ArrivalItem $arrivalsItem */
+            foreach ($arrivalsItems as $arrivalsItem): ?>
+                <tr>
+                    <td><input type="text" id="name[<?= $arrivalsItem->getProductId(); ?>]" name="name[<?= $arrivalsItem->getProductId(); ?>]" value="<?= $arrivalsItem->getProductName(); ?>"></td>
+                    <td><input type="number" id="cost[<?= $arrivalsItem->getProductId(); ?>]" name="cost[<?= $arrivalsItem->getProductId(); ?>]" value="<?= $arrivalsItem->getCost(); ?>"></td>
+                    <td><input type="number" id="qty[<?= $arrivalsItem->getProductId(); ?>]" name="qty[<?= $arrivalsItem->getProductId(); ?>]" value="<?= $arrivalsItem->getQty(); ?>"></td>
+                    <td><span id="delete"><img src="<?= $serverUrl; ?>/media/delete-icon.png" alt="Delete" width="20px"></span>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tr>
+        </thead>
+    </table>
+    <div>
+        <label for="shipment_cost"><span>Вартість доставки:<span></label>
+        <input type="number" id="shipment_cost" name="shipment_cost" value="<?= $arrival->getShipment(); ?>"
+               required>
+        <input type="number" id="id" name="id" value="<?= $arrival->getId(); ?>" style="display: none">
+    </div>
+    <div>
+        <button type="submit" id="add-product-button">Зберегти</button>
+    </div>
+</form>
+
+<script>
+    var serverUrl = '<?= $serverUrl ?>';
+    jQuery(document).ready(function ($) {
+        $("#add-product-to-arrival #add-product-button").on('click', function () {
+            var trLength = document.getElementsByTagName("tr").length,
+                table = document.getElementById("arrival-items-grid"),
+                row = table.insertRow(trLength),
+                productName = $('#add-product-to-arrival #products option:selected').text(),
+                productPrice = $('#add-product-to-arrival #products option:selected').attr('price'),
+                productId = $('#add-product-to-arrival #products option:selected').val(),
+                alreadyExists = $('input#name\\[' + productId + '\\]').length;
+
+            if (alreadyExists) {
+                alert('Каталін, ти вже додала цей продукт до замовлення!');
+                return;
+            }
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+
+            cell1.innerHTML = '<input type="text" id="name[' + productId + ']" name="name[' + productId + ']" '
+                + 'value="' + productName + '" readonly>';
+            //todo add here last prod cost
+            cell2.innerHTML = '<input type="number" id="cost[' + productId + ']" name="cost[' + productId + ']" '
+                + 'value="' + productPrice + '">';
+            cell3.innerHTML = '<input type="number" id="qty[' + productId + ']" name="qty[' + productId + ']" value="1">';
+
+            cell4.style['text-align'] = 'center';
+            cell4.innerHTML = '<span id="delete" ><img src="' + serverUrl + '/media/delete-icon.png"'
+                + ' alt="Delete" ' + 'width="20px"></span>';
+        });
+
+        $('table#arrival-items-grid').on('click', '#delete', function (e) {
+            e.toElement.parentElement.parentElement.parentElement.remove();
+        });
+    });
+</script>

@@ -1,15 +1,16 @@
+<body>
 <div class="main">
     <div class="container">
         <?php
 
         if ($_SERVER["REQUEST_URI"] != '/') {
-            $requestUri = str_replace(stristr($_SERVER["REQUEST_URI"], '?'), '', $_SERVER["REQUEST_URI"]);
-            include 'template/finance_management' . $requestUri . '.phtml';
+            include 'template' . $requestUrl . '.phtml';
         } else {
             include 'template/finance_management/finance.phtml';
-        ?>
-        <?php
+            ?>
+            <?php
         }
         ?>
     </div>
 </div>
+</body>

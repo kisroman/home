@@ -18,17 +18,13 @@ header {
     font-family: helvetica, sans-serif;
 }
 
-header .menu {
-    float: right;
-}
-
-nav ul li {
+#menu nav ul li {
     float: left;
     list-style: none;
     margin-right: 1em;
 }
 
-nav li a {
+#menu nav li a {
     color: #544738;
     text-decoration: none;
     float: left;
@@ -36,7 +32,7 @@ nav li a {
     padding: 12px;
 }
 
-nav li a:hover {
+#menu nav li a:hover {
     color: #7eb9be;
 }
 
@@ -52,7 +48,7 @@ nav li a:hover {
     margin: 0 auto;
 }
 
-nav a {
+#menu nav a {
     text-decoration: none;
     line-height: 38px;
 }
@@ -184,4 +180,11 @@ table th {
 table td {
     height: 30px;
     padding-left: 10px;
+}
+
+
+/*lovely space styles*/
+.title {
+    font-weight: bold;
+    font-size: 20px;
 }
