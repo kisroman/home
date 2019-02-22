@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\Model;
+namespace FinanceManagement\Model;
 
 class SpendingIncome
 {

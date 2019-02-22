@@ -1,6 +1,6 @@
 <?php
-/** @var \classes\Model\SpendingIncome $spendingIncome */
-$spendingIncome = \classes\ClassCreator::includeClass(\classes\Model\SpendingIncome::class);
+/** @var \FinanceManagement\Model\SpendingIncome $spendingIncome */
+$spendingIncome = \ClassCreator::get(\FinanceManagement\Model\SpendingIncome::class);
 $spendingIncomeByMonthAndYear = $spendingIncome->getSpendingIncomeByMonthAndYear($differenceByDate);
 
 ?>

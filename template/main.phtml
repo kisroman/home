@@ -4,9 +4,9 @@
 
         if ($_SERVER["REQUEST_URI"] != '/') {
             $requestUri = str_replace(stristr($_SERVER["REQUEST_URI"], '?'), '', $_SERVER["REQUEST_URI"]);
-            include 'template/block' . $requestUri . '.phtml';
+            include 'template/finance_management' . $requestUri . '.phtml';
         } else {
-            include 'template/block/finance.phtml';
+            include 'template/finance_management/finance.phtml';
         ?>
         <?php
         }

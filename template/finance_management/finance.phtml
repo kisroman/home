@@ -11,8 +11,8 @@
 
 $financesLimit = 10;
 
-/** @var \classes\Model\Finance $finance */
-$finance = \classes\ClassCreator::includeClass(\classes\Model\Finance::class);
+/** @var \FinanceManagement\Model\Finance $finance */
+$finance = ClassCreator::get(\FinanceManagement\Model\Finance::class);
 $finances = $finance->getFinances();
 $reverseFinance = array_reverse($finances, true);
 $lastSum = 0;
@@ -22,8 +22,8 @@ foreach ($finances as $date => $sums) {
     $lastSum = $sums['sumUah'];
 }
 
-/** @var \classes\Model\Rate $rate */
-$rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
+/** @var \FinanceManagement\Model\Rate $rate */
+$rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
 ?>
 
 <div class="left add-finance-details-form">

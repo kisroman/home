@@ -1,16 +1,16 @@
 <?php
 
-namespace classes\Model;
+namespace FinanceManagement\Model;
 
-use classes\ClassCreator;
-use classes\Db\Connection;
+use ClassCreator;
+use Framework\Db\Connection;
 
 class FinanceDetails
 {
     public function save($data)
     {
         /** @var Connection $connection */
-        $connection = ClassCreator::includeClass(Connection::class);
+        $connection = ClassCreator::get(Connection::class);
         $data['date'] = date('Y-m-d', strtotime($data['date']));
         if (!isset($data['active'])) {
             $data['active'] = 0;
@@ -36,7 +36,7 @@ class FinanceDetails
     public function getFinanceDetailsByDate($date)
     {
         /** @var Connection $connection */
-        $connection = ClassCreator::includeClass(Connection::class);
+        $connection = ClassCreator::get(Connection::class);
         $date = date('Y-m-d', strtotime($date));
 
         $financeDetails = $connection->select('finance', '*', '`date` = "' . $date . '"');
@@ -47,7 +47,7 @@ class FinanceDetails
     public function getFinanceDetails()
     {
         /** @var Connection $connection */
-        $connection = ClassCreator::includeClass(Connection::class);
+        $connection = ClassCreator::get(Connection::class);
         $financeDetails = $connection->select('finance');
 
         return $financeDetails;
@@ -57,8 +57,8 @@ class FinanceDetails
     {
         $financeDetails = $this->getFinanceDetailsByDate($date);
 
-        /** @var \classes\Model\Rate $rate */
-        $rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
+        /** @var \FinanceManagement\Model\Rate $rate */
+        $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
 
         $sumUah = 0;
         $activeSumUah = 0;
@@ -91,7 +91,7 @@ class FinanceDetails
     public function createDuplicateForDate($date)
     {
         /** @var Connection $connection */
-        $connection = ClassCreator::includeClass(Connection::class);
+        $connection = ClassCreator::get(Connection::class);
         $maxDate = array_pop($connection->selectMax('finance', 'date')->fetch_row());
 
         $financeDetails = $this->getFinanceDetailsByDate($maxDate);
@@ -107,14 +107,14 @@ class FinanceDetails
     public function delete($id)
     {
         /** @var Connection $connection */
-        $connection = ClassCreator::includeClass(Connection::class);
+        $connection = ClassCreator::get(Connection::class);
         $connection->delete('finance', '`id`=' . $id);
     }
 
     public function update($request)
     {
         /** @var Connection $connection */
-        $connection = ClassCreator::includeClass(Connection::class);
+        $connection = ClassCreator::get(Connection::class);
 
         if (isset($request['sum'])) {
             $connection->update('finance', '`sum` = ' . $request['sum'], '`id`=' . $request['id']);

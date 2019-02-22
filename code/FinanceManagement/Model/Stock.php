@@ -1,15 +1,15 @@
 <?php
-namespace classes\Model;
+namespace FinanceManagement\Model;
 
-use classes\ClassCreator;
-use classes\Db\Connection;
+use ClassCreator;
+use Framework\Db\Connection;
 
 class Stock
 {
     public function getStocks()
     {
         /** @var Connection $connection */
-        $connection = ClassCreator::includeClass(Connection::class);
+        $connection = ClassCreator::get(Connection::class);
         $stocks = $connection->select('stock');
 
         return $stocks;

@@ -1,16 +1,15 @@
 <?php
 
-namespace classes\Model;
+namespace FinanceManagement\Model;
 
-use classes\ClassCreator;
-use classes\Db\Connection;
+use ClassCreator;
 
 class Finance
 {
     public function getFinances()
     {
         /** @var FinanceDetails $financeDetailsModel */
-        $financeDetailsModel = ClassCreator::includeClass(FinanceDetails::class);
+        $financeDetailsModel = ClassCreator::get(FinanceDetails::class);
         $financeDetails = $financeDetailsModel->getFinanceDetails();
 
         $dates = [];

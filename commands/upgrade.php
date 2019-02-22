@@ -1,6 +1,6 @@
 <?php
 try {
-    require_once('classes/ClassCreator.php');
+    require_once('code/ClassCreator.php');
 
     $xml = simplexml_load_file('setup/version.xml');
 

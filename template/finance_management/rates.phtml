@@ -1,6 +1,6 @@
 <?php
-/** @var \classes\Model\Rate $rate */
-$rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
+/** @var \FinanceManagement\Model\Rate $rate */
+$rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
 $rates = $rate->getRates();
 ?>
 <div>

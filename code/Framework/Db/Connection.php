@@ -1,6 +1,6 @@
 <?php
 
-namespace classes\Db;
+namespace Framework\Db;
 
 class Connection
 {
@@ -51,8 +51,8 @@ class Connection
         $servername = "localhost";
         $username = "root";
         $password = "root";
-        $db = 'home';
-        $testDb = 'home_test';
+        //$db = 'home';
+        $db = 'home_test';
 
         $this->connection = mysqli_connect($servername, $username, $password, $db);
         if ($this->connection->connect_error) {

@@ -1,9 +1,9 @@
 <?php
 
-namespace classes\Model;
+namespace FinanceManagement\Model;
 
-use classes\ClassCreator;
-use classes\Db\Connection;
+use ClassCreator;
+use Framework\Db\Connection;
 
 class Rate
 {
@@ -16,7 +16,7 @@ class Rate
     {
         if ($this->rates === null) {
             /** @var Connection $connection */
-            $connection = ClassCreator::includeClass(Connection::class);
+            $connection = ClassCreator::get(Connection::class);
             $this->rates = $connection->select('rate');
         }
 
@@ -91,7 +91,7 @@ class Rate
     public function save($data)
     {
         /** @var Connection $connection */
-        $connection = ClassCreator::includeClass(Connection::class);
+        $connection = ClassCreator::get(Connection::class);
         $ifExist = $connection->select('rate', '*', 'currency = "' . $data['currency'] . '"');
 
         if ($ifExist->fetch_row()) {

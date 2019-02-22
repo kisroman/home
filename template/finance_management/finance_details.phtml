@@ -1,17 +1,17 @@
 <?php
-/** @var \classes\Model\Stock $stock */
-$stock = \classes\ClassCreator::includeClass(\classes\Model\Stock::class);
+/** @var \FinanceManagement\Model\Stock $stock */
+$stock = \ClassCreator::get(\FinanceManagement\Model\Stock::class);
 $stocks = $stock->getStocks();
 
-/** @var \classes\Model\Rate $rate */
-$rate = \classes\ClassCreator::includeClass(\classes\Model\Rate::class);
+/** @var \FinanceManagement\Model\Rate $rate */
+$rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
 $rates = $rate->getRates();
 
 $date = isset($_GET['date']) ? $_GET['date'] : null;
 
 if ($date):
-/** @var \classes\Model\FinanceDetails $financeDetail */
-$financeDetail = \classes\ClassCreator::includeClass(\classes\Model\FinanceDetails::class);
+/** @var \FinanceManagement\Model\FinanceDetails $financeDetail */
+$financeDetail = \ClassCreator::get(\FinanceManagement\Model\FinanceDetails::class);
 $financeDetails = $financeDetail->getFinanceDetailsByDate($date);
 
 list($sumUah, $activeSumUah) = $financeDetail->getSumsUahByDate($date);
