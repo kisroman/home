@@ -1,0 +1,45 @@
+<?php
+/** @var \LovelySpace\Model\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+$clientId = null;
+
+if (!empty($_POST)) {
+    $clientRepository->save($_POST);
+
+    header('Location: '. $serverUrl . '/lovely_space/client');
+    die;
+}
+
+if (!empty($_GET)) {
+    $clientId = isset($_GET['id']) ? $_GET['id'] : null;
+}
+
+/** @var \LovelySpace\Model\Client $client */
+$client = $clientRepository->get($clientId);
+
+?>
+<div class="edit-product-form" align="left">
+    <div><span class="title">Сторінка редагування клієнта</span></div>
+    <form action="" method="post" id="edit">
+        <div style="display: none">
+            <label for="id">ID:</label>
+            <input type="number" id="id" name="id" value="<?= $clientId; ?>">
+        </div>
+        <div>
+            <label class="required" for="name">Ім'я:</label>
+            <input type="text" id="name" name="name" value="<?= $client->getName(); ?>" required>
+        </div>
+        <div>
+            <label for="instagram_name">Instagram ім'я:</label>
+            <input type="text" id="instagram_name" name="instagram_name" value="<?= $client->getInstagramName(); ?>">
+        </div>
+        <div>
+            <label for="phone">Телефон</label>
+            <input type="text" id="phone" name="phone" value="<?= $client->getPhone() ? $client->getPhone() : '+380'; ?>">
+        </div>
+        <div>
+            <button onclick="location.href = <?= $_SERVER['HTTP_REFERER']?>;" id="back-button">Назад</button>
+            <input type="submit" value="Зберегти">
+        </div>
+    </form>
+</div>

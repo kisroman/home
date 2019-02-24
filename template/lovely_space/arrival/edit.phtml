@@ -24,6 +24,10 @@ $arrival = $arrivalRepository->get($arrivalId);
 /** @var \LovelySpace\Model\ArrivalItemRepository $arrivalItemRepository */
 $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemRepository::class);
 $arrivalsItems = $arrivalItemRepository->getListByArrivalId($arrivalId);
+
+/** @var \LovelySpace\Model\Resource\ArrivalItem $arrivalItemResource */
+$arrivalItemResource = \ClassCreator::get(\LovelySpace\Model\Resource\ArrivalItem::class);
+$lastCosts = [];
 ?>
 <div><span class="title">Сторінка редагування замовлення прибуття</span></div>
 
@@ -33,8 +37,11 @@ $arrivalsItems = $arrivalItemRepository->getListByArrivalId($arrivalId);
     </div>
     <div>
         <select id="products" name="products">
-            <?php foreach ($products as $product): ?>
-                <option value="<?= $product->getId(); ?>" price="<?= $product->getPrice(); ?>"><?= $product->getName(); ?></option>
+            <?php
+            /** @var \LovelySpace\Model\Product $product */
+            foreach ($products as $product): ?>
+                <option value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
+            <?php $lastCosts[$product->getId()] = $arrivalItemResource->getLastCostForProductByProductId($product->getId()); ?>
             <?php endforeach; ?>
         </select>
         <button id="add-product-button">Додати</button>
@@ -76,14 +83,15 @@ $arrivalsItems = $arrivalItemRepository->getListByArrivalId($arrivalId);
 </form>
 
 <script>
-    var serverUrl = '<?= $serverUrl ?>';
+    var serverUrl = '<?= $serverUrl ?>',
+        lastCosts = JSON.parse('<?= json_encode($lastCosts) ?>');
+
     jQuery(document).ready(function ($) {
         $("#add-product-to-arrival #add-product-button").on('click', function () {
             var trLength = document.getElementsByTagName("tr").length,
                 table = document.getElementById("arrival-items-grid"),
                 row = table.insertRow(trLength),
                 productName = $('#add-product-to-arrival #products option:selected').text(),
-                productPrice = $('#add-product-to-arrival #products option:selected').attr('price'),
                 productId = $('#add-product-to-arrival #products option:selected').val(),
                 alreadyExists = $('input#name\\[' + productId + '\\]').length;
 
@@ -98,9 +106,8 @@ $arrivalsItems = $arrivalItemRepository->getListByArrivalId($arrivalId);
 
             cell1.innerHTML = '<input type="text" id="name[' + productId + ']" name="name[' + productId + ']" '
                 + 'value="' + productName + '" readonly>';
-            //todo add here last prod cost
             cell2.innerHTML = '<input type="number" id="cost[' + productId + ']" name="cost[' + productId + ']" '
-                + 'value="' + productPrice + '">';
+                + 'value="' + lastCosts[productId] + '">';
             cell3.innerHTML = '<input type="number" id="qty[' + productId + ']" name="qty[' + productId + ']" value="1">';
 
             cell4.style['text-align'] = 'center';

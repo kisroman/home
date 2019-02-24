@@ -59,8 +59,10 @@ class ArrivalRepository
         if ($arrival->getId()) {
             $id = $arrival->getId();
         }
+
         /** @var \LovelySpace\Model\Resource\ArrivalItem $arrivalItemResource */
         $arrivalItemResource = ClassCreator::get(\LovelySpace\Model\Resource\ArrivalItem::class, $arrivalArray);
+        // delete all items for arrival to create news
         $arrivalItemResource->deleteByArrivalId($id);
 
         foreach ($itemsArray as $itemArray) {

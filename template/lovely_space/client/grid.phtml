@@ -1,0 +1,31 @@
+<?php
+/** @var \LovelySpace\Model\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+$clients = $clientRepository->getList();
+?>
+
+<table class="full-part">
+    <thead>
+    <tr>
+        <th>Ім'я</th>
+        <th>Instagram ім'я</th>
+        <th>Телефон</th>
+    </tr>
+    </thead>
+    <?php
+    /** @var \LovelySpace\Model\Client $client */
+    foreach ($clients as $client) {
+        echo '<tr class="clickable-row" data-href="'. $clientUrl . '/edit?id=' . $client->getId() . '">';
+        echo '<td>';
+        echo $client->getName();
+        echo '</td>';
+        echo '<td>';
+        echo $client->getInstagramName();
+        echo '</td>';
+        echo '<td>';
+        echo $client->getPhone();
+        echo '</td>';
+        echo '</tr>';
+    }
+    ?>
+</table>
