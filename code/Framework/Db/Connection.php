@@ -139,7 +139,7 @@ class Connection
         $query = substr($query, 0, -2);
         $query .= ')';
         $this->connection->query($query);
-
+        $this->columns = [];
     }
 
     public function addColumn($name, $type, $size = null, $options = [], $comment = null)

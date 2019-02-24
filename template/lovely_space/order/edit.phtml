@@ -1,45 +1,131 @@
 <?php
-/** @var \LovelySpace\Model\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
-$clientId = null;
+/** @var \LovelySpace\Model\ProductRepository $productRepository */
+$productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
+$products = $productRepository->getList();
+
+/** @var \LovelySpace\Model\OrderRepository $orderRepository */
+$orderRepository = \ClassCreator::get(\LovelySpace\Model\OrderRepository::class);
 
 if (!empty($_POST)) {
-    $clientRepository->save($_POST);
+    $orderRepository->save($_POST);
 
-    header('Location: '. $serverUrl . '/lovely_space/client');
+    header('Location: '. $serverUrl . '/lovely_space/order');
     die;
 }
 
+$orderId = null;
 if (!empty($_GET)) {
-    $clientId = isset($_GET['id']) ? $_GET['id'] : null;
+    $orderId = isset($_GET['id']) ? $_GET['id'] : null;
 }
 
-/** @var \LovelySpace\Model\Client $client */
-$client = $clientRepository->get($clientId);
+/** @var \LovelySpace\Model\Order $order */
+$order = $orderRepository->get($orderId);
 
+/** @var \LovelySpace\Model\OrderItemRepository $orderItemRepository */
+$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository::class);
+$ordersItems = $orderItemRepository->getListByOrderId($orderId);
+
+/** @var \LovelySpace\Model\Resource\OrderItem $orderItemResource */
+$orderItemResource = \ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class);
+
+/** @var \LovelySpace\Model\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+$clients = $clientRepository->getList()
 ?>
-<div class="edit-product-form" align="left">
-    <div><span class="title">Сторінка редагування клієнта</span></div>
-    <form action="" method="post" id="edit">
-        <div style="display: none">
-            <label for="id">ID:</label>
-            <input type="number" id="id" name="id" value="<?= $clientId; ?>">
-        </div>
-        <div>
-            <label class="required" for="name">Ім'я:</label>
-            <input type="text" id="name" name="name" value="<?= $client->getName(); ?>" required>
-        </div>
-        <div>
-            <label for="instagram_name">Instagram ім'я:</label>
-            <input type="text" id="instagram_name" name="instagram_name" value="<?= $client->getInstagramName(); ?>">
-        </div>
-        <div>
-            <label for="phone">Телефон</label>
-            <input type="text" id="phone" name="phone" value="<?= $client->getPhone() ? $client->getPhone() : '+380'; ?>">
-        </div>
-        <div>
-            <button onclick="location.href = <?= $_SERVER['HTTP_REFERER']?>;" id="back-button">Назад</button>
-            <input type="submit" value="Зберегти">
-        </div>
-    </form>
+<div><span class="title">Сторінка редагування замовлення</span></div>
+
+<div id="add-product-to-order">
+    <div>
+        <label for="products"><span>Оберіть продукт і додайте його до замовлення.<span></label>
+    </div>
+    <div>
+        <select id="products" name="products">
+            <?php
+            /** @var \LovelySpace\Model\Product $product */
+            foreach ($products as $product): ?>
+                <option price="<?= $product->getPrice(); ?>" value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
+            <?php endforeach; ?>
+        </select>
+        <button id="add-product-button">Додати</button>
+    </div>
 </div>
+
+<form action="" method="post" id="dddd">
+    <table id="order-items-grid" class="full-part">
+        <thead>
+        <tr>
+            <th>Імя продукта</th>
+            <th>Ціна</th>
+            <th>Кількість одиниць</th>
+            <th>Видалити</th>
+        </tr>
+            <?php
+            /** @var \LovelySpace\Model\OrderItem $ordersItem */
+            foreach ($ordersItems as $ordersItem): ?>
+                <tr>
+                    <td><input type="text" id="name[<?= $ordersItem->getProductId(); ?>]" name="name[<?= $ordersItem->getProductId(); ?>]" value="<?= $ordersItem->getProductName(); ?>"></td>
+                    <td><input type="number" id="price[<?= $ordersItem->getProductId(); ?>]" name="price[<?= $ordersItem->getProductId(); ?>]" value="<?= $ordersItem->getPrice(); ?>"></td>
+                    <td><input type="number" id="qty[<?= $ordersItem->getProductId(); ?>]" name="qty[<?= $ordersItem->getProductId(); ?>]" value="<?= $ordersItem->getQty(); ?>"></td>
+                    <td><span id="delete"><img src="<?= $serverUrl; ?>/media/delete-icon.png" alt="Delete" width="20px"></span>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tr>
+        </thead>
+    </table>
+    <div>
+        <input type="number" id="id" name="id" value="<?= $order->getId(); ?>" style="display: none">
+    </div>
+    <div>
+        <select id="client_id" name="client_id">
+            <?php
+            /** @var \LovelySpace\Model\Client $client */
+            foreach ($clients as $client):
+                $selected = $client->getId() == $order->getClientId() ? 'selected' : '' ?>
+                <option <?= $selected; ?> value="<?= $client->getId(); ?>"><?= $client->getName(); ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+    <div>
+        <button type="submit" id="add-product-button">Зберегти</button>
+    </div>
+</form>
+
+<script>
+    var serverUrl = '<?= $serverUrl ?>';
+
+    jQuery(document).ready(function ($) {
+        $("#add-product-to-order #add-product-button").on('click', function () {
+            var trLength = document.getElementsByTagName("tr").length,
+                table = document.getElementById("order-items-grid"),
+                row = table.insertRow(trLength),
+                productName = $('#add-product-to-order #products option:selected').text(),
+                productPrice = $('#add-product-to-order #products option:selected').attr('price'),
+                productId = $('#add-product-to-order #products option:selected').val(),
+                alreadyExists = $('input#name\\[' + productId + '\\]').length;
+
+            if (alreadyExists) {
+                alert('Каталін, ти вже додала цей продукт до замовлення!');
+                return;
+            }
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+
+            cell1.innerHTML = '<input type="text" id="name[' + productId + ']" name="name[' + productId + ']" '
+                + 'value="' + productName + '" readonly>';
+            cell2.innerHTML = '<input type="number" id="price[' + productId + ']" name="price[' + productId + ']" '
+                + 'value="' + productPrice + '">';
+            cell3.innerHTML = '<input type="number" id="qty[' + productId + ']" name="qty[' + productId + ']" value="1">';
+
+            cell4.style['text-align'] = 'center';
+            cell4.innerHTML = '<span id="delete" ><img src="' + serverUrl + '/media/delete-icon.png"'
+                + ' alt="Delete" ' + 'width="20px"></span>';
+        });
+
+        $('table#order-items-grid').on('click', '#delete', function (e) {
+            e.toElement.parentElement.parentElement.parentElement.remove();
+        });
+    });
+</script>
