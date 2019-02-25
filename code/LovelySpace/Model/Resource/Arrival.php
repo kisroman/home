@@ -39,7 +39,7 @@ class Arrival
         /** @var Connection $connection */
         $connection = ClassCreator::get(Connection::class);
         $arrivalSql = $connection->select(self::TABLE_NAME);
-        $arrivalsArray = $arrivalSql->fetch_all(MYSQLI_ASSOC);
+        $arrivalsArray = $arrivalSql ? $arrivalSql->fetch_all(MYSQLI_ASSOC) : [];
 
         return $arrivalsArray;
     }

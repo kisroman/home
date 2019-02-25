@@ -39,7 +39,7 @@ class Client
         /** @var Connection $connection */
         $connection = ClassCreator::get(Connection::class);
         $clientSql = $connection->select(self::TABLE_NAME);
-        $clientsArray = $clientSql->fetch_all(MYSQLI_ASSOC);
+        $clientsArray = $clientSql ? $clientSql->fetch_all(MYSQLI_ASSOC) : [];
 
         return $clientsArray;
     }

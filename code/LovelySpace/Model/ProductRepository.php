@@ -24,7 +24,7 @@ class ProductRepository
         $connection = ClassCreator::get(Connection::class);
         $products = [];
         $productSql = $connection->select(self::TABLE_NAME);
-        $productsArray = $productSql->fetch_all(MYSQLI_ASSOC);
+        $productsArray = $productSql ? $productSql->fetch_all(MYSQLI_ASSOC) : [];
 
         foreach ($productsArray as $productArray) {
             $products[] = ClassCreator::get(Product::class, $productArray);

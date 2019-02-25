@@ -48,13 +48,17 @@ class Connection
 
     public function __construct()
     {
-        $servername = "localhost";
+        $serverName = "localhost";
+//        $username = "sweet-home";
+//        $password = "3uuENVU3nrm6pAg";
+//        $db = "sweet-home";
         $username = "root";
         $password = "root";
         //$db = 'home';
         $db = 'home_test';
 
-        $this->connection = mysqli_connect($servername, $username, $password, $db);
+        $this->connection = mysqli_connect($serverName, $username, $password, $db);
+
         if ($this->connection->connect_error) {
             throw new \Exception("Connection failed: " . $this->connection->connect_error);
         } elseif (!$this->connection) {

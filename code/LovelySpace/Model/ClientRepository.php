@@ -24,7 +24,7 @@ class ClientRepository
         $connection = ClassCreator::get(Connection::class);
         $clients = [];
         $productSql = $connection->select(self::TABLE_NAME);
-        $clientsArray = $productSql->fetch_all(MYSQLI_ASSOC);
+        $clientsArray = $productSql ? $productSql->fetch_all(MYSQLI_ASSOC) : [];
 
         foreach ($clientsArray as $clientArray) {
             $clients[] = ClassCreator::get(Client::class, $clientArray);
