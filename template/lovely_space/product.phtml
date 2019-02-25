@@ -2,7 +2,7 @@
 $productUrl = $serverUrl . '/lovely_space/product';
 ?>
 <div>
-    <a href="<?= $productUrl . '/edit'; ?>">Створити новий продукт</a>
+    <button onclick="location.href = '<?= $productUrl . '/edit' ?>'" id="back-button">Створити новий продукт</button>
 </div>
 <div>
     <?php include 'product/grid.phtml'; ?>

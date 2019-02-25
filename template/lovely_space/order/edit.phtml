@@ -77,8 +77,9 @@ $clients = $clientRepository->getList()
         <input type="number" id="id" name="id" value="<?= $order->getId(); ?>" style="display: none">
     </div>
     <div>
+        <label for="client_id"><span>Оберіть клієнта<span></label>
         <select id="client_id" name="client_id">
-            <?php
+        <?php
             /** @var \LovelySpace\Model\Client $client */
             foreach ($clients as $client):
                 $selected = $client->getId() == $order->getClientId() ? 'selected' : '' ?>
@@ -86,10 +87,11 @@ $clients = $clientRepository->getList()
             <?php endforeach; ?>
         </select>
     </div>
-    <div>
-        <button type="submit" id="add-product-button">Зберегти</button>
-    </div>
 </form>
+<div>
+    <button onclick="location.href = '<?= $_SERVER['HTTP_REFERER']?>'" id="back-button">Назад</button>
+    <button form="edit" type="submit" id="save-order-button">Зберегти</button>
+</div>
 
 <script>
     var serverUrl = '<?= $serverUrl ?>';

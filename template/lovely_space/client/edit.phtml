@@ -33,9 +33,9 @@ $client = $clientRepository->get($clientId);
             <label for="phone">Телефон</label>
             <input type="text" id="phone" name="phone" value="<?= $client->getPhone() ? $client->getPhone() : '+380'; ?>">
         </div>
-        <div>
-            <button onclick="location.href = <?= $_SERVER['HTTP_REFERER']?>;" id="back-button">Назад</button>
-            <input type="submit" value="Зберегти">
-        </div>
     </form>
+    <div>
+        <button onclick="location.href = '<?= $_SERVER['HTTP_REFERER']?>'" id="back-button">Назад</button>
+        <button form="edit" type="submit" id="save-client-button">Зберегти</button>
+    </div>
 </div>

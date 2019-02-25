@@ -2,7 +2,7 @@
 $clientUrl = $serverUrl . '/lovely_space/client';
 ?>
 <div>
-    <a href="<?= $clientUrl . '/edit'; ?>">Створити нового слієнта.</a>
+    <button onclick="location.href = '<?= $clientUrl . '/edit' ?>'" id="back-button">Створити нового слієнта</button>
 </div>
 <div>
     <?php include 'client/grid.phtml'; ?>

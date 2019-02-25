@@ -46,9 +46,9 @@ $lastCost = $arrivalItem->getLastCostForProductByProductId($productId);
             <input type="number" id="qty" name="qty" disabled>
         </div>
         <?php endif; ?>
-        <div>
-            <button onclick="location.href = <?= $_SERVER['HTTP_REFERER']?>;" id="back-button">Назад</button>
-            <input type="submit" value="Зберегти">
-        </div>
     </form>
+    <div>
+        <button onclick="location.href = '<?= $_SERVER['HTTP_REFERER']?>'" id="back-button">Назад</button>
+        <button type="submit" form="edit" id="save-product-button">Зберегти</button>
+    </div>
 </div>

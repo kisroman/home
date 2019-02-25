@@ -2,7 +2,7 @@
     --main-color-lovely: #d35d6d;
 }
 #lovely-space th {
-    height: 20px;
+    height: 10px;
     text-align: left;
     background-color: var(--main-color-lovely);
     color: white;
@@ -10,5 +10,43 @@
 
 #lovely-space .title {
     font-weight: bold;
+    font-size: 20px;
+}
+
+#lovely-space button {
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    background: var(--main-color-lovely);
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out,
+    transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+#lovely-space button:hover,
+#lovely-space button:focus {
+    background: #ba1a33;
+}
+
+#lovely-space button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+#lovely-space button:active {
+    transform: scale(0.99);
+}
+
+#lovely-space .edit-page-link {
+    background-color: var(--main-color-lovely);
+    color: white;
     font-size: 20px;
 }

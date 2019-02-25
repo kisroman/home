@@ -2,7 +2,7 @@
 $orderUrl = $serverUrl . '/lovely_space/order';
 ?>
 <div>
-    <a href="<?= $orderUrl . '/edit'; ?>">Створити нове замолення.</a>
+    <button onclick="location.href = '<?= $orderUrl . '/edit' ?>'" id="back-button">Створити нове замолення</button>
 </div>
 <div>
     <?php include 'order/grid.phtml'; ?>
