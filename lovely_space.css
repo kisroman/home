@@ -1,0 +1,14 @@
+:root {
+    --main-color-lovely: #d35d6d;
+}
+#lovely-space th {
+    height: 20px;
+    text-align: left;
+    background-color: var(--main-color-lovely);
+    color: white;
+}
+
+#lovely-space .title {
+    font-weight: bold;
+    font-size: 20px;
+}

@@ -55,7 +55,8 @@ class Connection
         $username = "root";
         $password = "root";
         //$db = 'home';
-        $db = 'home_test';
+        //$db = 'home_test';
+        $db = 'lovely_space';
 
         $this->connection = mysqli_connect($serverName, $username, $password, $db);
 
@@ -63,8 +64,9 @@ class Connection
             throw new \Exception("Connection failed: " . $this->connection->connect_error);
         } elseif (!$this->connection) {
             throw new \Exception("MySQL server has gone away.");
-
         }
+
+        $this->connection->query("set names utf8mb4");
     }
 
     public function select($table, $fields = '*', $whereCondition = '')

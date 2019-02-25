@@ -15,12 +15,6 @@ $connection->addColumn(
     [],
     'Name'
 )->addColumn(
-    'instagram_name',
-    \Framework\Db\Connection::TYPE_TEXT,
-    20,
-    [],
-    'Instagram name'
-)->addColumn(
     'phone',
     \Framework\Db\Connection::TYPE_TEXT,
     20,

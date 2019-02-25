@@ -30,10 +30,6 @@ $client = $clientRepository->get($clientId);
             <input type="text" id="name" name="name" value="<?= $client->getName(); ?>" required>
         </div>
         <div>
-            <label for="instagram_name">Instagram ім'я:</label>
-            <input type="text" id="instagram_name" name="instagram_name" value="<?= $client->getInstagramName(); ?>">
-        </div>
-        <div>
             <label for="phone">Телефон</label>
             <input type="text" id="phone" name="phone" value="<?= $client->getPhone() ? $client->getPhone() : '+380'; ?>">
         </div>

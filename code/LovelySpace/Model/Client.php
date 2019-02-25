@@ -19,18 +19,12 @@ class Client
     /**
      * @var string
      */
-    private $instagramName;
-
-    /**
-     * @var string
-     */
     private $phone;
 
     public function __construct($data)
     {
         $this->id = isset($data['id']) ? $data['id'] : null;
         $this->name = isset($data['name']) ? $data['name'] : null;
-        $this->instagramName = isset($data['instagram_name']) ? $data['instagram_name'] : null;
         $this->phone = isset($data['phone']) ? $data['phone'] : null;
     }
 
@@ -57,14 +51,6 @@ class Client
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getInstagramName()
-    {
-        return $this->instagramName;
     }
 
     /**

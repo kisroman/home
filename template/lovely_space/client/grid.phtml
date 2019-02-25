@@ -8,7 +8,6 @@ $clients = $clientRepository->getList();
     <thead>
     <tr>
         <th>Ім'я</th>
-        <th>Instagram ім'я</th>
         <th>Телефон</th>
     </tr>
     </thead>
@@ -18,9 +17,6 @@ $clients = $clientRepository->getList();
         echo '<tr class="clickable-row" data-href="'. $clientUrl . '/edit?id=' . $client->getId() . '">';
         echo '<td>';
         echo $client->getName();
-        echo '</td>';
-        echo '<td>';
-        echo $client->getInstagramName();
         echo '</td>';
         echo '<td>';
         echo $client->getPhone();

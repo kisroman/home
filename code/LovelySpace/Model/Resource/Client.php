@@ -18,16 +18,15 @@ class Client
             $result = $connection->update(
                 self::TABLE_NAME,
                 'name = "' . $client->getName() . '"'
-                . ', instagram_name = "' . $client->getInstagramName() . '"'
                 . ', phone = "' . $client->getPhone() . '"',
                 'id = "' . $client->getId() . '"'
             );
         } else {
             $result = $connection->insert(
                 self::TABLE_NAME,
-                'null, "' . $client->getName() . '", "' . $client->getInstagramName() . '"'
+                'null, "' . $client->getName() . '"'
                 . ', "' . $client->getPhone() . '"',
-                'id, name, instagram_name, phone'
+                'id, name, phone'
             );
         }
 

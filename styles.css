@@ -167,7 +167,7 @@ form#password {
 }
 
 table {
-margin-top: 20px;
+    margin-top: 20px;
 }
 
 table th {
@@ -180,11 +180,4 @@ table th {
 table td {
     height: 30px;
     padding-left: 10px;
-}
-
-
-/*lovely space styles*/
-.title {
-    font-weight: bold;
-    font-size: 20px;
 }
