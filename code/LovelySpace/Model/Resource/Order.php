@@ -25,7 +25,7 @@ class Order
         } else {
             $result = $connection->insert(
                 self::TABLE_NAME,
-                'null, "' . $order->getClientId() . '", "' . $order->getDate() . '", "' . $order->getDate() . '"',
+                'null, "' . $order->getClientId() . '", "' . $order->getTotal() . '", "' . $order->getDate() . '"',
                 'id, client_id, total, date'
             );
         }

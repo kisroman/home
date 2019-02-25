@@ -49,13 +49,13 @@ class Connection
     public function __construct()
     {
         $serverName = "localhost";
-//        $username = "sweet-home";
-//        $password = "3uuENVU3nrm6pAg";
-//        $db = "sweet-home";
+        $username = "sweet-home";
+        $password = "3uuENVU3nrm6pAg";
+        $db = "sweet-home";
         $username = "root";
         $password = "root";
-        //$db = 'home';
-        //$db = 'home_test';
+        $db = 'home';
+        $db = 'home_test';
         $db = 'lovely_space';
 
         $this->connection = mysqli_connect($serverName, $username, $password, $db);
