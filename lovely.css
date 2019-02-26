@@ -1,5 +1,5 @@
 :root {
-    --main-color-lovely: #d35d6d;
+    --main-color-lovely: #d37a7d;
 }
 #lovely-space th {
     height: 10px;
@@ -49,4 +49,55 @@
     background-color: var(--main-color-lovely);
     color: white;
     font-size: 20px;
+}
+
+#lovely-space input {
+    height: 30px;
+    font-size: 1rem;
+    background: none;
+    border: none;
+    line-height: 1em;
+    font-weight: 300;
+    padding: 0.125em 0.25em;
+    width: 80%;
+    border-bottom: 1px solid var(--main-color-lovely);
+}
+#lovely-space input:focus {
+    outline: none !important;
+    border:1px solid var(--main-color-lovely);
+    box-shadow: 0 0 20px var(--main-color-lovely);
+}
+
+#lovely-space label {
+    font-size: 1em;
+    margin-bottom: 0.5em;
+    -webkit-transition: all 0.25s;
+    transition: all 0.25s;
+    font-family: 'Raleway', sans-serif;
+    width:40%;
+}
+
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+
+#lovely-space .buttons {
+    margin-bottom: 160px;
+    margin-left: 25%;
+}
+
+#lovely-space div.title {
+    margin-bottom: 20px;
+    margin-left: 25%;
+    color:var(--main-color-lovely);
+    font-size: 40px;
+    font-weight: 600;
 }

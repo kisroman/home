@@ -19,19 +19,31 @@ $client = $clientRepository->get($clientId);
 
 ?>
 <div class="edit-product-form" align="left">
-    <div><span class="title">Сторінка редагування клієнта</span></div>
+    <div class="title"><span class="title">Сторінка редагування клієнта</span></div>
     <form action="" method="post" id="edit">
         <div style="display: none">
-            <label for="id">ID:</label>
-            <input type="number" id="id" name="id" value="<?= $clientId; ?>">
+            <div class="col-25">
+                <label for="id">ID:</label>
+            </div>
+            <div class="col-75">
+                <input type="number" id="id" name="id" value="<?= $clientId; ?>">
+            </div>
         </div>
         <div>
-            <label class="required" for="name">Ім'я:</label>
-            <input type="text" id="name" name="name" value="<?= $client->getName(); ?>" required>
+            <div class="col-25">
+                <label class="required" for="name">Ім'я:</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="name" name="name" value="<?= $client->getName(); ?>" required>
+            </div>
         </div>
         <div>
-            <label for="phone">Телефон</label>
-            <input type="text" id="phone" name="phone" value="<?= $client->getPhone() ? $client->getPhone() : '+380'; ?>">
+            <div class="col-25">
+                <label for="phone">Телефон</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="phone" name="phone" value="<?= $client->getPhone() ? $client->getPhone() : '+380'; ?>">
+            </div>
         </div>
     </form>
     <div>

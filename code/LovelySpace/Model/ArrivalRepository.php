@@ -28,6 +28,25 @@ class ArrivalRepository
             $arrivals[] = ClassCreator::get(Arrival::class, $arrivalArray);
         }
 
+        /** @var Arrival $arrival */
+//        foreach ($arrivals as $arrival) {
+//            /** @var \LovelySpace\Model\ArrivalItemRepository $arrivalItemRepository */
+//            $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemRepository::class);
+//            $items = $arrivalItemRepository->getListByArrivalId($arrival->getId());
+//            /** @var ArrivalItem $item */
+//            foreach ($items as $item) {
+//                $productId = $item->getProductId();
+//                $qty = $item->getQty();
+//                /** @var \LovelySpace\Model\ProductStock $productStock */
+//                $productStock = \ClassCreator::get(\LovelySpace\Model\ProductStock::class,
+//                    [
+//                        'product_id' => $productId,
+//                        'qty' => $qty,
+//                        'total' => '-' . $item->getCost() * $qty,
+//                    ]);
+//                $productStock->save();
+//            }
+//        }
         return $arrivals;
     }
 
@@ -70,6 +89,14 @@ class ArrivalRepository
             /** @var ArrivalItem $arrivalsItem */
             $arrivalsItem = ClassCreator::get(ArrivalItem::class, $itemArray);
             $arrivalsItem->save();
+
+            /** @var ProductStockRepository $productStockRepository */
+            $productStockRepository = ClassCreator::get(ProductStockRepository::class);
+            $productStockRepository->save([
+                'product_id' => $arrivalsItem->getProductId(),
+                'qty' =>  $arrivalsItem->getQty(),
+                'total' => '-' . ($arrivalsItem->getCost() * $arrivalsItem->getQty()),
+            ]);
         }
     }
 }

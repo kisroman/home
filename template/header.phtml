@@ -1,5 +1,6 @@
 <?php
 if (strpos($requestUrl, 'lovely') !== false) {
+    $logoUrl = '/media/lovely-logo.png';
     $menuPoints =
         [
             [
@@ -20,6 +21,7 @@ if (strpos($requestUrl, 'lovely') !== false) {
             ],
         ];
 } else {
+    $logoUrl = '/media/cool-monkey.jpeg';
     $menuPoints =
         [
             [
@@ -51,7 +53,7 @@ if (strpos($requestUrl, 'lovely') !== false) {
 </head>
 <header>
     <div class="left">
-        <div id="menu2">
+        <div id="left-menu">
             <nav>
                 <ul>
                     <li><a href="<?php echo $serverUrl; ?>/finance_management/finance">Finances</a></li>
@@ -63,7 +65,7 @@ if (strpos($requestUrl, 'lovely') !== false) {
 
     <div class="container">
         <a href="/" class="logo">
-            <img src="<?php echo $serverUrl; ?>/media/cool-monkey.jpeg" alt="Cool Monkey" width="150px">
+            <img src="<?php echo $serverUrl . $logoUrl; ?>" alt="Cool Monkey" width="150px">
         </a>
         <div id="menu">
             <nav>

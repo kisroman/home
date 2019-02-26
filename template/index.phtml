@@ -6,6 +6,7 @@ $requestUrl = str_replace(stristr($_SERVER["REQUEST_URI"], '?'), '', $_SERVER["R
 if(empty($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== 'true') {
     include 'login.phtml';
 } else {
+    include 'require_once.phtml';
     include 'header.phtml';
     include 'main.phtml';
     include 'footer.phtml';

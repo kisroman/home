@@ -2,6 +2,10 @@
 /** @var \LovelySpace\Model\ProductRepository $productRepository */
 $productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
 $products = $productRepository->getList();
+
+/** @var \LovelySpace\Model\ProductStockManager $productStockManager */
+$productStockManager = \ClassCreator::get(\LovelySpace\Model\ProductStockManager::class);
+$stocksByProductId = $productStockManager->getProductStocksByProductId();
 ?>
 
 <table class="full-part">
@@ -9,9 +13,12 @@ $products = $productRepository->getList();
     <tr>
         <th>Ім'я продукта</th>
         <th>Ціна</th>
+        <th>В наявності</th>
+        <th>Заробіток на продукті</th>
     </tr>
     </thead>
     <?php
+    $total = 0;
     /** @var \LovelySpace\Model\Product $product */
     foreach ($products as $product) {
         echo '<tr class="clickable-row" data-href="'. $productUrl . '/edit?id=' . $product->getId() . '">';
@@ -21,7 +28,20 @@ $products = $productRepository->getList();
         echo '<td>';
         echo $product->getPrice();
         echo '</td>';
+        echo '<td>';
+        echo isset($stocksByProductId[$product->getId()]['qty']) ? $stocksByProductId[$product->getId()]['qty'] : 0;
+        echo '</td>';
+        echo '<td>';
+        $productTotal = isset($stocksByProductId[$product->getId()]['total']) ?
+            $stocksByProductId[$product->getId()]['total'] : 0;
+        $total += $productTotal;
+        echo $productTotal;
+        echo '</td>';
         echo '</tr>';
     }
     ?>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td><?= $total ?></td>
 </table>

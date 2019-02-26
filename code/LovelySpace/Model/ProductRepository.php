@@ -26,6 +26,10 @@ class ProductRepository
         $productSql = $connection->select(self::TABLE_NAME);
         $productsArray = $productSql ? $productSql->fetch_all(MYSQLI_ASSOC) : [];
 
+        usort($productsArray, function ($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
+
         foreach ($productsArray as $productArray) {
             $products[] = ClassCreator::get(Product::class, $productArray);
         }

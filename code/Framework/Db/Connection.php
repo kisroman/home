@@ -52,11 +52,12 @@ class Connection
         $username = "sweet-home";
         $password = "3uuENVU3nrm6pAg";
         $db = "sweet-home";
-        $username = "root";
-        $password = "root";
-        $db = 'home';
-        $db = 'home_test';
-        $db = 'lovely_space';
+//        $username = "root";
+//        $password = "root";
+//        $db = 'home';
+//        $db = 'home_test';
+//        $db = 'lovely_space';
+        //$db = 'lovely_test';
 
         $this->connection = mysqli_connect($serverName, $username, $password, $db);
 

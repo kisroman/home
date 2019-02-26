@@ -22,6 +22,7 @@ header {
     float: left;
     list-style: none;
     margin-right: 1em;
+    margin-top: 25px;
 }
 
 #menu nav li a {
@@ -180,4 +181,19 @@ table th {
 table td {
     height: 30px;
     padding-left: 10px;
+}
+
+#left-menu {
+    color: #544738;
+    font-size: 20px;
+    padding: 12px;
+    line-height: 38px;
+}
+
+#left-menu a{
+    text-decoration: none;
+}
+
+#left-menu li {
+    list-style: none;
 }
