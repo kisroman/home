@@ -11,7 +11,6 @@ $orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository
 <table class="full-part">
     <thead>
     <tr>
-        <th>Ідентифікатор</th>
         <th>Ім'я клієнта</th>
         <th>Сума</th>
         <th>Дата</th>
@@ -26,7 +25,7 @@ $orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository
         /** @var \LovelySpace\Model\Client $client */
         $client = $clientRepository->get($order->getClientId());
         echo '<tr class="clickable-row" data-href="'. $orderUrl . '/edit?id=' . $order->getId() . '">';
-        echo '<td>';
+        echo '<td style="display: none">';
         echo $order->getId();
         echo '</td>';
         echo '<td>';

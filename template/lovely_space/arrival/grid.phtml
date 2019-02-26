@@ -11,7 +11,6 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
 <table class="full-part">
     <thead>
     <tr>
-        <th>Ідентифікатор</th>
         <th>Доставка</th>
         <th>Сума</th>
         <th>Сума разом з доставкою</th>
@@ -23,7 +22,7 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
     /** @var \LovelySpace\Model\Arrival $arrival */
     foreach ($arrivals as $arrival) {
         echo '<tr class="clickable-row" data-href="'. $arrivalUrl . '/edit?id=' . $arrival->getId() . '">';
-        echo '<td>';
+        echo '<td style="display: none">';
         echo $arrival->getId();
         echo '</td>';
         echo '<td>';
