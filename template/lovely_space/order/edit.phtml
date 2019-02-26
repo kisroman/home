@@ -46,7 +46,7 @@ $clients = $clientRepository->getList()
                 <option price="<?= $product->getPrice(); ?>" value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
             <?php endforeach; ?>
         </select>
-        <button id="add-product-button">Додати</button>
+        <button id="add-product-button" class="near-select">Додати</button>
     </div>
 </div>
 

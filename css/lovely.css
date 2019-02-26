@@ -31,8 +31,6 @@
     text-align: center;
     transition: background 250ms ease-in-out,
     transform 150ms ease;
-    -webkit-appearance: none;
-    height: 28px;
 }
 
 #lovely-space button:hover,
@@ -48,7 +46,10 @@
 #lovely-space button:active {
     transform: scale(0.99);
 }
-
+#lovely-space button.near-select {
+    padding: 0rem 2rem;
+    height: 28px;
+}
 #lovely-space .edit-page-link {
     background-color: var(--main-color-lovely);
     color: white;
@@ -66,6 +67,11 @@
     width: 80%;
     border-bottom: 1px solid var(--main-color-lovely);
 }
+
+#lovely-space table input {
+    width: 100%;
+}
+
 #lovely-space input:focus {
     outline: none !important;
     border:1px solid var(--main-color-lovely);
@@ -108,7 +114,23 @@
 
 #lovely-space #shipment {
     padding-top: 20px;
+    padding-bottom: 5px;
 }
+
 #lovely-space #shipment input{
     width: 5%;
 }
+
+#lovely-space table {
+    border: 1px solid black;
+;
+}
+
+#lovely-space tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+th {
+    text-align: center;
+}
+

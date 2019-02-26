@@ -70,12 +70,16 @@ class Connection
         $this->connection->query("set names utf8mb4");
     }
 
-    public function select($table, $fields = '*', $whereCondition = '')
+    public function select($table, $fields = '*', $whereCondition = '', $groupByField = '')
     {
         $query = 'SELECT ' . $fields . ' FROM ' . $table;
 
         if ($whereCondition !== '') {
             $query .= ' WHERE ' . $whereCondition;
+        }
+
+        if ($groupByField !== '') {
+            $query .= ' GROUP BY ' . $groupByField;
         }
 
         return $this->connection->query($query);
