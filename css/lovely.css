@@ -8,6 +8,10 @@
     color: white;
 }
 
+#lovely-space th.name {
+    width:60%;
+}
+
 #lovely-space .title {
     font-weight: bold;
     font-size: 20px;
@@ -28,7 +32,7 @@
     transition: background 250ms ease-in-out,
     transform 150ms ease;
     -webkit-appearance: none;
-    -moz-appearance: none;
+    height: 28px;
 }
 
 #lovely-space button:hover,
@@ -100,4 +104,11 @@
     color:var(--main-color-lovely);
     font-size: 40px;
     font-weight: 600;
+}
+
+#lovely-space #shipment {
+    padding-top: 20px;
+}
+#lovely-space #shipment input{
+    width: 5%;
 }

@@ -39,7 +39,7 @@ $clients = $clientRepository->getList()
         <label for="products"><span>Оберіть продукт і додайте його до замовлення.<span></label>
     </div>
     <div>
-        <select id="products" name="products">
+        <select class="select2" id="products" name="products">
             <?php
             /** @var \LovelySpace\Model\Product $product */
             foreach ($products as $product): ?>
@@ -78,7 +78,7 @@ $clients = $clientRepository->getList()
     </div>
     <div>
         <label for="client_id"><span>Оберіть клієнта<span></label>
-        <select id="client_id" name="client_id">
+        <select class="select2" id="client_id" name="client_id">
         <?php
             /** @var \LovelySpace\Model\Client $client */
             foreach ($clients as $client):
