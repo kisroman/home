@@ -46,12 +46,14 @@ $clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::clas
                         var filterName = filter['Ім\'я клієнта'].toUpperCase(),
                             modelName = model['Ім\'я клієнта'].toUpperCase(),
                             filterSellProducts = filter['Продані продукти'].toUpperCase(),
-                            modelSellProducts = model['Продані продукти'].toUpperCase();
+                            modelSellProducts = model['Продані продукти'].toUpperCase(),
+                            filterSum = filter['Сума'] ? filter['Сума'].toString() : '',
+                            modelSum = model['Сума'] ? model['Сума'].toString() : '';
 
                         return (!filterName || modelName.indexOf(filterName) > -1)
-                            && (!filter['Сума'] || parseInt(model['Сума']) === parseInt(filter['Сума']))
+                            && (typeof filterSum === 'undefined' || modelSum.indexOf(filterSum) > -1)
                             && (!filterSellProducts || modelSellProducts.indexOf(filterSellProducts) > -1)
-                            && (!filter['Дата'].toUpperCase() || model['Дата'].indexOf(filter['Дата'].toUpperCase()) > -1)
+                            && (!filter['Дата'] || model['Дата'].indexOf(filter['Дата']) > -1)
                     });}
             },
             rowClick: function(args) {

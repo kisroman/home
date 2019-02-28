@@ -4,24 +4,53 @@ $clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::clas
 $clients = $clientRepository->getList();
 ?>
 
-<table class="full-part grid">
-    <thead>
-    <tr>
-        <th>Ім'я</th>
-        <th>Телефон</th>
-    </tr>
-    </thead>
-    <?php
-    /** @var \LovelySpace\Model\Client $client */
-    foreach ($clients as $client) {
-        echo '<tr class="clickable-row" data-href="'. $clientUrl . '/edit?id=' . $client->getId() . '">';
-        echo '<td>';
-        echo $client->getName();
-        echo '</td>';
-        echo '<td>';
-        echo $client->getPhone();
-        echo '</td>';
-        echo '</tr>';
-    }
-    ?>
-</table>
+<div id="jsGrid"></div>
+
+<script>
+    var models = [
+        <?php
+        /** @var \LovelySpace\Model\Client $model */
+        foreach ($clients as $model): ?>
+        {
+            'id': '<?= $model->getId()?>',
+            'Ім\'я': '<?= $model->getName()?>',
+            'Телефон': '<?= $model->getPhone()?>'
+        },
+        <?php endforeach; ?>
+    ], url = '<?= $clientUrl?>';
+
+    $(function() {
+        $('#jsGrid').jsGrid({
+            height: '147%',
+            width: '100%',
+
+            filtering: true,
+            editing: false,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            controller: {
+                loadData: function(filter) {
+                    return $.grep(models, function(model) {
+                        var filterName = filter['Ім\'я'].toUpperCase(),
+                            modelName = model['Ім\'я'].toUpperCase();
+
+                        return (!filterName || modelName.indexOf(filterName) > -1)
+                            && (!filter['Телефон'] || model['Телефон'].indexOf(filter['Телефон']) > -1)
+                    });}
+            },
+            rowClick: function(args) {
+                var id = args.item.id;
+                location.href = url + '/edit?id=' + id;
+            },
+            pageSize: 30,
+            data: models,
+
+            fields: [
+                { name: 'id', type: 'number', visible: false},
+                { name: 'Ім\'я', type: 'text', width: 150 },
+                { name: 'Телефон', type: 'text', width: 50 }
+            ]
+        });
+    });
+</script>

@@ -5,43 +5,75 @@ $arrivals = $arrivalRepository->getList();
 
 /** @var \LovelySpace\Model\ArrivalItemRepository $arrivalItemRepository */
 $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemRepository::class);
-
 ?>
 
+<div id="jsGrid"></div>
 
-<table class="full-part grid">
-    <thead>
-    <tr>
-        <th>Доставка</th>
-        <th>Сума</th>
-        <th>Сума разом з доставкою</th>
-        <th>Дата</th>
-        <th>Отримані продукти</th>
-    </tr>
-    </thead>
-    <?php
-    /** @var \LovelySpace\Model\Arrival $arrival */
-    foreach ($arrivals as $arrival) {
-        echo '<tr class="clickable-row" data-href="'. $arrivalUrl . '/edit?id=' . $arrival->getId() . '">';
-        echo '<td style="display: none">';
-        echo $arrival->getId();
-        echo '</td>';
-        echo '<td>';
-        echo $arrival->getShipment() . ' грн';
-        echo '</td>';
-        echo '<td>';
-        echo $arrival->getTotal() . ' грн';
-        echo '</td>';
-        echo '<td>';
-        echo $arrival->getGrandTotal() . ' грн';
-        echo '</td>';
-        echo '<td>';
-        echo $arrival->getDate();
-        echo '</td>';
-        echo '<td>';
-        echo $arrivalItemRepository->getProductNamesByArrivalId($arrival->getId());
-        echo '</td>';
-        echo '</tr>';
-    }
-    ?>
-</table>
+<script>
+    var models = [
+        <?php
+        /** @var \LovelySpace\Model\Arrival $arrival */
+        foreach ($arrivals as $arrival):
+        ?>
+        {
+            'id': '<?= $arrival->getId() ?>',
+            'Доставка': '<?= $arrival->getShipment() ?>',
+            'Сума': '<?= $arrival->getTotal() . ' грн' ?>',
+            'Сума разом з доставкою': '<?= $arrival->getGrandTotal() ?>',
+            'Дата': '<?= $arrival->getDate() ?>',
+            'Отримані продукти': '<?= $arrivalItemRepository->getProductNamesByArrivalId($arrival->getId()) ?>'
+        },
+        <?php endforeach; ?>
+    ], url = '<?= $arrivalUrl?>';
+
+    $(function() {
+        $('#jsGrid').jsGrid({
+            height: '147%',
+            width: '100%',
+
+            filtering: true,
+            editing: false,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            controller: {
+                loadData: function(filter) {
+
+                    return $.grep(models, function(model) {
+                        var filterDate = filter['Дата'].toUpperCase(),
+                            modelDate = model['Дата'].toUpperCase(),
+                            filterGotProducts = filter['Отримані продукти'].toUpperCase(),
+                            modelGotProducts = model['Отримані продукти'].toUpperCase(),
+                            filterShipment = filter['Доставка'] ? filter['Доставка'].toString() : '',
+                            modelShipment = model['Доставка'] ? model['Доставка'].toString() : '',
+                            filterSum = filter['Сума'] ? filter['Сума'].toString() : '',
+                            modelSum = model['Сума'] ? model['Сума'].toString() : '',
+                            filterSumShipment = filter['Сума разом з доставкою'] ? filter['Сума разом з доставкою'].toString() : '',
+                            modelSumShipment = model['Сума разом з доставкою'] ? model['Сума разом з доставкою'].toString() : '';
+
+                        return (!filterDate || modelDate.indexOf(filterDate) > -1)
+                            && (typeof filterShipment === 'undefined' || modelShipment.indexOf(filterShipment) > -1)
+                            && (!filterGotProducts || modelGotProducts.indexOf(filterGotProducts) > -1)
+                            && (typeof filterSum === 'undefined' || modelSum.indexOf(filterSum) > -1)
+                            && (typeof filterSumShipment === 'undefined' || modelSumShipment.indexOf(filterSumShipment) > -1)
+
+                    });}
+            },
+            rowClick: function(args) {
+                var id = args.item.id;
+                location.href = url + '/edit?id=' + id;
+            },
+            pageSize: 30,
+            data: models,
+
+            fields: [
+                {name: 'id', type: 'number', visible: false},
+                { name: 'Доставка', type: 'number', width: 35 },
+                { name: 'Сума', type: 'number', width: 35 },
+                { name: 'Сума разом з доставкою', type: 'number', width: 40 },
+                { name: 'Дата', type: 'text', width: 45 },
+                { name: 'Отримані продукти', type: 'text', width: 300 }
+            ]
+        });
+    });
+</script>
