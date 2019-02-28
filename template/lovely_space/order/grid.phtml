@@ -5,42 +5,69 @@ $orders = $orderRepository->getList();
 
 /** @var \LovelySpace\Model\OrderItemRepository $orderItemRepository */
 $orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository::class);
-
+/** @var \LovelySpace\Model\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
 ?>
 
-<table class="full-part">
-    <thead>
-    <tr>
-        <th>Ім'я клієнта</th>
-        <th>Сума</th>
-        <th>Дата</th>
-        <th>Продані продукти</th>
-    </tr>
-    </thead>
-    <?php
-    /** @var \LovelySpace\Model\ClientRepository $clientRepository */
-    $clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
-    /** @var \LovelySpace\Model\Order $order */
-    foreach ($orders as $order) {
+<div id="jsGrid"></div>
+
+<script>
+    var models = [
+        <?php
+        /** @var \LovelySpace\Model\Order $order */
+        foreach ($orders as $order):
         /** @var \LovelySpace\Model\Client $client */
         $client = $clientRepository->get($order->getClientId());
-        echo '<tr class="clickable-row" data-href="'. $orderUrl . '/edit?id=' . $order->getId() . '">';
-        echo '<td style="display: none">';
-        echo $order->getId();
-        echo '</td>';
-        echo '<td>';
-        echo $client->getName();
-        echo '</td>';
-        echo '<td>';
-        echo $order->getTotal() . ' грн';
-        echo '</td>';
-        echo '<td>';
-        echo $order->getDate();
-        echo '</td>';
-        echo '<td>';
-        echo $orderItemRepository->getProductNamesByOrderId($order->getId());
-        echo '</td>';
-        echo '</tr>';
-    }
-    ?>
-</table>
+        ?>
+        {
+            'id': '<?= $order->getId() ?>',
+            'Ім\'я клієнта': '<?= $client->getName() ?>',
+            'Сума': '<?= $order->getTotal() . ' грн' ?>',
+            'Дата': '<?= $order->getDate() ?>',
+            'Продані продукти': '<?= $orderItemRepository->getProductNamesByOrderId($order->getId()) ?>'
+        },
+        <?php endforeach; ?>
+    ], url = '<?= $orderUrl?>';
+
+    $(function() {
+        $('#jsGrid').jsGrid({
+            height: '147%',
+            width: '100%',
+
+            filtering: true,
+            editing: false,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            controller: {
+                loadData: function(filter) {
+
+                    return $.grep(models, function(model) {
+                        var filterName = filter['Ім\'я клієнта'].toUpperCase(),
+                            modelName = model['Ім\'я клієнта'].toUpperCase(),
+                            filterSellProducts = filter['Продані продукти'].toUpperCase(),
+                            modelSellProducts = model['Продані продукти'].toUpperCase();
+
+                        return (!filterName || modelName.indexOf(filterName) > -1)
+                            && (!filter['Сума'] || parseInt(model['Сума']) === parseInt(filter['Сума']))
+                            && (!filterSellProducts || modelSellProducts.indexOf(filterSellProducts) > -1)
+                            && (!filter['Дата'].toUpperCase() || model['Дата'].indexOf(filter['Дата'].toUpperCase()) > -1)
+                    });}
+            },
+            rowClick: function(args) {
+                var id = args.item.id;
+                location.href = url + '/edit?id=' + id;
+            },
+            pageSize: 30,
+            data: models,
+
+            fields: [
+                {name: 'id', type: 'number', visible: false},
+                { name: 'Ім\'я клієнта', type: 'text', width: 100 },
+                { name: 'Сума', type: 'number', width: 50 },
+                { name: 'Дата', type: 'text', width: 50 },
+                { name: 'Продані продукти', type: 'text', width: 200 }
+            ]
+        });
+    });
+</script>

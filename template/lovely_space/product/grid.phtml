@@ -7,41 +7,56 @@ $products = $productRepository->getList();
 $productStockManager = \ClassCreator::get(\LovelySpace\Model\ProductStockManager::class);
 $stocksByProductId = $productStockManager->getProductStocksByProductId();
 ?>
+<div id="jsGrid"></div>
 
-<table class="full-part">
-    <thead>
-    <tr>
-        <th>Ім'я продукта</th>
-        <th>Ціна</th>
-        <th>В наявності</th>
-        <th>Заробіток на продукті</th>
-    </tr>
-    </thead>
-    <?php
-    $total = 0;
-    /** @var \LovelySpace\Model\Product $product */
-    foreach ($products as $product) {
-        echo '<tr class="clickable-row" data-href="'. $productUrl . '/edit?id=' . $product->getId() . '">';
-        echo '<td>';
-        echo $product->getName();
-        echo '</td>';
-        echo '<td>';
-        echo $product->getPrice();
-        echo '</td>';
-        echo '<td>';
-        echo isset($stocksByProductId[$product->getId()]['qty']) ? $stocksByProductId[$product->getId()]['qty'] : 0;
-        echo '</td>';
-        echo '<td>';
-        $productTotal = isset($stocksByProductId[$product->getId()]['total']) ?
-            $stocksByProductId[$product->getId()]['total'] : 0;
-        $total += $productTotal;
-        echo $productTotal;
-        echo '</td>';
-        echo '</tr>';
-    }
-    ?>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td><?= $total ?></td>
-</table>
+<script>
+    var products = [
+        <?php
+        /** @var \LovelySpace\Model\Product $product */
+        foreach ($products as $product): ?>
+        {
+            'id': '<?= $product->getId()?>',
+            'Ім\'я продукта': '<?= $product->getName()?>',
+            'Ціна': <?= $product->getPrice()?>,
+            'В наявності': <?= isset($stocksByProductId[$product->getId()]['qty']) ? $stocksByProductId[$product->getId()]['qty'] : 0 ?>
+        },
+        <?php endforeach; ?>
+    ], productUrl = '<?= $productUrl?>';
+
+    $(function() {
+        $('#jsGrid').jsGrid({
+            height: '147%',
+            width: '100%',
+
+            filtering: true,
+            editing: false,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            controller: {
+                loadData: function(filter) {
+                    return $.grep(products, function(product) {
+                        var filterName = filter['Ім\'я продукта'].toUpperCase(),
+                            productName = product['Ім\'я продукта'].toUpperCase();
+
+                        return (!filterName || productName.indexOf(filterName) > -1)
+                            && (!filter['Ціна'] || product['Ціна'] === parseInt(filter['Ціна']))
+                            && (!filter['В наявності'] || product['В наявності'] === parseInt(filter['В наявності']))
+                    });}
+            },
+            rowClick: function(args) {
+                var productId = args.item.id;
+                location.href = productUrl + '/edit?id=' + productId;
+            },
+            pageSize: 30,
+            data: products,
+
+            fields: [
+                {name: 'id', type: 'number', visible: false},
+                { name: 'Ім\'я продукта', type: 'text', width: 150 },
+                { name: 'Ціна', type: 'number', width: 50 },
+                { name: 'В наявності', type: 'text', width: 200 }
+            ]
+        });
+    });
+</script>

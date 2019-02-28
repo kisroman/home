@@ -14,7 +14,7 @@
 
 #lovely-space .title {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 35px;
 }
 
 #lovely-space button {
@@ -46,10 +46,7 @@
 #lovely-space button:active {
     transform: scale(0.99);
 }
-#lovely-space button.near-select {
-    padding: 0rem 2rem;
-    height: 28px;
-}
+
 #lovely-space .edit-page-link {
     background-color: var(--main-color-lovely);
     color: white;
@@ -58,18 +55,22 @@
 
 #lovely-space input {
     height: 30px;
-    font-size: 1rem;
+    font-size: 24px;
     background: none;
     border: none;
     line-height: 1em;
     font-weight: 300;
     padding: 0.125em 0.25em;
-    width: 80%;
+    width: 100%;
     border-bottom: 1px solid var(--main-color-lovely);
 }
 
 #lovely-space table input {
     width: 100%;
+}
+
+#lovely-space table {
+    margin-top: 0;
 }
 
 #lovely-space input:focus {
@@ -79,35 +80,30 @@
 }
 
 #lovely-space label {
-    font-size: 1em;
+    font-size: 24px;
     margin-bottom: 0.5em;
     -webkit-transition: all 0.25s;
     transition: all 0.25s;
     font-family: 'Raleway', sans-serif;
-    width:40%;
+    width: 40%;
 }
 
-.col-25 {
+.col-30 {
     float: left;
-    width: 25%;
+    width: 30%;
     margin-top: 6px;
 }
 
-.col-75 {
+.col-70 {
     float: left;
-    width: 75%;
+    width: 70%;
     margin-top: 6px;
-}
-
-#lovely-space .buttons {
-    margin-bottom: 160px;
-    margin-left: 25%;
 }
 
 #lovely-space div.title {
     margin-bottom: 20px;
-    margin-left: 25%;
-    color:var(--main-color-lovely);
+    margin-left: 15%;
+    color: var(--main-color-lovely);
     font-size: 40px;
     font-weight: 600;
 }
@@ -118,19 +114,43 @@
 }
 
 #lovely-space #shipment input{
-    width: 5%;
-}
-
-#lovely-space table {
-    border: 1px solid black;
-;
+    width: 6%;
 }
 
 #lovely-space tr:nth-child(even) {
     background-color: #f2f2f2;
 }
 
-th {
-    text-align: center;
+#lovely-space .jsgrid-grid-body tr:hover {
+    background-color: var(--main-color-lovely);
 }
 
+#lovely-space .jsgrid-cell{
+    border: #d2d2d2 1px solid;
+}
+
+#lovely-space .jsgrid-header-cell{
+    border: var(--main-color-lovely) 1px solid;
+}
+
+#lovely-space button.full {
+    width: 100%;
+    height: 75px;
+}
+
+#lovely-space .half {
+    width: 49.8%;
+    height: 75px;
+}
+
+#lovely-space .selection {
+    font-size: 25px;
+}
+
+#lovely-space .select2.select2-container {
+    width: 49%;
+}
+#lovely-space .select2.select2-container .select2-selection {
+    height: 75px;
+    padding-top: 20px;
+}

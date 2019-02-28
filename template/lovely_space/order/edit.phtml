@@ -46,7 +46,7 @@ $clients = $clientRepository->getList()
                 <option price="<?= $product->getPrice(); ?>" value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
             <?php endforeach; ?>
         </select>
-        <button id="add-product-button" class="near-select">Додати</button>
+        <button id="add-product-button" class="near-select half">Додати</button>
     </div>
 </div>
 
@@ -89,8 +89,8 @@ $clients = $clientRepository->getList()
     </div>
 </form>
 <div>
-    <button onclick="location.href = '<?= $_SERVER['HTTP_REFERER']?>'" id="back-button">Назад</button>
-    <button form="edit" type="submit" id="save-order-button">Зберегти</button>
+    <button class="half" onclick="location.href = '<?= $_SERVER['HTTP_REFERER']?>'" id="back-button">Назад</button>
+    <button class="half" form="edit" type="submit" id="save-order-button">Зберегти</button>
 </div>
 
 <script>

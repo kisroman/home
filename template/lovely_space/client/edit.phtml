@@ -22,32 +22,32 @@ $client = $clientRepository->get($clientId);
     <div class="title"><span class="title">Сторінка редагування клієнта</span></div>
     <form action="" method="post" id="edit">
         <div style="display: none">
-            <div class="col-25">
+            <div class="col-30">
                 <label for="id">ID:</label>
             </div>
-            <div class="col-75">
+            <div class="col-70">
                 <input type="number" id="id" name="id" value="<?= $clientId; ?>">
             </div>
         </div>
         <div>
-            <div class="col-25">
+            <div class="col-30">
                 <label class="required" for="name">Ім'я:</label>
             </div>
-            <div class="col-75">
+            <div class="col-70">
                 <input type="text" id="name" name="name" value="<?= $client->getName(); ?>" required>
             </div>
         </div>
         <div>
-            <div class="col-25">
+            <div class="col-30">
                 <label for="phone">Телефон</label>
             </div>
-            <div class="col-75">
+            <div class="col-70">
                 <input type="text" id="phone" name="phone" value="<?= $client->getPhone() ? $client->getPhone() : '+380'; ?>">
             </div>
         </div>
     </form>
     <div>
-        <button onclick="location.href = '<?= $_SERVER['HTTP_REFERER']?>'" id="back-button">Назад</button>
-        <button form="edit" type="submit" id="save-client-button">Зберегти</button>
+        <button class="half" onclick="location.href = '<?= $_SERVER['HTTP_REFERER']?>'" id="back-button">Назад</button>
+        <button class="half" form="edit" type="submit" id="save-client-button">Зберегти</button>
     </div>
 </div>
