@@ -1945,11 +1945,11 @@
                 $result = this.filterControl = this._createTextBox();
 
             if(this.autosearch) {
-                $result.on("keypress", function(e) {
-                    if(e.which === 13) {
+                $result.on("keyup", function(e) {
+                    //if(e.which === 13) {
                         grid.search();
                         e.preventDefault();
-                    }
+                    //}
                 });
             }
 
