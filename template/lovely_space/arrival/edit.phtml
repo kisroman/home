@@ -32,10 +32,12 @@ $lastCosts = [];
 <div class="title"><span class="title">Сторінка редагування замовлення прибуття</span></div>
 
 <div id="add-product-to-arrival">
-    <div>
-        <label for="products"><span>Оберіть продукт і додайте його до замовлення.<span></label>
-    </div>
-    <div>
+<!--    <div>-->
+<!--
+<!--    </div>-->
+
+        <div class="full">
+            <label for="products"><span>Оберіть продукт<span></label>
         <select class="select2" id="products" name="products">
             <?php
             /** @var \LovelySpace\Model\Product $product */
@@ -44,15 +46,18 @@ $lastCosts = [];
             <?php $lastCosts[$product->getId()] = $arrivalItemResource->getLastCostForProductByProductId($product->getId()); ?>
             <?php endforeach; ?>
         </select>
-        <button id="add-product-button" class="near-select half">Додати</button>
-    </div>
+        </div>
+        <div class="full">
+        <button id="add-product-button" class="near-select full">Додати</button>
+        </div>
+
 </div>
 
 <form action="" method="post" id="edit">
     <table id="arrival-items-grid" class="full-part">
         <thead>
         <tr>
-            <th class="name">Імя продукта</th>
+            <th class="product-name">Імя продукта</th>
             <th>Собівартість за одиницю</th>
             <th>Кількість одиниць</th>
             <th>Видалити</th>

@@ -1,13 +1,10 @@
 <?php
-//if (!isset($_POST['password'])) {
-//    include 'password.phtml';
-//    return;
-//} else {
-//    if ($_POST['password'] != 'zxc') {
-//        include 'password.phtml';
-//        return;
-//    }
-//}
+if (!empty($_POST)) {
+    /** @var \FinanceManagement\Model\FinanceDetails $financeDetails */
+    $financeDetails = \ClassCreator::get(\FinanceManagement\Model\FinanceDetails::class);
+    $financeDetails->createDuplicateForDate($_POST['date']);
+    echo "<meta http-equiv='refresh' content='0'>";
+}
 
 $financesLimit = 10;
 
@@ -27,7 +24,7 @@ $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
 ?>
 
 <div class="left add-finance-details-form">
-    <form action="finance/post" method="post" id="finance_details">
+    <form action="" method="post" id="finance_details">
         <label for="date">Date:</label>
         <input type="text" id="datepicker" value="<?php echo date('Y-m-d'); ?>" name="date" required>
         <input type="submit" value="Add">

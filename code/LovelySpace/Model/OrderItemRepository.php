@@ -52,7 +52,7 @@ class OrderItemRepository
 
         /** @var OrderItem $orderItem */
         foreach ($ordersItems as $orderItem) {
-            $productNames .= $orderItem->getProductName() . ', ';
+            $productNames .= $orderItem->getProductName() . '</br>';
         }
         $productNames = substr($productNames, 0, -2);
 

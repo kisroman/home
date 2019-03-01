@@ -25,7 +25,7 @@ $stocksByProductId = $productStockManager->getProductStocksByProductId();
 
     $(function() {
         $('#jsGrid').jsGrid({
-            height: '147%',
+            height: '120%',
             width: '100%',
 
             filtering: true,
@@ -53,9 +53,9 @@ $stocksByProductId = $productStockManager->getProductStocksByProductId();
 
             fields: [
                 { name: 'id', type: 'number', visible: false},
-                { name: 'Ім\'я продукта', type: 'text', width: 150 },
+                { name: 'Ім\'я продукта', type: 'text', width: 400 },
                 { name: 'Ціна', type: 'number', width: 50 },
-                { name: 'В наявності', type: 'text', width: 200 }
+                { name: 'В наявності', type: 'text', width: 50 }
             ]
         });
     });

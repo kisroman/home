@@ -36,9 +36,8 @@ $clients = $clientRepository->getList()
 
 <div id="add-product-to-order">
     <div>
-        <label for="products"><span>Оберіть продукт і додайте його до замовлення.<span></label>
-    </div>
-    <div>
+        <div class="full">
+            <label for="products"><span>Оберіть продукт<span></label>
         <select class="select2" id="products" name="products">
             <?php
             /** @var \LovelySpace\Model\Product $product */
@@ -46,7 +45,10 @@ $clients = $clientRepository->getList()
                 <option price="<?= $product->getPrice(); ?>" value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
             <?php endforeach; ?>
         </select>
-        <button id="add-product-button" class="near-select half">Додати</button>
+        </div>
+        <div class="full">
+        <button id="add-product-button" class="near-select full">Додати</button>
+        </div>
     </div>
 </div>
 
@@ -54,7 +56,7 @@ $clients = $clientRepository->getList()
     <table id="order-items-grid" class="full-part">
         <thead>
         <tr>
-            <th>Імя продукта</th>
+            <th class="product-name">Імя продукта</th>
             <th>Ціна</th>
             <th>Кількість одиниць</th>
             <th>Видалити</th>

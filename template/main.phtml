@@ -7,13 +7,15 @@
             $isLovelySpace = strpos($_SERVER['REQUEST_URI'], 'lovely_space') !== false;
             if ($isLovelySpace) {
                 echo '<div id="lovely-space">';
-            }
-            include 'template' . $requestUrl . '.phtml';
-            if ($isLovelySpace) {
+                include 'template' . $requestUrl . '.phtml';
                 echo '</div>';
+            } else {
+                include 'template/finance_management' . $requestUrl . '.phtml';
             }
         } else {
-            include 'template/finance_management/finance.phtml';
+            echo '<div id="lovely-space">';
+            include 'template/lovely_space/product.phtml';
+            echo '</div>';
             ?>
             <?php
         }

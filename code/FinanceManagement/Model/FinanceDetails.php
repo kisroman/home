@@ -92,7 +92,8 @@ class FinanceDetails
     {
         /** @var Connection $connection */
         $connection = ClassCreator::get(Connection::class);
-        $maxDate = array_pop($connection->selectMax('finance', 'date')->fetch_row());
+        $maxDate = $connection->selectMax('finance', 'date')->fetch_row();
+        $maxDate = array_pop($maxDate);
 
         $financeDetails = $this->getFinanceDetailsByDate($maxDate);
 

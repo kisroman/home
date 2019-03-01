@@ -1,9 +1,0 @@
-<?php
-if (!empty($_POST)) {
-    /** @var \FinanceManagement\Model\Rate $rate */
-    $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
-    $rate->save($_POST);
-}
-
-header('Location: ' . $_SERVER["HTTP_REFERER"], true, 302);
-die();

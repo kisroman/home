@@ -1,4 +1,11 @@
 <?php
+if (!empty($_POST)) {
+    /** @var \FinanceManagement\Model\Rate $rate */
+    $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
+    $rate->save($_POST);
+    echo "<meta http-equiv='refresh' content='0'>";
+}
+
 /** @var \FinanceManagement\Model\Rate $rate */
 $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
 $rates = $rate->getRates();
@@ -31,7 +38,7 @@ $rates = $rate->getRates();
 </div>
 
 <div class="add-rate-form" align="center">
-    <form action="rates/post" method="post" id="rate">
+    <form action="" method="post" id="rate">
         <div>
             <label for="currency">Currency:</label>
             <select name="currency" id="currency">

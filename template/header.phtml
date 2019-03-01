@@ -1,46 +1,59 @@
 <?php
-if (strpos($requestUrl, 'lovely') !== false) {
-    $logoUrl = '/media/lovely-logo.png';
-    $menuPoints =
-        [
-            [
-                'url' => $serverUrl . '/lovely_space/product',
-                'label' => 'Продукти',
-            ],
-            [
-                'url' => $serverUrl . '/lovely_space/arrival',
-                'label' => 'Прибуття',
-            ],
-            [
-                'url' => $serverUrl . '/lovely_space/order',
-                'label' => 'Замовлення',
-            ],
-            [
-                'url' => $serverUrl . '/lovely_space/client',
-                'label' => 'Клієнти',
-            ],
-        ];
-} else {
+if (!(strpos($requestUrl, 'lovely') !== false || $requestUrl === '/')) {
     $logoUrl = '/media/cool-monkey.jpeg';
     $menuPoints =
         [
             [
-                'url' => $serverUrl . '/finance_management/finance',
+                'url' => $serverUrl . '/finance',
                 'label' => 'Finances',
             ],
             [
-                'url' => $serverUrl . '/finance_management/rates',
+                'url' => $serverUrl . '/rates',
                 'label' => 'Rates',
             ],
             [
-                'url' => $serverUrl . '/finance_management/finance_details',
+                'url' => $serverUrl . '/finance_details',
                 'label' => 'Details add',
             ],
             [
-                'url' => $serverUrl . '/finance_management/diagrams',
+                'url' => $serverUrl . '/diagrams',
                 'label' => 'Diagrams',
             ],
         ];
+} else {
+    $logoUrl = '/media/lovely-logo.png';
+    $productUrl = '/lovely_space/product';
+    $arrivalUrl = '/lovely_space/arrival';
+    $orderUrl = '/lovely_space/order';
+    $clientUrl = '/lovely_space/client';
+
+    $menuPoints =
+        [
+            [
+                'url' => $serverUrl . $productUrl,
+                'label' => 'Продукти',
+            ],
+            [
+                'url' => $serverUrl . $arrivalUrl,
+                'label' => 'Прибуття',
+            ],
+            [
+                'url' => $serverUrl . $orderUrl,
+                'label' => 'Замовлення',
+            ],
+            [
+                'url' => $serverUrl . $clientUrl,
+                'label' => 'Клієнти',
+            ],
+        ];
+
+    foreach ($menuPoints as $key => $value) {
+        if (strpos($value['url'], $requestUrl) !== false) {
+            $menuPoints[$key]['class'] = 'menu-chosen';
+        } else {
+            $menuPoints[$key]['class'] = '';
+        }
+    }
 }
 ?>
 <head>
@@ -59,16 +72,16 @@ if (strpos($requestUrl, 'lovely') !== false) {
     <title>Finance</title>
 </head>
 <header>
-    <div class="left">
-        <div id="left-menu">
-            <nav>
-                <ul>
-                    <li><a href="<?php echo $serverUrl; ?>/finance_management/finance">Finances</a></li>
-                    <li><a href="<?php echo $serverUrl; ?>/lovely_space/product">Lovely space</a></li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+<!--    <div class="left">-->
+<!--        <div id="left-menu">-->
+<!--            <nav>-->
+<!--                <ul>-->
+<!--                    <li><a href="--><?php //echo $serverUrl; ?><!--/finance_management/finance">Finances</a></li>-->
+<!--                    <li><a href="--><?php //echo $serverUrl; ?><!--/lovely_space/product">Lovely space</a></li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+<!--        </div>-->
+<!--    </div>-->
 
     <div class="container">
         <a href="/" class="logo">
@@ -78,7 +91,8 @@ if (strpos($requestUrl, 'lovely') !== false) {
             <nav>
                 <ul>
                     <?php foreach ($menuPoints as $menuPoint): ?>
-                        <li><a href="<?php echo $menuPoint['url']; ?>"><?php echo $menuPoint['label']; ?></a></li>
+                        <li><a class="<?=$menuPoint['class'] ?>" href="<?php echo $menuPoint['url']; ?>"><?php echo $menuPoint['label'];
+                        ?></a></li>
                     <?php endforeach; ?>
                 </ul>
             </nav>
@@ -86,59 +100,4 @@ if (strpos($requestUrl, 'lovely') !== false) {
     </div>
 </header>
 <script>
-//     var clients = [
-//         { "Name": "Otto Clay", "Age": 25, "Country": 1, "Address": "Ap #897-1459 Quam Avenue", "Married": false },
-//         { "Name": "TConnor Johnston", "Age": 45, "Country": 2, "Address": "Ap #370-4647 Dis Av.", "Married": true },
-//         { "Name": "TLacey Hess", "Age": 29, "Country": 3, "Address": "Ap #365-8835 Integer St.", "Married": false },
-//         { "Name": "Timothy Henson", "Age": 56, "Country": 1, "Address": "911-5143 Luctus Ave", "Married": true },
-//         { "Name": "Ramona Benton", "Age": 32, "Country": 3, "Address": "Ap #614-689 Vehicula Street", "Married": false }
-//     ];
-//
-//     var countries = [
-//         { Name: "", Id: 0 },
-//         { Name: "United States", Id: 1 },
-//         { Name: "Canada", Id: 2 },
-//         { Name: "United Kingdom", Id: 3 }
-//     ];
-//
-//     $(function() {
-//
-//         $("#jsGrid").jsGrid({
-//             height: "90%",
-//             width: "100%",
-//
-//             filtering: true,
-//             editing: false,
-//             sorting: true,
-//             paging: true,
-//             autoload: true,
-//             controller: {
-//                 loadData: function(filter) {
-//                     return $.grep(clients, function(client) {
-//                         return (!filter["Name"].toUpperCase() || client["Name"].toUpperCase().indexOf(filter["Name"].toUpperCase()) > -1)
-//                             && (!filter["Age"] || client["Age"].indexOf(filter["Age"])>-1)
-//                             && (!filter["Address"] || client["Address"].indexOf(filter["Address"]) > -1)
-//                     });}
-//             },
-//
-//             pageSize: 30,
-//             pageButtonCount: 5,
-//
-// //            deleteConfirm: "Do you really want to delete the client?",
-//
-//             //controller: db,
-//             data: clients,
-//
-//             fields: [
-//                 { name: "Name", type: "text", width: 150 },
-//                 { name: "Age", type: "number", width: 50 },
-//                 { name: "Address", type: "text", width: 200 },
-//                 { name: "Country", type: "select", items: countries, valueField: "Id", textField: "Name" },
-//
-//                 { name: "Married", type: "checkbox", title: "Is Married", sorting: false },
-//
-//             ]
-//         });
-//
-//     });
 </script>

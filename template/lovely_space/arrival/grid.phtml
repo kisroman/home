@@ -19,7 +19,7 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
             'id': '<?= $arrival->getId() ?>',
             'Доставка': '<?= $arrival->getShipment() ?>',
             'Сума': '<?= $arrival->getTotal() . ' грн' ?>',
-            'Сума разом з доставкою': '<?= $arrival->getGrandTotal() ?>',
+            'Сума разом з доставкою': '<?= $arrival->getGrandTotal() . ' грн' ?>',
             'Дата': '<?= $arrival->getDate() ?>',
             'Отримані продукти': '<?= $arrivalItemRepository->getProductNamesByArrivalId($arrival->getId()) ?>'
         },
@@ -28,7 +28,7 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
 
     $(function() {
         $('#jsGrid').jsGrid({
-            height: '147%',
+            height: '120%',
             width: '100%',
 
             filtering: true,
@@ -68,11 +68,11 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
 
             fields: [
                 {name: 'id', type: 'number', visible: false},
-                { name: 'Доставка', type: 'number', width: 35 },
+                { name: 'Доставка', type: 'number', width: 40 },
                 { name: 'Сума', type: 'number', width: 35 },
                 { name: 'Сума разом з доставкою', type: 'number', width: 40 },
                 { name: 'Дата', type: 'text', width: 45 },
-                { name: 'Отримані продукти', type: 'text', width: 300 }
+                { name: 'Отримані продукти', type: 'text', width: 150 }
             ]
         });
     });

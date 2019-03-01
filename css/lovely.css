@@ -1,15 +1,12 @@
 :root {
     --main-color-lovely: #d37a7d;
 }
+
 #lovely-space th {
     height: 10px;
     text-align: left;
     background-color: var(--main-color-lovely);
     color: white;
-}
-
-#lovely-space th.name {
-    width:60%;
 }
 
 #lovely-space .title {
@@ -26,7 +23,7 @@
     background: var(--main-color-lovely);
     color: #ffffff;
     font-family: sans-serif;
-    font-size: 1rem;
+    font-size: 40px;
     cursor: pointer;
     text-align: center;
     transition: background 250ms ease-in-out,
@@ -54,8 +51,8 @@
 }
 
 #lovely-space input {
-    height: 30px;
-    font-size: 24px;
+    height: 60px;
+    font-size: 40px;
     background: none;
     border: none;
     line-height: 1em;
@@ -75,12 +72,12 @@
 
 #lovely-space input:focus {
     outline: none !important;
-    border:1px solid var(--main-color-lovely);
+    border: 1px solid var(--main-color-lovely);
     box-shadow: 0 0 20px var(--main-color-lovely);
 }
 
 #lovely-space label {
-    font-size: 24px;
+    font-size: 40px;
     margin-bottom: 0.5em;
     -webkit-transition: all 0.25s;
     transition: all 0.25s;
@@ -88,13 +85,13 @@
     width: 40%;
 }
 
-.col-30 {
+.col-35 {
     float: left;
     width: 30%;
     margin-top: 6px;
 }
 
-.col-70 {
+.col-65 {
     float: left;
     width: 70%;
     margin-top: 6px;
@@ -113,7 +110,7 @@
     padding-bottom: 5px;
 }
 
-#lovely-space #shipment input{
+#lovely-space #shipment input {
     width: 6%;
 }
 
@@ -125,22 +122,22 @@
     background-color: var(--main-color-lovely);
 }
 
-#lovely-space .jsgrid-cell{
+#lovely-space .jsgrid-cell {
     border: #d2d2d2 1px solid;
 }
 
-#lovely-space .jsgrid-header-cell{
+#lovely-space .jsgrid-header-cell {
     border: var(--main-color-lovely) 1px solid;
 }
 
 #lovely-space button.full {
     width: 100%;
-    height: 75px;
+    height: 100px;
 }
 
 #lovely-space .half {
-    width: 49.8%;
-    height: 75px;
+    width: 49.7%;
+    height: 100px;
 }
 
 #lovely-space .selection {
@@ -150,7 +147,36 @@
 #lovely-space .select2.select2-container {
     width: 49%;
 }
+
 #lovely-space .select2.select2-container .select2-selection {
-    height: 75px;
-    padding-top: 20px;
+    height: 55px;
+    padding-top: 13px;
 }
+
+#lovely-space table td {
+    height: 60px;
+    font-size: 30px;
+}
+
+#lovely-space .jsgrid-header-row th {
+    font-size: 27px;
+}
+
+#lovely-space div.full {
+    width: 100%;
+}
+
+#lovely-space div.full-with-margin {
+    width: 98%;
+    margin-left: 2%;
+}
+
+#lovely-space table th.product-name {
+    width: 60%;
+}
+
+li a.menu-chosen {
+    background-color: #7eb9be;
+}
+
+
