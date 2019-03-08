@@ -6,8 +6,6 @@ use Framework\Db\Connection;
 
 class ClientRepository
 {
-    const TABLE_NAME = 'client';
-
     public function get($clientId)
     {
         /** @var \LovelySpace\Model\Resource\Client $clientResource */

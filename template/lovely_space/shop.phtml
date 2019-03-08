@@ -1,0 +1,9 @@
+<?php
+$urlToShop = $serverUrl . $shopUrl;
+?>
+<div>
+    <button class="full" onclick="location.href = '<?= $urlToShop . '/edit' ?>'" id="back-button">Створити новий магазин</button>
+</div>
+<div>
+    <?php include 'shop/grid.phtml'; ?>
+</div>

@@ -369,7 +369,7 @@ class DataObject implements \ArrayAccess
      * @param   string $method
      * @param   array $args
      * @return  mixed
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws \Exception
      */
     public function __call($method, $args)
     {
@@ -389,8 +389,8 @@ class DataObject implements \ArrayAccess
                 $key = $this->_underscore(substr($method, 3));
                 return isset($this->_data[$key]);
         }
-        throw new \Magento\Framework\Exception\LocalizedException(
-            new \Magento\Framework\Phrase('Invalid method %1::%2', [get_class($this), $method])
+        throw new \Exception(
+            new \Exception('Invalid method %1::%2', [get_class($this), $method])
         );
     }
 

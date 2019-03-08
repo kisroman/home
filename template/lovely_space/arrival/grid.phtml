@@ -5,6 +5,9 @@ $arrivals = $arrivalRepository->getList();
 
 /** @var \LovelySpace\Model\ArrivalItemRepository $arrivalItemRepository */
 $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemRepository::class);
+
+/** @var \LovelySpace\Model\ShopRepository $shopRepository */
+$shopRepository = \ClassCreator::get(\LovelySpace\Model\ShopRepository::class);
 ?>
 
 <div id="jsGrid"></div>
@@ -14,9 +17,13 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
         <?php
         /** @var \LovelySpace\Model\Arrival $arrival */
         foreach ($arrivals as $arrival):
+        $shopName = $shopRepository->getNameById($arrival->getShopId())
+            ? $shopRepository->getNameById($arrival->getShopId())
+            : '';
         ?>
         {
             'id': '<?= $arrival->getId() ?>',
+            'Магазин': '<?= $shopName ?>',
             'Доставка': '<?= $arrival->getShipment() ?>',
             'Сума': '<?= $arrival->getTotal() . ' грн' ?>',
             'Сума разом з доставкою': '<?= $arrival->getGrandTotal() . ' грн' ?>',
@@ -40,7 +47,9 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
                 loadData: function(filter) {
 
                     return $.grep(models, function(model) {
-                        var filterDate = filter['Дата'].toUpperCase(),
+                        var filterShop = filter['Магазин'].toUpperCase(),
+                            modeShop = model['Магазин'].toUpperCase(),
+                            filterDate = filter['Дата'].toUpperCase(),
                             modelDate = model['Дата'].toUpperCase(),
                             filterGotProducts = filter['Отримані продукти'].toUpperCase(),
                             modelGotProducts = model['Отримані продукти'].toUpperCase(),
@@ -51,7 +60,8 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
                             filterSumShipment = filter['Сума разом з доставкою'] ? filter['Сума разом з доставкою'].toString() : '',
                             modelSumShipment = model['Сума разом з доставкою'] ? model['Сума разом з доставкою'].toString() : '';
 
-                        return (!filterDate || modelDate.indexOf(filterDate) > -1)
+                        return (!filterShop || modeShop.indexOf(filterShop) > -1)
+                            && (!filterDate || modelDate.indexOf(filterDate) > -1)
                             && (typeof filterShipment === 'undefined' || modelShipment.indexOf(filterShipment) > -1)
                             && (!filterGotProducts || modelGotProducts.indexOf(filterGotProducts) > -1)
                             && (typeof filterSum === 'undefined' || modelSum.indexOf(filterSum) > -1)
@@ -68,6 +78,7 @@ $arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemReposi
 
             fields: [
                 {name: 'id', type: 'number', visible: false},
+                { name: 'Магазин', type: 'text', width: 70 },
                 { name: 'Доставка', type: 'number', width: 40 },
                 { name: 'Сума', type: 'number', width: 35 },
                 { name: 'Сума разом з доставкою', type: 'number', width: 40 },

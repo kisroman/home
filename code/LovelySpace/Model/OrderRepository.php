@@ -52,6 +52,10 @@ class OrderRepository
         $orderArray['total'] = $total;
         $orderArray['client_id'] = isset($data['client_id']) ? $data['client_id'] : null;;
 
+        if (!$orderArray['id']) {
+            $orderArray['date'] = date('Y-m-d');
+        }
+
         /** @var Order $order */
         $order = ClassCreator::get(Order::class, $orderArray);
         $id = $order->save();

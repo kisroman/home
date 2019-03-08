@@ -264,8 +264,8 @@ form div.full-with-margin {
     padding-top: 20px;
 }
 
-input:disabled {
-
+input:disabled
+{
     border: 1px solid #666;
     padding: 5px;
 }
@@ -279,4 +279,9 @@ input:disabled {
     color: #e02b27;
     font-size: 3.2rem;
     margin: 0 0 0 5px;
+}
+
+form div#shop {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }

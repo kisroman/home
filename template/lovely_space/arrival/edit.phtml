@@ -3,6 +3,10 @@
 $productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
 $products = $productRepository->getList();
 
+/** @var \LovelySpace\Model\ShopRepository $shopRepository */
+$shopRepository = \ClassCreator::get(\LovelySpace\Model\ShopRepository::class);
+$shops = $shopRepository->getList();
+
 /** @var \LovelySpace\Model\ArrivalRepository $arrivalRepository */
 $arrivalRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalRepository::class);
 
@@ -77,6 +81,17 @@ $lastCosts = [];
         <input type="number" id="shipment_cost" name="shipment_cost" value="<?= $arrival->getShipment(); ?>"
                required>
         <input type="number" id="id" name="id" value="<?= $arrival->getId(); ?>" style="display: none">
+    </div>
+    <div id="shop">
+        <label class="required" for="shop"><span>Магазин:<span></label>
+        <select class="select2" id="shop" name="shop">
+            <?php
+            /** @var \LovelySpace\Model\Shop $shop */
+            foreach ($shops as $shop): ?>
+                <?php $selected = $shop->getId() == $arrival->getShopId() ? 'selected' : '' ?>
+                <option <?= $selected; ?> value="<?= $shop->getId(); ?>"><?= $shop->getName(); ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
 </form>
 <div>

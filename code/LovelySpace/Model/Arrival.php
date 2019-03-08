@@ -8,6 +8,7 @@ namespace LovelySpace\Model;
  * @method int getGrandTotal()
  * @method string getDate()
  * @method int getShipment()
+ * @method int getShopId()
  */
 class Arrival extends AbstractModel
 {

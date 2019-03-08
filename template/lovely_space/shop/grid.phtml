@@ -1,0 +1,53 @@
+<?php
+/** @var \LovelySpace\Model\ShopRepository $shopRepository */
+$shopRepository = \ClassCreator::get(\LovelySpace\Model\ShopRepository::class);
+$shops = $shopRepository->getList();
+?>
+
+<div id="jsGrid"></div>
+
+<script>
+    var models = [
+        <?php
+        /** @var \LovelySpace\Model\Shop $model */
+        foreach ($shops as $model): ?>
+        {
+            'id': '<?= $model->getId()?>',
+            'Ім\'я': '<?= $model->getName()?>'
+        },
+        <?php endforeach; ?>
+    ], url = '<?= $urlToShop?>';
+
+    $(function() {
+        $('#jsGrid').jsGrid({
+            height: '120%',
+            width: '100%',
+
+            filtering: true,
+            editing: false,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            controller: {
+                loadData: function(filter) {
+                    return $.grep(models, function(model) {
+                        var filterName = filter['Ім\'я'].toUpperCase(),
+                            modelName = model['Ім\'я'].toUpperCase();
+
+                        return (!filterName || modelName.indexOf(filterName) > -1)
+                    })}
+            },
+            rowClick: function(args) {
+                var id = args.item.id;
+                location.href = url + '/edit?id=' + id;
+            },
+            pageSize: 30,
+            data: models,
+
+            fields: [
+                { name: 'id', type: 'number', visible: false},
+                { name: 'Ім\'я', type: 'text', width: 150 }
+            ]
+        });
+    });
+</script>

@@ -48,7 +48,10 @@ class ArrivalRepository
         }
         $arrivalArray['id'] = isset($data['id']) ? $data['id'] : null;
         $arrivalArray['shipment'] = $data['shipment_cost'];
-        $arrivalArray['date'] = date('Y-m-d');
+        $arrivalArray['shop_id'] = $data['shop'];
+        if (!$arrivalArray['id']) {
+            $arrivalArray['date'] = date('Y-m-d');
+        }
         $arrivalArray['total'] = $total;
         $arrivalArray['grand_total'] = $total + $data['shipment_cost'];
 
