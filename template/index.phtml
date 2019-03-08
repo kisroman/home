@@ -1,13 +1,18 @@
 <?php
 session_start();
 $serverUrl = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
-$requestUrl = str_replace(stristr($_SERVER["REQUEST_URI"], '?'), '', $_SERVER["REQUEST_URI"]);
+$requestUrl = str_replace(stristr($_SERVER['REQUEST_URI'], '?'), '', $_SERVER['REQUEST_URI']);
+$isLovelySpace = strpos($_SERVER['REQUEST_URI'], 'lovely_space') !== false || $_SERVER['REQUEST_URI'] == '/';
 
-if(empty($_SESSION["authenticated"]) || $_SESSION["authenticated"] !== 'true') {
+if(empty($_SESSION['authenticated']) || $_SESSION['authenticated'] !== 'true') {
     include 'login.phtml';
 } else {
     include 'require_once.phtml';
-    include 'header.phtml';
+    if ($isLovelySpace) {
+        include 'header_lovely.phtml';
+    } else {
+        include 'header.phtml';
+    }
     include 'main.phtml';
     include 'footer.phtml';
 }

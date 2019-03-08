@@ -27,7 +27,7 @@ $stocksByProductId = $productStockManager->getProductStocksByProductId();
 $qty =  isset($stocksByProductId[$product->getId()]['qty']) ? $stocksByProductId[$product->getId()]['qty'] : 0;
 ?>
 <div class="edit-product-form">
-    <div class="title"><span class="title">Сторінка редагування продукту</span></div>
+    <div class="title"><span class="title">Продукти</span></div>
     <form action="" method="post" id="edit">
         <div style="display: none">
             <label for="id">ID:</label>
@@ -55,7 +55,7 @@ $qty =  isset($stocksByProductId[$product->getId()]['qty']) ? $stocksByProductId
                     <label class="required" for="cost">Остання собівартість:</label>
                 </div>
                 <div class="full-with-margin">
-                    <input type="number" id="cost" name="cost" value="<?= $lastCost; ?>" disabled>
+                    <input type="number" id="cost" name="cost" value="<?= $lastCost; ?>" disabled="disabled">
                 </div>
             </div>
             <div>
@@ -63,7 +63,7 @@ $qty =  isset($stocksByProductId[$product->getId()]['qty']) ? $stocksByProductId
                     <label class="required" for="qty">Наявна кількість:</label>
                 </div>
                 <div class="full-with-margin">
-                    <input type="number" id="qty" name="qty" value="<?= $qty; ?>" disabled>
+                    <input type="number" id="qty" name="qty" value="<?= $qty; ?>" disabled="disabled">
                 </div>
             </div>
         <?php endif; ?>

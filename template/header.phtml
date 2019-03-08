@@ -35,7 +35,7 @@ if (!(strpos($requestUrl, 'lovely') !== false || $requestUrl === '/')) {
             ],
             [
                 'url' => $serverUrl . $arrivalUrl,
-                'label' => 'Прибуття',
+                'label' => 'Надходження',
             ],
             [
                 'url' => $serverUrl . $orderUrl,
@@ -46,21 +46,24 @@ if (!(strpos($requestUrl, 'lovely') !== false || $requestUrl === '/')) {
                 'label' => 'Клієнти',
             ],
         ];
+    if ($requestUrl === '/') {
+    //    $menuPoints[0]['class'] ==
+    }
+}
 
-    foreach ($menuPoints as $key => $value) {
-        if (strpos($value['url'], $requestUrl) !== false) {
-            $menuPoints[$key]['class'] = 'menu-chosen';
-        } else {
-            $menuPoints[$key]['class'] = '';
-        }
+foreach ($menuPoints as $key => $value) {
+    if ((strpos($value['url'], $requestUrl) !== false && $requestUrl !== '/')
+        || ($requestUrl === '/' && $value['label'] === 'Продукти')
+    ) {
+        $menuPoints[$key]['class'] = 'menu-chosen';
+    } else {
+        $menuPoints[$key]['class'] = '';
     }
 }
 ?>
 <head>
-
     <link href="<?php echo $serverUrl; ?>/css/select2.min.css" rel="stylesheet" />
     <link href="<?php echo $serverUrl; ?>/css/styles.css" rel="stylesheet">
-    <link href="<?php echo $serverUrl; ?>/css/lovely.css" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

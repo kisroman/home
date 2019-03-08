@@ -4,7 +4,6 @@
         <?php
 
         if ($_SERVER['REQUEST_URI'] != '/') {
-            $isLovelySpace = strpos($_SERVER['REQUEST_URI'], 'lovely_space') !== false;
             if ($isLovelySpace) {
                 echo '<div id="lovely-space">';
                 include 'template' . $requestUrl . '.phtml';

@@ -32,24 +32,24 @@ $orderItemResource = \ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::c
 $clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
 $clients = $clientRepository->getList()
 ?>
-<div class="title"><span class="title">Сторінка редагування замовлення</span></div>
+<div class="title"><span class="title">Замовлення клієнтів</span></div>
 
 <div id="add-product-to-order">
-    <div>
-        <div class="full">
-            <label for="products"><span>Оберіть продукт<span></label>
+    <div id="add-product" class="full">
+        <label for="products"><span>Оберіть продукт<span></label>
         <select class="select2" id="products" name="products">
             <?php
             /** @var \LovelySpace\Model\Product $product */
             foreach ($products as $product): ?>
-                <option price="<?= $product->getPrice(); ?>" value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
+                <option price="<?= $product->getPrice(); ?>"
+                        value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
             <?php endforeach; ?>
         </select>
-        </div>
-        <div class="full">
-        <button id="add-product-button" class="near-select full">Додати</button>
-        </div>
     </div>
+    <div class="full">
+        <button id="add-product-button" class="near-select full">Додати</button>
+    </div>
+
 </div>
 
 <form action="" method="post" id="edit">
@@ -78,7 +78,7 @@ $clients = $clientRepository->getList()
     <div>
         <input type="number" id="id" name="id" value="<?= $order->getId(); ?>" style="display: none">
     </div>
-    <div>
+    <div id="choose-client">
         <label for="client_id"><span>Оберіть клієнта<span></label>
         <select class="select2" id="client_id" name="client_id">
         <?php
