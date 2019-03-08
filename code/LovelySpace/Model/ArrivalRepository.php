@@ -11,7 +11,7 @@ class ArrivalRepository
         /** @var \LovelySpace\Model\Resource\Arrival $arrivalResource */
         $arrivalResource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival::class);
 
-        $arrivalArray = $arrivalResource->getArrival($arrivalId);
+        $arrivalArray = $arrivalResource->getModel($arrivalId);
         $arrival = ClassCreator::get(Arrival::class, $arrivalArray);
 
         return $arrival;
@@ -21,9 +21,9 @@ class ArrivalRepository
     {
         /** @var \LovelySpace\Model\Resource\Arrival $arrivalResource */
         $arrivalResource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival::class);
-        $arrivals = [];
-        $arrivalsArray = $arrivalResource->getArrivalsArray();
+        $arrivalsArray = $arrivalResource->getModelsArray();
 
+        $arrivals = [];
         foreach ($arrivalsArray as $arrivalArray) {
             $arrivals[] = ClassCreator::get(Arrival::class, $arrivalArray);
         }

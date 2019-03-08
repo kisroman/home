@@ -22,7 +22,7 @@ class OrderItemRepository
         /** @var \LovelySpace\Model\Resource\OrderItem $orderItemResource */
         $orderItemResource = ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class);
         $orders = [];
-        $ordersItemsArray = $orderItemResource->getOrdersItemsArray();
+        $ordersItemsArray = $orderItemResource->getModelsArray();
 
         foreach ($ordersItemsArray as $orderItemArray) {
             $orders[] = ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class, $orderItemArray);
@@ -36,7 +36,7 @@ class OrderItemRepository
         /** @var \LovelySpace\Model\Resource\OrderItem $orderItemResource */
         $orderItemResource = ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class);
         $ordersItems = [];
-        $ordersItemsArray = $orderItemResource->getOrdersItemsArray($orderId);
+        $ordersItemsArray = $orderItemResource->getModelsArray($orderId);
 
         foreach ($ordersItemsArray as $orderItemArray) {
             $ordersItems[] = ClassCreator::get(\LovelySpace\Model\OrderItem::class, $orderItemArray);

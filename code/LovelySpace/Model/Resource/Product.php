@@ -7,5 +7,5 @@ use Framework\Db\Connection;
 
 class Product extends AbstractModel
 {
-    const TABLE_NAME = 'product';
+    const TABLE_NAME = '`product`';
 }

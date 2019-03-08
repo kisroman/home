@@ -21,9 +21,9 @@ class OrderRepository
     {
         /** @var \LovelySpace\Model\Resource\Order $orderResource */
         $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order::class);
-        $orders = [];
-        $ordersArray = $orderResource->getOrdersArray();
+        $ordersArray = $orderResource->getModelsArray();
 
+        $orders = [];
         foreach ($ordersArray as $orderArray) {
             $orders[] = ClassCreator::get(Order::class, $orderArray);
         }

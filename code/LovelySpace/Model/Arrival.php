@@ -2,75 +2,19 @@
 
 namespace LovelySpace\Model;
 
-use ClassCreator;
-
-class Arrival
+/**
+ * @method int getId()
+ * @method int getTotal()
+ * @method int getGrandTotal()
+ * @method string getDate()
+ * @method int getShipment()
+ */
+class Arrival extends AbstractModel
 {
-    /**
-     * @var int
-     */
-    private $id;
-
-    /**
-     * @var int
-     */
-    private $total;
-
-    /**
-     * @var int
-     */
-    private $grandTotal;
-    
-    /**
-     * @var string
-     */
-    private $date;
-
-    /**
-     * @var int
-     */
-    private $shipment;
-
-    public function __construct($data)
+    public function __construct(array $data = [])
     {
-        $this->id = isset($data['id']) ? $data['id'] : null;
-        $this->total = isset($data['total']) ? $data['total'] : null;
-        $this->grandTotal = isset($data['grand_total']) ? $data['grand_total'] : null;
-        $this->date = isset($data['date']) ? $data['date'] : null;
-        $this->shipment = isset($data['shipment']) ? $data['shipment'] : null;
-    }
+        parent::__construct($data);
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getTotal()
-    {
-        return $this->total;
-    }
-
-    public function getGrandTotal()
-    {
-        return $this->grandTotal;
-    }
-
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    public function getShipment()
-    {
-        return $this->shipment;
-    }
-
-    public function save()
-    {
-        /** @var \LovelySpace\Model\Resource\Arrival $resource */
-        $resource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival::class);
-        $id = $resource->save($this);
-
-        return $id;
+        $this->initResource(\LovelySpace\Model\Resource\Arrival::class);
     }
 }
