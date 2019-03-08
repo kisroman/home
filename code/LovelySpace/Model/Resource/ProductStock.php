@@ -34,27 +34,4 @@ class ProductStock
 
         return $qtyByProductsId;
     }
-
-    public function save($model)
-    {
-        /** @var Connection $connection */
-        $connection = ClassCreator::get(Connection::class);
-
-        if ($model->getId()) {
-            $result= $connection->update(
-                self::TABLE_NAME,
-                'product_id = "' . $model->getProductId()
-                . '", qty = "' . $model->getQty()
-                . '", total = "' . $model->getTotal() . '"',
-                'id = "' . $model->getId() . '"'
-            );
-        } else {
-            $result = $connection->insert(
-                self::TABLE_NAME,
-                'null, "' . $model->getProductId() . '", "' . $model->getQty() . '", "' . $model->getTotal() . '"',
-                'id, product_id, qty, total'
-            );
-        }
-        return $result;
-    }
 }

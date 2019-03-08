@@ -10,21 +10,19 @@ class ClientRepository
 
     public function get($clientId)
     {
-        /** @var Connection $connection */
-        $connection = ClassCreator::get(Connection::class);
-        $clientSql = $connection->select(self::TABLE_NAME, '*', 'id=' . $clientId);
-        $client = ClassCreator::get(Client::class, $clientSql ? $clientSql->fetch_assoc() : []);
+        /** @var \LovelySpace\Model\Resource\Client $clientResource */
+        $clientResource = ClassCreator::get(\LovelySpace\Model\Resource\Client::class);
+        $product = ClassCreator::get(Client::class, $clientResource->getModel($clientId));
 
-        return $client;
+        return $product;
     }
 
     public function getList()
     {
-        /** @var Connection $connection */
-        $connection = ClassCreator::get(Connection::class);
         $clients = [];
-        $productSql = $connection->select(self::TABLE_NAME);
-        $clientsArray = $productSql ? $productSql->fetch_all(MYSQLI_ASSOC) : [];
+        /** @var \LovelySpace\Model\Resource\Client $clientResource */
+        $clientResource = ClassCreator::get(\LovelySpace\Model\Resource\Client::class);
+        $clientsArray = $clientResource->getModelsArray();
 
         usort($clientsArray, function ($a, $b) {
             return strcmp($a['name'], $b['name']);

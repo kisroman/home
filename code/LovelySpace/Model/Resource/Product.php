@@ -5,7 +5,7 @@ namespace LovelySpace\Model\Resource;
 use ClassCreator;
 use Framework\Db\Connection;
 
-class Client extends AbstractModel
+class Product extends AbstractModel
 {
-    const TABLE_NAME = 'client';
+    const TABLE_NAME = 'product';
 }

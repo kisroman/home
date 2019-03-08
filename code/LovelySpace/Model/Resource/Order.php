@@ -36,7 +36,7 @@ class Order
     {
         /** @var Connection $connection */
         $connection = ClassCreator::get(Connection::class);
-        $orderSql = $connection->select(self::TABLE_NAME);
+        $orderSql = $connection->select(self::TABLE_NAME, '*', '', '', '`date` DESC');
         $ordersArray = $orderSql ? $orderSql->fetch_all(MYSQLI_ASSOC) : [];
 
         return $ordersArray;

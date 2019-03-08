@@ -2,42 +2,20 @@
 
 namespace LovelySpace\Model;
 
-class Product
+/**
+ * @method int getId()
+ * @method string getName()
+ * @method int getPrice()
+ */
+class Product extends AbstractModel
 {
     /**
-     * @var string
+     * @param array $data
      */
-    private $name;
-
-    /**
-     * @var int
-     */
-    private $price;
-
-    /**
-     * @var int
-     */
-    private $id;
-
-    public function __construct($productData)
+    public function __construct(array $data = [])
     {
-        $this->id = isset($productData['id']) ? $productData['id'] : null;
-        $this->name = isset($productData['name']) ? $productData['name'] : null;
-        $this->price = isset($productData['price']) ? $productData['price'] : null;
-    }
+        parent::__construct($data);
 
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function getPrice()
-    {
-        return $this->price;
+        $this->initResource(\LovelySpace\Model\Resource\Product::class);
     }
 }

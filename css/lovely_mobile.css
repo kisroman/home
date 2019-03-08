@@ -272,5 +272,11 @@ input:disabled {
 
 #lovely-space div div form#edit {
     margin-top: 60px;
+}
 
+.required:after {
+    content: '*';
+    color: #e02b27;
+    font-size: 3.2rem;
+    margin: 0 0 0 5px;
 }

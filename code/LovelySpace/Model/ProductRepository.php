@@ -6,25 +6,21 @@ use Framework\Db\Connection;
 
 class ProductRepository
 {
-    const TABLE_NAME = 'product';
-
     public function get($productId)
     {
-        /** @var Connection $connection */
-        $connection = ClassCreator::get(Connection::class);
-        $productSql = $connection->select(self::TABLE_NAME, '*', 'id=' . $productId);
-        $product = ClassCreator::get(Product::class, $productSql ? $productSql->fetch_assoc() : []);
+        /** @var \LovelySpace\Model\Resource\Product $productResource */
+        $productResource = ClassCreator::get(\LovelySpace\Model\Resource\Product::class);
+        $product = ClassCreator::get(Product::class, $productResource->getModel($productId));
 
         return $product;
     }
 
     public function getList()
     {
-        /** @var Connection $connection */
-        $connection = ClassCreator::get(Connection::class);
         $products = [];
-        $productSql = $connection->select(self::TABLE_NAME);
-        $productsArray = $productSql ? $productSql->fetch_all(MYSQLI_ASSOC) : [];
+        /** @var \LovelySpace\Model\Resource\Product $productResource */
+        $productResource = ClassCreator::get(\LovelySpace\Model\Resource\Product::class);
+        $productsArray = $productResource->getModelsArray();
 
         usort($productsArray, function ($a, $b) {
             return strcmp($a['name'], $b['name']);
@@ -39,21 +35,8 @@ class ProductRepository
 
     public function save($data)
     {
-        /** @var Connection $connection */
-        $connection = ClassCreator::get(Connection::class);
-
-        if (isset($data['id']) && $data['id']) {
-            $connection->update(
-                self::TABLE_NAME,
-                'name = "' . $data['name'] . '", price = ' . $data['price'],
-                'id = "' . $data['id'] . '"'
-            );
-        } else {
-            $connection->insert(
-                self::TABLE_NAME,
-                'null, "' . $data['name'] . '", "' . $data['price'] . '"',
-                'id, name, price'
-            );
-        }
+        /** @var Product $product */
+        $product = ClassCreator::get(Product::class, $data);
+        $product->save();
     }
 }
