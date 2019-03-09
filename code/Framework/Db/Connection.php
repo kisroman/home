@@ -52,12 +52,12 @@ class Connection
         $username = "sweet-home";
         $password = "3uuENVU3nrm6pAg";
         $db = "sweet-home";
-//        $username = "root";
-//        $password = "root";
+        $username = "root";
+        $password = "root";
 //        $db = 'home';
 //        $db = 'home_test';
 //        $db = 'lovely_space';
-        //$db = 'lovely_test';
+        $db = 'lovely_test';
 
         $this->connection = mysqli_connect($serverName, $username, $password, $db);
 
@@ -70,12 +70,16 @@ class Connection
         $this->connection->query("set names utf8mb4");
     }
 
-    public function select($table, $fields = '*', $whereCondition = '', $groupByField = '')
+    public function select($table, $fields = '*', $whereCondition = '', $groupByField = '', $orderBy = '')
     {
         $query = 'SELECT ' . $fields . ' FROM ' . $table;
 
         if ($whereCondition !== '') {
             $query .= ' WHERE ' . $whereCondition;
+        }
+
+        if ($orderBy !== '') {
+            $query .= ' ORDER BY ' . $orderBy;
         }
 
         if ($groupByField !== '') {
@@ -147,6 +151,7 @@ class Connection
             $columnQuery .= ', ';
             $query .= $columnQuery;
         }
+
         $query = substr($query, 0, -2);
         $query .= ')';
         $this->connection->query($query);
@@ -167,6 +172,19 @@ class Connection
         if ($comment !== null) {
             $this->columns[$name]['comment'] = $comment;
         }
+
+        return $this;
+    }
+
+    public function addColumnForExistingTable($table, $name, $type, $size = null, $options = [], $comment = null)
+    {
+        $query = 'ALTER TABLE ' . $table . ' ADD COLUMN ' . $name . ' ' . $type;
+
+        if ($size !== null) {
+            $query .= '(' . $size . ')';
+        }
+
+        $this->connection->query($query);
 
         return $this;
     }
