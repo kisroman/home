@@ -3,9 +3,9 @@
 $productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
 $products = $productRepository->getList();
 
-/** @var \LovelySpace\Model\ProductStockManager $productStockManager */
-$productStockManager = \ClassCreator::get(\LovelySpace\Model\ProductStockManager::class);
-$stocksByProductId = $productStockManager->getProductStocksByProductId();
+/** @var \LovelySpace\Model\ProductStockRepository $productStockRepository */
+$productStockRepository = \ClassCreator::get(\LovelySpace\Model\ProductStockRepository::class);
+$productStocks = $productStockRepository->getList();
 ?>
 <div id="jsGrid"></div>
 
@@ -18,7 +18,7 @@ $stocksByProductId = $productStockManager->getProductStocksByProductId();
             'id': '<?= $product->getId()?>',
             'Ім\'я продукта': '<?= $product->getName()?>',
             'Ціна': <?= $product->getPrice()?>,
-            'В наявності': <?= isset($stocksByProductId[$product->getId()]['qty']) ? $stocksByProductId[$product->getId()]['qty'] : 0 ?>
+            'В наявності': <?= isset($productStocks[$product->getId()]) ? $productStocks[$product->getId()]->getQty() : 0 ?>
         },
         <?php endforeach; ?>
     ], productUrl = '<?= $productUrl?>';

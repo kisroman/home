@@ -21,10 +21,10 @@ $product = $productRepository->get($productId);
 $arrivalItem = \ClassCreator::get(\LovelySpace\Model\Resource\ArrivalItem::class);
 $lastCost = $arrivalItem->getLastCostForProductByProductId($productId);
 
-/** @var \LovelySpace\Model\ProductStockManager $productStockManager */
-$productStockManager = \ClassCreator::get(\LovelySpace\Model\ProductStockManager::class);
-$stocksByProductId = $productStockManager->getProductStocksByProductId();
-$qty =  isset($stocksByProductId[$product->getId()]['qty']) ? $stocksByProductId[$product->getId()]['qty'] : 0;
+/** @var \LovelySpace\Model\ProductStockRepository $productStockRepository */
+$productStockRepository = \ClassCreator::get(\LovelySpace\Model\ProductStockRepository::class);
+$productStocks = $productStockRepository->getList();
+$qty = isset($productStocks[$product->getId()]) ? $productStocks[$product->getId()]->getQty() : 0;
 ?>
 <div class="edit-product-form">
     <div class="title"><span class="title">Продукт</span></div>

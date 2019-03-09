@@ -13,7 +13,10 @@ class ProductStockRepository
 
         $productsStocks = [];
         foreach ($productStocksArray as $productStockArray) {
-            $productsStocks[] = ClassCreator::get(ProductStock::class, $productStockArray);
+            $productsStocks[$productStockArray['product_id']] = ClassCreator::get(
+                ProductStock::class,
+                $productStockArray
+            );
         }
 
         return $productsStocks;
