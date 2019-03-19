@@ -7,6 +7,11 @@ $orders = $orderRepository->getList();
 $orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository::class);
 /** @var \LovelySpace\Model\ClientRepository $clientRepository */
 $clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+
+
+/** @var \LovelySpace\Model\EarningsRepository $earningsRepository */
+$earningsRepository = \ClassCreator::get(\LovelySpace\Model\EarningsRepository::class);
+$reportOrderItems = $earningsRepository->getList();
 ?>
 
 <div id="jsGrid"></div>
@@ -14,17 +19,19 @@ $clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::clas
 <script>
     var models = [
         <?php
+
         /** @var \LovelySpace\Model\Order $order */
         foreach ($orders as $order):
         /** @var \LovelySpace\Model\Client $client */
         $client = $clientRepository->get($order->getClientId());
+        list($productNames, $earns) = $orderItemRepository->getProductNamesByOrderId($order->getId(), $reportOrderItems);
         ?>
         {
             'id': '<?= $order->getId() ?>',
             'Ім\'я клієнта': '<?= $client->getName() ?>',
             'Сума': '<?= $order->getTotal() . ' грн' ?>',
             'Дата': '<?= $order->getDate() ?>',
-            'Продані продукти': '<?= $orderItemRepository->getProductNamesByOrderId($order->getId()) ?>'
+            'Продані продукти': '<?= $productNames ?>'
         },
         <?php endforeach; ?>
     ], url = '<?= $orderUrl?>';

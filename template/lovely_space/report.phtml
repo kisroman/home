@@ -1,0 +1,127 @@
+<?php
+
+if (isset($_POST['from_date'])) {
+    $_SESSION['from_date'] = $_POST['from_date'];
+}
+if (isset($_POST['to_date'])) {
+    $_SESSION['to_date'] = $_POST['to_date'];
+}
+if (isset($_POST['client_id'])) {
+    $_SESSION['client_id'] = $_POST['client_id'];
+}
+
+if (!empty($_POST)) {
+    header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+}
+
+$fromDate = isset($_SESSION['from_date']) ? $_SESSION['from_date'] : '';
+$toDate = isset($_SESSION['to_date']) ? $_SESSION['to_date'] : '';
+$clientId = isset($_SESSION['client_id']) ? $_SESSION['client_id'] : '';
+
+/** @var \LovelySpace\Model\OrderRepository $orderRepository */
+$orderRepository = \ClassCreator::get(\LovelySpace\Model\OrderRepository::class);
+$orders = $orderRepository->getListWithInDate($fromDate, $toDate);
+
+/** @var \LovelySpace\Model\OrderItemRepository $orderItemRepository */
+$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository::class);
+/** @var \LovelySpace\Model\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+
+/** @var \LovelySpace\Model\EarningsRepository $earningsRepository */
+$earningsRepository = \ClassCreator::get(\LovelySpace\Model\EarningsRepository::class);
+$reportOrderItems = $earningsRepository->getList();
+
+/** @var \LovelySpace\Model\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+$clients = $clientRepository->getList()
+?>
+
+<form class="filter" action="" method="post">
+    <div class="full-with-margin">
+        <label for="from_date"><span>Дата з:<span></label>
+    </div>
+    <div class="full-with-margin">
+        <input type="text" class="datepicker" id="from_date" name="from_date" value="<?= $fromDate ?>">
+    </div>
+
+    <div class="full-with-margin">
+        <label for="to_date"><span>Дата по:<span></label>
+    </div>
+    <div class="full-with-margin">
+        <input type="text" class="datepicker" id="to_date" name="to_date" value="<?= $toDate ?>">
+    </div>
+
+    <div id="choose-client">
+        <label for="client_id"><span>Оберіть клієнта<span></label>
+        <select class="select2" id="client_id" name="client_id">
+            <option value=""></option>
+            <?php
+            /** @var \LovelySpace\Model\Client $client */
+            foreach ($clients as $client):
+                $selected = $client->getId() == $clientId ? 'selected' : '' ?>
+                <option <?= $selected ?> value="<?= $client->getId(); ?>"><?= $client->getName(); ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="full">
+        <button type="submit" class="full" id="make-filter">Фільтрувати</button>
+    </div>
+</form>
+<table class="full-part">
+    <thead>
+    <tr>
+        <th>Ім'я клієнта</th>
+        <th>Дата</th>
+        <th>Продані продукти</th>
+    </tr>
+    </thead>
+    <?php
+    /** @var \LovelySpace\Model\ClientRepository $clientRepository */
+    $clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+    $earnings = 0;
+    $shippings = 0;
+    /** @var \LovelySpace\Model\Order $order */
+    foreach ($orders as $order) {
+        if ($clientId && $order->getClientId() != $clientId) {
+            continue;
+        }
+        /** @var \LovelySpace\Model\Client $client */
+        $client = $clientRepository->get($order->getClientId());
+        list($productNames, $earning) = $orderItemRepository->getProductNamesByOrderId($order->getId(), $reportOrderItems);
+        $earnings += $earning;
+        echo '<tr class="clickable-row" data-href="'. $orderUrl . '/edit?id=' . $order->getId() . '">';
+        echo '<td style="display: none">';
+        echo $order->getId();
+        echo '</td>';
+        echo '<td>';
+        echo $client->getName();
+        echo '</td>';
+        echo '<td>';
+        echo $order->getDate();
+        echo '</td>';
+        echo '<td>';
+        echo $productNames;
+        echo '</br>';
+        echo '<b>Загальний заробіток: ' . $earning . '</b>';
+        echo '</td>';
+        echo '</tr>';
+    }
+
+    echo '<tr>';
+    echo '<td>';
+    echo '</td>';
+    echo '<td>';
+    echo '</td>';
+    echo '<td>';
+    echo $earnings . ' грн';
+    echo '</td>';
+    echo '</tr>';
+    ?>
+</table>
+
+<script>
+    $(function () {
+        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
+    });
+</script>

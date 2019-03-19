@@ -25,7 +25,7 @@ class ArrivalRepository
 
         $arrivals = [];
         foreach ($arrivalsArray as $arrivalArray) {
-            $arrivals[] = ClassCreator::get(Arrival::class, $arrivalArray);
+            $arrivals[$arrivalArray['id']] = ClassCreator::get(Arrival::class, $arrivalArray);
         }
 
         return $arrivals;

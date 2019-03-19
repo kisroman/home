@@ -5,6 +5,7 @@ $arrivalUrl = '/lovely_space/arrival';
 $orderUrl = '/lovely_space/order';
 $clientUrl = '/lovely_space/client';
 $shopUrl = '/lovely_space/shop';
+$reportUrl = '/lovely_space/report';
 
 $menuPoints =
     [
@@ -28,6 +29,10 @@ $menuPoints =
             'url' => $serverUrl . $shopUrl,
             'label' => 'Магазини',
         ],
+        [
+            'url' => $serverUrl . $reportUrl,
+            'label' => 'Статистика',
+        ],
     ];
 
 
@@ -42,6 +47,9 @@ foreach ($menuPoints as $key => $value) {
 }
 ?>
 <head>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <link href="<?php echo $serverUrl; ?>/css/select2.min.css" rel="stylesheet" />
     <?php if (preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"])) :?>
@@ -50,9 +58,6 @@ foreach ($menuPoints as $key => $value) {
         <link href="<?php echo $serverUrl; ?>/css/styles.css" rel="stylesheet">
         <link href="<?php echo $serverUrl; ?>/css/lovely.css" rel="stylesheet">
     <?php endif; ?>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="<?php echo $serverUrl; ?>/js/lib/select2.js"></script>
 
     <link type="text/css" rel="stylesheet" href="<?php echo $serverUrl; ?>/css/jsgrid.css" />

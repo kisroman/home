@@ -25,7 +25,7 @@ class OrderItemRepository
         $ordersItemsArray = $orderItemResource->getModelsArray();
 
         foreach ($ordersItemsArray as $orderItemArray) {
-            $orders[] = ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class, $orderItemArray);
+            $orders[] = ClassCreator::get(\LovelySpace\Model\OrderItem::class, $orderItemArray);
         }
 
         return $orders;
@@ -45,17 +45,20 @@ class OrderItemRepository
         return $ordersItems;
     }
 
-    public function getProductNamesByOrderId($orderId)
+    public function getProductNamesByOrderId($orderId, $reportOrderItems)
     {
         $ordersItems = $this->getListByOrderId($orderId);
         $productNames = '';
+        $earns = 0;
 
         /** @var OrderItem $orderItem */
         foreach ($ordersItems as $orderItem) {
-            $productNames .= $orderItem->getProductName() . '</br>';
+            $earn = isset($reportOrderItems[$orderItem->getId()]) ? $reportOrderItems[$orderItem->getId()] : 0 ;
+            $productNames .= $orderItem->getProductName() . '(' . $earn . 'грн)</br>';
+            $earns += $earn;
         }
-        $productNames = substr($productNames, 0, -2);
+        $productNames = substr($productNames, 0, -5);
 
-        return $productNames;
+        return [$productNames, $earns];
     }
 }

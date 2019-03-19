@@ -19,6 +19,29 @@ class Order extends AbstractModel
         return $ordersArray;
     }
 
+    public function getModelsArrayWithInDate($dateFrom, $dateTo)
+    {
+        /** @var Connection $connection */
+        $connection = ClassCreator::get(Connection::class);
+        $whereCondition = '';
+
+        if ($dateFrom) {
+            $whereCondition = '`date` >= "'. $dateFrom . '"';
+            if ($dateTo) {
+                $whereCondition .= ' AND `date` <= "' . $dateTo . '"';
+            }
+        }
+
+        if (!$dateFrom && $dateTo) {
+            $whereCondition = '`date` <= "'. $dateTo . '"';
+        }
+
+        $orderSql = $connection->select(self::TABLE_NAME, '*', $whereCondition, '', '`date` DESC');
+        $ordersArray = $orderSql ? $orderSql->fetch_all(MYSQLI_ASSOC) : [];
+
+        return $ordersArray;
+    }
+
     public function getOrder($orderId)
     {
         /** @var Connection $connection */

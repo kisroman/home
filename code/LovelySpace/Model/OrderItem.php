@@ -21,4 +21,16 @@ class OrderItem extends AbstractModel
 
         $this->initResource(\LovelySpace\Model\Resource\OrderItem::class);
     }
+
+    /**
+     * @return \LovelySpace\Model\Order|null
+     */
+    public function getOrder()
+    {
+        /** @var \LovelySpace\Model\OrderRepository $orderRepository */
+        $orderRepository = \ClassCreator::get(\LovelySpace\Model\OrderRepository::class);
+        $order = $orderRepository->get($this->getOrderId());
+
+        return $order->getId() ? $order : null;
+    }
 }

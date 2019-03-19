@@ -31,6 +31,20 @@ class OrderRepository
         return $orders;
     }
 
+    public function getListWithInDate($dateFrom = null, $dateTo = null)
+    {
+        /** @var \LovelySpace\Model\Resource\Order $orderResource */
+        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order::class);
+        $ordersArray = $orderResource->getModelsArrayWithInDate($dateFrom, $dateTo);
+
+        $orders = [];
+        foreach ($ordersArray as $orderArray) {
+            $orders[] = ClassCreator::get(Order::class, $orderArray);
+        }
+
+        return $orders;
+    }
+
     public function save($data)
     {
         $itemsArray = [];

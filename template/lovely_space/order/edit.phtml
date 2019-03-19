@@ -85,7 +85,7 @@ $clients = $clientRepository->getList()
             /** @var \LovelySpace\Model\Client $client */
             foreach ($clients as $client):
                 $selected = $client->getId() == $order->getClientId() ? 'selected' : '' ?>
-                <option <?= $selected; ?> value="<?= $client->getId(); ?>"><?= $client->getName(); ?></option>
+                <option <?= $selected ?> value="<?= $client->getId(); ?>"><?= $client->getName(); ?></option>
             <?php endforeach; ?>
         </select>
     </div>

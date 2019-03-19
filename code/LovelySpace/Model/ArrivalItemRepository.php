@@ -6,6 +6,20 @@ use Framework\Db\Connection;
 
 class ArrivalItemRepository
 {
+    public function getList()
+    {
+        /** @var \LovelySpace\Model\Resource\ArrivalItem $arrivalItemResource */
+        $arrivalItemResource = ClassCreator::get(\LovelySpace\Model\Resource\ArrivalItem::class);
+        $arrivalsItems = [];
+        $arrivalsItemsArray = $arrivalItemResource->getModelsArray();
+
+        foreach ($arrivalsItemsArray as $arrivalItemArray) {
+            $arrivalsItems[] = ClassCreator::get(\LovelySpace\Model\ArrivalItem::class, $arrivalItemArray);
+        }
+
+        return $arrivalsItems;
+    }
+
     public function getListByArrivalId($arrivalId)
     {
         /** @var \LovelySpace\Model\Resource\ArrivalItem $arrivalItemResource */
