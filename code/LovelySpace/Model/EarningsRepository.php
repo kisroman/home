@@ -57,11 +57,16 @@ class EarningsRepository
                         $reportOrders[$orderItem->getId()] = $orderItem->getPrice() - $cost;
                         $qty--;
                         if ($qty == 0) {
-                            unset($reportArrivals[$orderItem->getProductId()][$date]);
+                            unset($reportArrivals[$orderItem->getProductId()][$date][$cost]);
+                            if (!$reportArrivals[$orderItem->getProductId()][$date]) {
+                                unset($reportArrivals[$orderItem->getProductId()][$date]);
+                            }
                         } else {
                             $reportArrivals[$orderItem->getProductId()][$date][$cost] = $qty;
                         }
+                        break;
                     }
+                    break;
                 }
             }
         }

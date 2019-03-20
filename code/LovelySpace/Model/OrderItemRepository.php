@@ -53,9 +53,9 @@ class OrderItemRepository
 
         /** @var OrderItem $orderItem */
         foreach ($ordersItems as $orderItem) {
-            $earn = isset($reportOrderItems[$orderItem->getId()]) ? $reportOrderItems[$orderItem->getId()] : 0 ;
+            $earn = isset($reportOrderItems[$orderItem->getId()]) ? $reportOrderItems[$orderItem->getId()] : 'Проблема ';
             $productNames .= $orderItem->getProductName() . '(' . $earn . 'грн)</br>';
-            $earns += $earn;
+            $earns += (int)$earn;
         }
         $productNames = substr($productNames, 0, -5);
 

@@ -31,7 +31,7 @@ class OrderRepository
         return $orders;
     }
 
-    public function getListWithInDate($dateFrom = null, $dateTo = null)
+    public function getListWithinDate($dateFrom = null, $dateTo = null)
     {
         /** @var \LovelySpace\Model\Resource\Order $orderResource */
         $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order::class);

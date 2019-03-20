@@ -20,7 +20,7 @@ $clientId = isset($_SESSION['client_id']) ? $_SESSION['client_id'] : '';
 
 /** @var \LovelySpace\Model\OrderRepository $orderRepository */
 $orderRepository = \ClassCreator::get(\LovelySpace\Model\OrderRepository::class);
-$orders = $orderRepository->getListWithInDate($fromDate, $toDate);
+$orders = $orderRepository->getListWithinDate($fromDate, $toDate);
 
 /** @var \LovelySpace\Model\OrderItemRepository $orderItemRepository */
 $orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository::class);
