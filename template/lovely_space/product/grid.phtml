@@ -1,10 +1,10 @@
 <?php
-/** @var \LovelySpace\Model\ProductRepository $productRepository */
-$productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
+/** @var \LovelySpace\Model\Product\ProductRepository $productRepository */
+$productRepository = \ClassCreator::get(\LovelySpace\Model\Product\ProductRepository::class);
 $products = $productRepository->getList();
 
-/** @var \LovelySpace\Model\ProductStockRepository $productStockRepository */
-$productStockRepository = \ClassCreator::get(\LovelySpace\Model\ProductStockRepository::class);
+/** @var \LovelySpace\Model\Product\ProductStockRepository $productStockRepository */
+$productStockRepository = \ClassCreator::get(\LovelySpace\Model\Product\ProductStockRepository::class);
 $productStocks = $productStockRepository->getList();
 ?>
 <div id="jsGrid"></div>
@@ -12,7 +12,7 @@ $productStocks = $productStockRepository->getList();
 <script>
     var products = [
         <?php
-        /** @var \LovelySpace\Model\Product $product */
+        /** @var \LovelySpace\Model\Product\Product $product */
         foreach ($products as $product): ?>
         {
             'id': '<?= $product->getId()?>',

@@ -1,5 +1,5 @@
 <?php
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Arrival;
 
 use ClassCreator;
 use Framework\Db\Connection;
@@ -8,8 +8,8 @@ class ArrivalRepository
 {
     public function get($arrivalId)
     {
-        /** @var \LovelySpace\Model\Resource\Arrival $arrivalResource */
-        $arrivalResource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival::class);
+        /** @var \LovelySpace\Model\Resource\Arrival\Arrival $arrivalResource */
+        $arrivalResource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival\Arrival::class);
 
         $arrivalArray = $arrivalResource->getModel($arrivalId);
         $arrival = ClassCreator::get(Arrival::class, $arrivalArray);
@@ -19,8 +19,8 @@ class ArrivalRepository
 
     public function getList()
     {
-        /** @var \LovelySpace\Model\Resource\Arrival $arrivalResource */
-        $arrivalResource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival::class);
+        /** @var \LovelySpace\Model\Resource\Arrival\Arrival $arrivalResource */
+        $arrivalResource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival\Arrival::class);
         $arrivalsArray = $arrivalResource->getModelsArray();
 
         $arrivals = [];
@@ -63,8 +63,8 @@ class ArrivalRepository
             $id = $arrival->getId();
         }
 
-        /** @var \LovelySpace\Model\Resource\ArrivalItem $arrivalItemResource */
-        $arrivalItemResource = ClassCreator::get(\LovelySpace\Model\Resource\ArrivalItem::class, $arrivalArray);
+        /** @var \LovelySpace\Model\Resource\Arrival\ArrivalItem $arrivalItemResource */
+        $arrivalItemResource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival\ArrivalItem::class, $arrivalArray);
         // delete all items for arrival to create news
         $arrivalItemResource->deleteByArrivalId($id);
 

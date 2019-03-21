@@ -1,6 +1,6 @@
 <?php
-/** @var \LovelySpace\Model\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+/** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 $clientId = null;
 
 if (!empty($_POST)) {
@@ -14,7 +14,7 @@ if (!empty($_GET)) {
     $clientId = isset($_GET['id']) ? $_GET['id'] : null;
 }
 
-/** @var \LovelySpace\Model\Client $client */
+/** @var \LovelySpace\Model\Client\Client $client */
 $client = $clientRepository->get($clientId);
 
 ?>

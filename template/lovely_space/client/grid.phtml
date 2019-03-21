@@ -1,6 +1,6 @@
 <?php
-/** @var \LovelySpace\Model\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+/** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 $clients = $clientRepository->getList();
 ?>
 
@@ -9,7 +9,7 @@ $clients = $clientRepository->getList();
 <script>
     var models = [
         <?php
-        /** @var \LovelySpace\Model\Client $model */
+        /** @var \LovelySpace\Model\Client\Client $model */
         foreach ($clients as $model): ?>
         {
             'id': '<?= $model->getId()?>',

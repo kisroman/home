@@ -1,6 +1,6 @@
 <?php
 
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Arrival;
 
 /**
  * @method int getId()
@@ -10,12 +10,12 @@ namespace LovelySpace\Model;
  * @method int getShipment()
  * @method int getShopId()
  */
-class Arrival extends AbstractModel
+class Arrival extends \LovelySpace\Model\AbstractModel
 {
     public function __construct(array $data = [])
     {
         parent::__construct($data);
 
-        $this->initResource(\LovelySpace\Model\Resource\Arrival::class);
+        $this->initResource(\LovelySpace\Model\Resource\Arrival\Arrival::class);
     }
 }

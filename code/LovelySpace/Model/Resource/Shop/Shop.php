@@ -1,9 +1,10 @@
 <?php
 
-namespace LovelySpace\Model\Resource;
+namespace LovelySpace\Model\Resource\Shop;
 
 use ClassCreator;
 use Framework\Db\Connection;
+use LovelySpace\Model\Resource\AbstractModel;
 
 class Shop extends AbstractModel
 {

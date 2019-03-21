@@ -1,5 +1,5 @@
 <?php
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Product;
 
 use ClassCreator;
 
@@ -7,8 +7,8 @@ class ProductStockRepository
 {
     public function getList()
     {
-        /** @var \LovelySpace\Model\Resource\ProductStock $productStockResource */
-        $productStockResource = ClassCreator::get(\LovelySpace\Model\Resource\ProductStock::class);
+        /** @var \LovelySpace\Model\Resource\Product\ProductStock $productStockResource */
+        $productStockResource = ClassCreator::get(\LovelySpace\Model\Resource\Product\ProductStock::class);
         $productStocksArray = $productStockResource->getModelsArray();
 
         $productsStocks = [];

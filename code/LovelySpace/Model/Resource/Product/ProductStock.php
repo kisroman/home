@@ -1,6 +1,6 @@
 <?php
 
-namespace LovelySpace\Model\Resource;
+namespace LovelySpace\Model\Resource\Product;
 
 use ClassCreator;
 use Framework\Db\Connection;

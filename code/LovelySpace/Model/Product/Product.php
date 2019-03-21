@@ -1,13 +1,13 @@
 <?php
 
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Product;
 
 /**
  * @method int getId()
  * @method string getName()
  * @method int getPrice()
  */
-class Product extends AbstractModel
+class Product extends \LovelySpace\Model\AbstractModel
 {
     /**
      * @param array $data
@@ -16,6 +16,6 @@ class Product extends AbstractModel
     {
         parent::__construct($data);
 
-        $this->initResource(\LovelySpace\Model\Resource\Product::class);
+        $this->initResource(\LovelySpace\Model\Resource\Product\Product::class);
     }
 }

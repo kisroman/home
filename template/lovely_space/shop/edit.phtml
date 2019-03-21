@@ -1,6 +1,6 @@
 <?php
-/** @var \LovelySpace\Model\ShopRepository $shopRepository */
-$shopRepository = \ClassCreator::get(\LovelySpace\Model\ShopRepository::class);
+/** @var \LovelySpace\Model\Shop\ShopRepository $shopRepository */
+$shopRepository = \ClassCreator::get(\LovelySpace\Model\Shop\ShopRepository::class);
 $shopId = null;
 
 if (!empty($_POST)) {
@@ -14,7 +14,7 @@ if (!empty($_GET)) {
     $shopId = isset($_GET['id']) ? $_GET['id'] : null;
 }
 
-/** @var \LovelySpace\Model\Shop $shop */
+/** @var \LovelySpace\Model\Shop\Shop $shop */
 $shop = $shopRepository->get($shopId);
 
 ?>

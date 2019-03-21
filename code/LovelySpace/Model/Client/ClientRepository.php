@@ -1,5 +1,5 @@
 <?php
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Client;
 
 use ClassCreator;
 use Framework\Db\Connection;
@@ -8,8 +8,8 @@ class ClientRepository
 {
     public function get($clientId)
     {
-        /** @var \LovelySpace\Model\Resource\Client $clientResource */
-        $clientResource = ClassCreator::get(\LovelySpace\Model\Resource\Client::class);
+        /** @var \LovelySpace\Model\Resource\Client\Client $clientResource */
+        $clientResource = ClassCreator::get(\LovelySpace\Model\Resource\Client\Client::class);
         $product = ClassCreator::get(Client::class, $clientResource->getModel($clientId));
 
         return $product;
@@ -18,8 +18,8 @@ class ClientRepository
     public function getList()
     {
         $clients = [];
-        /** @var \LovelySpace\Model\Resource\Client $clientResource */
-        $clientResource = ClassCreator::get(\LovelySpace\Model\Resource\Client::class);
+        /** @var \LovelySpace\Model\Resource\Client\Client $clientResource */
+        $clientResource = ClassCreator::get(\LovelySpace\Model\Resource\Client\Client::class);
         $clientsArray = $clientResource->getModelsArray();
 
         usort($clientsArray, function ($a, $b) {

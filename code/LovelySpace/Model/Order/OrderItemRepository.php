@@ -1,5 +1,5 @@
 <?php
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Order;
 
 use ClassCreator;
 use Framework\Db\Connection;
@@ -8,8 +8,8 @@ class OrderItemRepository
 {
     public function get($orderId)
     {
-        /** @var \LovelySpace\Model\Resource\Order $orderResource */
-        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order::class);
+        /** @var \LovelySpace\Model\Resource\Order\Order $orderResource */
+        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order\Order::class);
 
         $orderArray = $orderResource->getOrder($orderId);
         $order = ClassCreator::get(Order::class, $orderArray);
@@ -19,13 +19,13 @@ class OrderItemRepository
 
     public function getList()
     {
-        /** @var \LovelySpace\Model\Resource\OrderItem $orderItemResource */
-        $orderItemResource = ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class);
+        /** @var \LovelySpace\Model\Resource\Order\OrderItem $orderItemResource */
+        $orderItemResource = ClassCreator::get(\LovelySpace\Model\Resource\Order\OrderItem::class);
         $orders = [];
         $ordersItemsArray = $orderItemResource->getModelsArray();
 
         foreach ($ordersItemsArray as $orderItemArray) {
-            $orders[] = ClassCreator::get(\LovelySpace\Model\OrderItem::class, $orderItemArray);
+            $orders[] = ClassCreator::get(\LovelySpace\Model\Order\OrderItem::class, $orderItemArray);
         }
 
         return $orders;
@@ -33,13 +33,13 @@ class OrderItemRepository
 
     public function getListByOrderId($orderId)
     {
-        /** @var \LovelySpace\Model\Resource\OrderItem $orderItemResource */
-        $orderItemResource = ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class);
+        /** @var \LovelySpace\Model\Resource\Order\OrderItem $orderItemResource */
+        $orderItemResource = ClassCreator::get(\LovelySpace\Model\Resource\Order\OrderItem::class);
         $ordersItems = [];
         $ordersItemsArray = $orderItemResource->getModelsArray($orderId);
 
         foreach ($ordersItemsArray as $orderItemArray) {
-            $ordersItems[] = ClassCreator::get(\LovelySpace\Model\OrderItem::class, $orderItemArray);
+            $ordersItems[] = ClassCreator::get(\LovelySpace\Model\Order\OrderItem::class, $orderItemArray);
         }
 
         return $ordersItems;

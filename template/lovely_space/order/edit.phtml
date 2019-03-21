@@ -1,10 +1,10 @@
 <?php
-/** @var \LovelySpace\Model\ProductRepository $productRepository */
-$productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
+/** @var \LovelySpace\Model\Product\ProductRepository $productRepository */
+$productRepository = \ClassCreator::get(\LovelySpace\Model\Product\ProductRepository::class);
 $products = $productRepository->getList();
 
-/** @var \LovelySpace\Model\OrderRepository $orderRepository */
-$orderRepository = \ClassCreator::get(\LovelySpace\Model\OrderRepository::class);
+/** @var \LovelySpace\Model\Order\OrderRepository $orderRepository */
+$orderRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderRepository::class);
 
 if (!empty($_POST)) {
     $orderRepository->save($_POST);
@@ -18,18 +18,18 @@ if (!empty($_GET)) {
     $orderId = isset($_GET['id']) ? $_GET['id'] : null;
 }
 
-/** @var \LovelySpace\Model\Order $order */
+/** @var \LovelySpace\Model\Order\Order $order */
 $order = $orderRepository->get($orderId);
 
-/** @var \LovelySpace\Model\OrderItemRepository $orderItemRepository */
-$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository::class);
+/** @var \LovelySpace\Model\Order\OrderItemRepository $orderItemRepository */
+$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderItemRepository::class);
 $ordersItems = $orderItemRepository->getListByOrderId($orderId);
 
-/** @var \LovelySpace\Model\Resource\OrderItem $orderItemResource */
-$orderItemResource = \ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class);
+/** @var \LovelySpace\Model\Resource\Order\OrderItem $orderItemResource */
+$orderItemResource = \ClassCreator::get(\LovelySpace\Model\Resource\Order\OrderItem::class);
 
-/** @var \LovelySpace\Model\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+/** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 $clients = $clientRepository->getList()
 ?>
 <div class="title"><span class="title">Замовлення клієнтів</span></div>
@@ -39,7 +39,7 @@ $clients = $clientRepository->getList()
         <label for="products"><span>Оберіть продукт<span></label>
         <select class="select2" id="products" name="products">
             <?php
-            /** @var \LovelySpace\Model\Product $product */
+            /** @var \LovelySpace\Model\Product\Product $product */
             foreach ($products as $product): ?>
                 <option price="<?= $product->getPrice(); ?>"
                         value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
@@ -62,7 +62,7 @@ $clients = $clientRepository->getList()
             <th>Видалити</th>
         </tr>
             <?php
-            /** @var \LovelySpace\Model\OrderItem $ordersItem */
+            /** @var \LovelySpace\Model\Order\OrderItem $ordersItem */
             foreach ($ordersItems as $ordersItem): ?>
                 <tr>
                     <td><input type="text" id="name[<?= $ordersItem->getProductId(); ?>]" name="name[<?= $ordersItem->getProductId(); ?>]" value="<?= $ordersItem->getProductName(); ?>"></td>
@@ -82,7 +82,7 @@ $clients = $clientRepository->getList()
         <label for="client_id"><span>Оберіть клієнта<span></label>
         <select class="select2" id="client_id" name="client_id">
         <?php
-            /** @var \LovelySpace\Model\Client $client */
+            /** @var \LovelySpace\Model\Client\Client $client */
             foreach ($clients as $client):
                 $selected = $client->getId() == $order->getClientId() ? 'selected' : '' ?>
                 <option <?= $selected ?> value="<?= $client->getId(); ?>"><?= $client->getName(); ?></option>

@@ -1,6 +1,6 @@
 <?php
-/** @var \LovelySpace\Model\ProductRepository $productRepository */
-$productRepository = \ClassCreator::get(\LovelySpace\Model\ProductRepository::class);
+/** @var \LovelySpace\Model\Product\ProductRepository $productRepository */
+$productRepository = \ClassCreator::get(\LovelySpace\Model\Product\ProductRepository::class);
 $productId = null;
 
 if (!empty($_POST)) {
@@ -14,15 +14,15 @@ if (!empty($_GET)) {
     $productId = isset($_GET['id']) ? $_GET['id'] : null;
 }
 
-/** @var \LovelySpace\Model\Product $product */
+/** @var \LovelySpace\Model\Product\Product $product */
 $product = $productRepository->get($productId);
 
-/** @var \LovelySpace\Model\Resource\ArrivalItem $arrivalItem */
-$arrivalItem = \ClassCreator::get(\LovelySpace\Model\Resource\ArrivalItem::class);
+/** @var \LovelySpace\Model\Resource\Arrival\ArrivalItem $arrivalItem */
+$arrivalItem = \ClassCreator::get(\LovelySpace\Model\Resource\Arrival\ArrivalItem::class);
 $lastCost = $arrivalItem->getLastCostForProductByProductId($productId);
 
-/** @var \LovelySpace\Model\ProductStockRepository $productStockRepository */
-$productStockRepository = \ClassCreator::get(\LovelySpace\Model\ProductStockRepository::class);
+/** @var \LovelySpace\Model\Product\ProductStockRepository $productStockRepository */
+$productStockRepository = \ClassCreator::get(\LovelySpace\Model\Product\ProductStockRepository::class);
 $productStocks = $productStockRepository->getList();
 $qty = isset($productStocks[$product->getId()]) ? $productStocks[$product->getId()]->getQty() : 0;
 ?>

@@ -1,17 +1,17 @@
 <?php
-/** @var \LovelySpace\Model\OrderRepository $orderRepository */
-$orderRepository = \ClassCreator::get(\LovelySpace\Model\OrderRepository::class);
+/** @var \LovelySpace\Model\Order\OrderRepository $orderRepository */
+$orderRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderRepository::class);
 $orders = $orderRepository->getList();
 
-/** @var \LovelySpace\Model\OrderItemRepository $orderItemRepository */
-$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository::class);
-/** @var \LovelySpace\Model\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+/** @var \LovelySpace\Model\Order\OrderItemRepository $orderItemRepository */
+$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderItemRepository::class);
+/** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 
 
-/** @var \LovelySpace\Model\EarningsRepository $earningsRepository */
-$earningsRepository = \ClassCreator::get(\LovelySpace\Model\EarningsRepository::class);
-$reportOrderItems = $earningsRepository->getList();
+/** @var \LovelySpace\Model\Earning\EarningRepository $EarningRepository */
+$EarningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
+$reportOrderItems = $EarningRepository->getList();
 ?>
 
 <div id="jsGrid"></div>
@@ -20,9 +20,9 @@ $reportOrderItems = $earningsRepository->getList();
     var models = [
         <?php
 
-        /** @var \LovelySpace\Model\Order $order */
+        /** @var \LovelySpace\Model\Order\Order $order */
         foreach ($orders as $order):
-        /** @var \LovelySpace\Model\Client $client */
+        /** @var \LovelySpace\Model\Client\Client $client */
         $client = $clientRepository->get($order->getClientId());
         list($productNames, $earns) = $orderItemRepository->getProductNamesByOrderId($order->getId(), $reportOrderItems);
         ?>

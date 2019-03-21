@@ -18,21 +18,21 @@ $fromDate = isset($_SESSION['from_date']) ? $_SESSION['from_date'] : '';
 $toDate = isset($_SESSION['to_date']) ? $_SESSION['to_date'] : '';
 $clientId = isset($_SESSION['client_id']) ? $_SESSION['client_id'] : '';
 
-/** @var \LovelySpace\Model\OrderRepository $orderRepository */
-$orderRepository = \ClassCreator::get(\LovelySpace\Model\OrderRepository::class);
+/** @var \LovelySpace\Model\Order\OrderRepository $orderRepository */
+$orderRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderRepository::class);
 $orders = $orderRepository->getListWithinDate($fromDate, $toDate);
 
-/** @var \LovelySpace\Model\OrderItemRepository $orderItemRepository */
-$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\OrderItemRepository::class);
-/** @var \LovelySpace\Model\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+/** @var \LovelySpace\Model\Order\OrderItemRepository $orderItemRepository */
+$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderItemRepository::class);
+/** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 
-/** @var \LovelySpace\Model\EarningsRepository $earningsRepository */
-$earningsRepository = \ClassCreator::get(\LovelySpace\Model\EarningsRepository::class);
-$reportOrderItems = $earningsRepository->getList();
+/** @var \LovelySpace\Model\Earning\EarningRepository $EarningRepository */
+$EarningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
+$reportOrderItems = $EarningRepository->getList();
 
-/** @var \LovelySpace\Model\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+/** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
+$clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 $clients = $clientRepository->getList()
 ?>
 
@@ -56,7 +56,7 @@ $clients = $clientRepository->getList()
         <select class="select2" id="client_id" name="client_id">
             <option value=""></option>
             <?php
-            /** @var \LovelySpace\Model\Client $client */
+            /** @var \LovelySpace\Model\Client\Client $client */
             foreach ($clients as $client):
                 $selected = $client->getId() == $clientId ? 'selected' : '' ?>
                 <option <?= $selected ?> value="<?= $client->getId(); ?>"><?= $client->getName(); ?></option>
@@ -77,16 +77,16 @@ $clients = $clientRepository->getList()
     </tr>
     </thead>
     <?php
-    /** @var \LovelySpace\Model\ClientRepository $clientRepository */
-    $clientRepository = \ClassCreator::get(\LovelySpace\Model\ClientRepository::class);
+    /** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
+    $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
     $earnings = 0;
     $shippings = 0;
-    /** @var \LovelySpace\Model\Order $order */
+    /** @var \LovelySpace\Model\Order\Order $order */
     foreach ($orders as $order) {
         if ($clientId && $order->getClientId() != $clientId) {
             continue;
         }
-        /** @var \LovelySpace\Model\Client $client */
+        /** @var \LovelySpace\Model\Client\Client $client */
         $client = $clientRepository->get($order->getClientId());
         list($productNames, $earning) = $orderItemRepository->getProductNamesByOrderId($order->getId(), $reportOrderItems);
         $earnings += $earning;

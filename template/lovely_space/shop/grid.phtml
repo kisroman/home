@@ -1,6 +1,6 @@
 <?php
-/** @var \LovelySpace\Model\ShopRepository $shopRepository */
-$shopRepository = \ClassCreator::get(\LovelySpace\Model\ShopRepository::class);
+/** @var \LovelySpace\Model\Shop\ShopRepository $shopRepository */
+$shopRepository = \ClassCreator::get(\LovelySpace\Model\Shop\ShopRepository::class);
 $shops = $shopRepository->getList();
 ?>
 
@@ -9,7 +9,7 @@ $shops = $shopRepository->getList();
 <script>
     var models = [
         <?php
-        /** @var \LovelySpace\Model\Shop $model */
+        /** @var \LovelySpace\Model\Shop\Shop $model */
         foreach ($shops as $model): ?>
         {
             'id': '<?= $model->getId()?>',

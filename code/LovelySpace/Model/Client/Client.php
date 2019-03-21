@@ -1,6 +1,8 @@
 <?php
 
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Client;
+
+use LovelySpace\Model\AbstractModel;
 
 /**
  * @method int getId()
@@ -16,6 +18,6 @@ class Client extends AbstractModel
     {
         parent::__construct($data);
 
-        $this->initResource(\LovelySpace\Model\Resource\Client::class);
+        $this->initResource(\LovelySpace\Model\Resource\Client\Client::class);
     }
 }

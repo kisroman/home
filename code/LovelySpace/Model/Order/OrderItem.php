@@ -1,9 +1,10 @@
 <?php
 
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Order;
 
 use ClassCreator;
 use Framework\Db\Connection;
+use LovelySpace\Model\AbstractModel;
 
 /**
  * @method int getId()
@@ -19,16 +20,16 @@ class OrderItem extends AbstractModel
     {
         parent::__construct($data);
 
-        $this->initResource(\LovelySpace\Model\Resource\OrderItem::class);
+        $this->initResource(\LovelySpace\Model\Resource\Order\OrderItem::class);
     }
 
     /**
-     * @return \LovelySpace\Model\Order|null
+     * @return \LovelySpace\Model\Order\Order|null
      */
     public function getOrder()
     {
-        /** @var \LovelySpace\Model\OrderRepository $orderRepository */
-        $orderRepository = \ClassCreator::get(\LovelySpace\Model\OrderRepository::class);
+        /** @var \LovelySpace\Model\Order\OrderRepository $orderRepository */
+        $orderRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderRepository::class);
         $order = $orderRepository->get($this->getOrderId());
 
         return $order->getId() ? $order : null;

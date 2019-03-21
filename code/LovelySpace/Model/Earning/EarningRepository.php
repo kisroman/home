@@ -1,12 +1,15 @@
 <?php
 
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Earning;
 
 use ClassCreator;
 use Framework\Db\Connection;
-use LovelySpace\Model\ArrivalItemRepository;
+use LovelySpace\Model\Arrival\ArrivalItem;
+use LovelySpace\Model\Arrival\ArrivalItemRepository;
+use LovelySpace\Model\Arrival\ArrivalRepository;
+use LovelySpace\Model\Order\OrderItemRepository;
 
-class EarningsRepository
+class EarningRepository
 {
     public function getList()
     {

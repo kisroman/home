@@ -1,5 +1,5 @@
 <?php
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Product;
 
 use ClassCreator;
 use Framework\Db\Connection;
@@ -8,8 +8,8 @@ class ProductRepository
 {
     public function get($productId)
     {
-        /** @var \LovelySpace\Model\Resource\Product $productResource */
-        $productResource = ClassCreator::get(\LovelySpace\Model\Resource\Product::class);
+        /** @var \LovelySpace\Model\Resource\Product\Product $productResource */
+        $productResource = ClassCreator::get(\LovelySpace\Model\Resource\Product\Product::class);
         $product = ClassCreator::get(Product::class, $productResource->getModel($productId));
 
         return $product;
@@ -18,8 +18,8 @@ class ProductRepository
     public function getList()
     {
         $products = [];
-        /** @var \LovelySpace\Model\Resource\Product $productResource */
-        $productResource = ClassCreator::get(\LovelySpace\Model\Resource\Product::class);
+        /** @var \LovelySpace\Model\Resource\Product\Product $productResource */
+        $productResource = ClassCreator::get(\LovelySpace\Model\Resource\Product\Product::class);
         $productsArray = $productResource->getModelsArray();
 
         usort($productsArray, function ($a, $b) {

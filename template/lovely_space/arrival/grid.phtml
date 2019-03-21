@@ -1,13 +1,13 @@
 <?php
-/** @var \LovelySpace\Model\ArrivalRepository $arrivalRepository */
-$arrivalRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalRepository::class);
+/** @var \LovelySpace\Model\Arrival\ArrivalRepository $arrivalRepository */
+$arrivalRepository = \ClassCreator::get(\LovelySpace\Model\Arrival\ArrivalRepository::class);
 $arrivals = $arrivalRepository->getList();
 
-/** @var \LovelySpace\Model\ArrivalItemRepository $arrivalItemRepository */
-$arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\ArrivalItemRepository::class);
+/** @var \LovelySpace\Model\Arrival\ArrivalItemRepository $arrivalItemRepository */
+$arrivalItemRepository = \ClassCreator::get(\LovelySpace\Model\Arrival\ArrivalItemRepository::class);
 
-/** @var \LovelySpace\Model\ShopRepository $shopRepository */
-$shopRepository = \ClassCreator::get(\LovelySpace\Model\ShopRepository::class);
+/** @var \LovelySpace\Model\Shop\ShopRepository $shopRepository */
+$shopRepository = \ClassCreator::get(\LovelySpace\Model\Shop\ShopRepository::class);
 ?>
 
 <div id="jsGrid"></div>
@@ -15,7 +15,7 @@ $shopRepository = \ClassCreator::get(\LovelySpace\Model\ShopRepository::class);
 <script>
     var models = [
         <?php
-        /** @var \LovelySpace\Model\Arrival $arrival */
+        /** @var \LovelySpace\Model\Arrival\Arrival $arrival */
         foreach ($arrivals as $arrival):
         $shopName = $shopRepository->getNameById($arrival->getShopId())
             ? $shopRepository->getNameById($arrival->getShopId())

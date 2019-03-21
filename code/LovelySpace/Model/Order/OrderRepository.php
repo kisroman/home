@@ -1,5 +1,5 @@
 <?php
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Order;
 
 use ClassCreator;
 use Framework\Db\Connection;
@@ -8,8 +8,8 @@ class OrderRepository
 {
     public function get($orderId)
     {
-        /** @var \LovelySpace\Model\Resource\Order $orderResource */
-        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order::class);
+        /** @var \LovelySpace\Model\Resource\Order\Order $orderResource */
+        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order\Order::class);
 
         $orderArray = $orderResource->getOrder($orderId);
         $order = ClassCreator::get(Order::class, $orderArray);
@@ -19,8 +19,8 @@ class OrderRepository
 
     public function getList()
     {
-        /** @var \LovelySpace\Model\Resource\Order $orderResource */
-        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order::class);
+        /** @var \LovelySpace\Model\Resource\Order\Order $orderResource */
+        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order\Order::class);
         $ordersArray = $orderResource->getModelsArray();
 
         $orders = [];
@@ -33,8 +33,8 @@ class OrderRepository
 
     public function getListWithinDate($dateFrom = null, $dateTo = null)
     {
-        /** @var \LovelySpace\Model\Resource\Order $orderResource */
-        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order::class);
+        /** @var \LovelySpace\Model\Resource\Order\Order $orderResource */
+        $orderResource = ClassCreator::get(\LovelySpace\Model\Resource\Order\Order::class);
         $ordersArray = $orderResource->getModelsArrayWithInDate($dateFrom, $dateTo);
 
         $orders = [];
@@ -78,8 +78,8 @@ class OrderRepository
             $id = $order->getId();
         }
 
-        /** @var \LovelySpace\Model\Resource\OrderItem $orderItemResource */
-        $orderItemResource = ClassCreator::get(\LovelySpace\Model\Resource\OrderItem::class, $orderArray);
+        /** @var \LovelySpace\Model\Resource\Order\OrderItem $orderItemResource */
+        $orderItemResource = ClassCreator::get(\LovelySpace\Model\Resource\Order\OrderItem::class, $orderArray);
         // delete all items for order to create news
         $orderItemResource->deleteByOrderId($id);
 

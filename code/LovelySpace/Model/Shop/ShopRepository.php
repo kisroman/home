@@ -1,6 +1,6 @@
 <?php
 
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Shop;
 
 use ClassCreator;
 
@@ -8,9 +8,9 @@ class ShopRepository
 {
     public function get($shopId)
     {
-        /** @var \LovelySpace\Model\Resource\Shop $shopResource */
-        $shopResource = ClassCreator::get(\LovelySpace\Model\Resource\Shop::class);
-        $shop = ClassCreator::get(Client::class, $shopResource->getModel($shopId));
+        /** @var \LovelySpace\Model\Resource\Shop\Shop $shopResource */
+        $shopResource = ClassCreator::get(\LovelySpace\Model\Resource\Shop\Shop::class);
+        $shop = ClassCreator::get(Shop::class, $shopResource->getModel($shopId));
 
         return $shop;
     }
@@ -18,8 +18,8 @@ class ShopRepository
     public function getList()
     {
         $shops = [];
-        /** @var \LovelySpace\Model\Resource\Shop $shopResource */
-        $shopResource = ClassCreator::get(\LovelySpace\Model\Resource\Shop::class);
+        /** @var \LovelySpace\Model\Resource\Shop\Shop $shopResource */
+        $shopResource = ClassCreator::get(\LovelySpace\Model\Resource\Shop\Shop::class);
         $shopsArray = $shopResource->getModelsArray();
 
         usort($shopsArray, function ($a, $b) {
@@ -27,7 +27,7 @@ class ShopRepository
         });
 
         foreach ($shopsArray as $shopArray) {
-            $shops[] = ClassCreator::get(Client::class, $shopArray);
+            $shops[] = ClassCreator::get(Shop::class, $shopArray);
         }
 
         return $shops;
@@ -42,8 +42,8 @@ class ShopRepository
 
     public function getNameById($id)
     {
-        /** @var \LovelySpace\Model\Resource\Shop $shopResource */
-        $shopResource = ClassCreator::get(\LovelySpace\Model\Resource\Shop::class);
+        /** @var \LovelySpace\Model\Resource\Shop\Shop $shopResource */
+        $shopResource = ClassCreator::get(\LovelySpace\Model\Resource\Shop\Shop::class);
 
         return $shopResource->getNameById($id);
     }

@@ -1,6 +1,8 @@
 <?php
 
-namespace LovelySpace\Model;
+namespace LovelySpace\Model\Order;
+
+use LovelySpace\Model\AbstractModel;
 
 
 /**
@@ -15,6 +17,6 @@ class Order extends AbstractModel
     {
         parent::__construct($data);
 
-        $this->initResource(\LovelySpace\Model\Resource\Order::class);
+        $this->initResource(\LovelySpace\Model\Resource\Order\Order::class);
     }
 }

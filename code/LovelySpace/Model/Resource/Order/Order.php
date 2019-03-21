@@ -1,9 +1,10 @@
 <?php
 
-namespace LovelySpace\Model\Resource;
+namespace LovelySpace\Model\Resource\Order;
 
 use ClassCreator;
 use Framework\Db\Connection;
+use LovelySpace\Model\Resource\AbstractModel;
 
 class Order extends AbstractModel
 {
