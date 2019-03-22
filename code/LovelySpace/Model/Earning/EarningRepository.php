@@ -7,6 +7,7 @@ use Framework\Db\Connection;
 use LovelySpace\Model\Arrival\ArrivalItem;
 use LovelySpace\Model\Arrival\ArrivalItemRepository;
 use LovelySpace\Model\Arrival\ArrivalRepository;
+use LovelySpace\Model\Order\OrderItem;
 use LovelySpace\Model\Order\OrderItemRepository;
 
 class EarningRepository
@@ -33,12 +34,13 @@ class EarningRepository
                 ? $arrivals[$arrivalItem->getArrivalId()]
                 : $arrivalItem->getArrival();
 
-            if (isset($reportArrivals[$arrivalItem->getProductId()][$arrival->getDate()][$arrivalItem->getCost()])
+            $cost = $arrivalItem->getCost();
+            if (isset($reportArrivals[$arrivalItem->getProductId()][$arrival->getDate()][$cost])
             ) {
-                $qty = $reportArrivals[$arrivalItem->getProductId()][$arrival->getDate()][$arrivalItem->getCost()];
-                $reportArrivals[$arrivalItem->getProductId()][$arrival->getDate()][$arrivalItem->getCost()] = $arrivalItem->getQty() + $qty;
+                $qty = $reportArrivals[$arrivalItem->getProductId()][$arrival->getDate()][$cost];
+                $reportArrivals[$arrivalItem->getProductId()][$arrival->getDate()][$cost] = $arrivalItem->getQty() + $qty;
             } else {
-                $reportArrivals[$arrivalItem->getProductId()][$arrival->getDate()][$arrivalItem->getCost()]
+                $reportArrivals[$arrivalItem->getProductId()][$arrival->getDate()][$cost]
                     = $arrivalItem->getQty();
             }
         }

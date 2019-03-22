@@ -27,9 +27,9 @@ $orderItemRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderItemRepo
 /** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
 $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 
-/** @var \LovelySpace\Model\Earning\EarningRepository $EarningRepository */
-$EarningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
-$reportOrderItems = $EarningRepository->getList();
+/** @var \LovelySpace\Model\Earning\EarningRepository $earningRepository */
+$earningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
+$reportOrderItems = $earningRepository->getList();
 
 /** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
 $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
@@ -80,7 +80,6 @@ $clients = $clientRepository->getList()
     /** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
     $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
     $earnings = 0;
-    $shippings = 0;
     /** @var \LovelySpace\Model\Order\Order $order */
     foreach ($orders as $order) {
         if ($clientId && $order->getClientId() != $clientId) {
@@ -119,9 +118,3 @@ $clients = $clientRepository->getList()
     echo '</tr>';
     ?>
 </table>
-
-<script>
-    $(function () {
-        $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
-    });
-</script>

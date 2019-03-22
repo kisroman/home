@@ -1,0 +1,61 @@
+<?php
+/** @var \LovelySpace\Model\Spending\SpendingRepository $spendingRepository */
+$spendingRepository = \ClassCreator::get(\LovelySpace\Model\Spending\SpendingRepository::class);
+$spendings = $spendingRepository->getList();
+?>
+
+<div id="jsGrid"></div>
+
+<script>
+    var models = [
+        <?php
+        /** @var \LovelySpace\Model\Spending\Spending $model */
+        foreach ($spendings as $model): ?>
+        {
+            'id': '<?= $model->getId()?>',
+            'Сума': '<?= $model->getSum() . ' грн'?>',
+            'Дата': '<?= $model->getDate()?>',
+            'Коментар': '<?= $model->getComment()?>'
+        },
+        <?php endforeach; ?>
+    ], url = '<?= $urlToSpending?>';
+
+    $(function() {
+        $('#jsGrid').jsGrid({
+            height: '120%',
+            width: '100%',
+
+            filtering: true,
+            editing: false,
+            sorting: true,
+            paging: true,
+            autoload: true,
+            controller: {
+                loadData: function(filter) {
+                    return $.grep(models, function(model) {
+                        var filterComment = filter['Коментар'].toUpperCase(),
+                            modelComment = model['Коментар'].toUpperCase(),
+                            filterSum = filter['Сума'] ? filter['Сума'].toString() : '',
+                            modelSum = model['Сума'] ? model['Сума'].toString() : '';
+
+                        return (!filterComment || modelComment.indexOf(filterComment) > -1)
+                            && (typeof filterSum === 'undefined' || modelSum.indexOf(filterSum) > -1)
+                            && (!filter['Дата'] || model['Дата'].indexOf(filter['Дата']) > -1)
+                    })}
+            },
+            rowClick: function(args) {
+                var id = args.item.id;
+                location.href = url + '/edit?id=' + id;
+            },
+            pageSize: 30,
+            data: models,
+
+            fields: [
+                { name: 'id', type: 'number', visible: false},
+                { name: 'Сума', type: 'number', width: 50},
+                { name: 'Дата', type: 'text', width: 50 },
+                { name: 'Коментар', type: 'text', width: 200 }
+            ]
+        });
+    });
+</script>
