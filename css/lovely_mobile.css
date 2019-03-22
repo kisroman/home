@@ -301,3 +301,7 @@ form div#shop {
 .ui-datepicker table {
     font-size: 3rem;
 }
+
+div#shop {
+    padding-top: 20px;
+}

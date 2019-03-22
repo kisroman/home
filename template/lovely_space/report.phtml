@@ -33,7 +33,16 @@ $reportOrderItems = $earningRepository->getList();
 
 /** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
 $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
-$clients = $clientRepository->getList()
+$clients = $clientRepository->getList();
+
+/** @var \LovelySpace\Model\Spending\SpendingRepository $spendingRepository */
+$spendingRepository = \ClassCreator::get(\LovelySpace\Model\Spending\SpendingRepository::class);
+$spendingModels = $spendingRepository->getListWithinDate($fromDate, $toDate);
+$spendings = 0;
+
+foreach ($spendingModels as $spendingModel) {
+    $spendings += $spendingModel->getSum();
+}
 ?>
 
 <form class="filter" action="" method="post">
@@ -111,9 +120,31 @@ $clients = $clientRepository->getList()
     echo '<td>';
     echo '</td>';
     echo '<td>';
+    echo 'Заробіток:';
     echo '</td>';
     echo '<td>';
     echo $earnings . ' грн';
+    echo '</td>';
+    echo '</tr>';
+
+    echo '<tr>';
+    echo '<td>';
+    echo '</td>';
+    echo '<td>';
+    echo 'Інші витрати:';
+    echo '</td>';
+    echo '<td>';
+    echo $spendings . ' грн';
+    echo '</td>';
+    echo '</tr>';
+    echo '<tr>';
+    echo '<td>';
+    echo '</td>';
+    echo '<td>';
+    echo 'Підсумок:';
+    echo '</td>';
+    echo '<td>';
+    echo $earnings - $spendings . ' грн';
     echo '</td>';
     echo '</tr>';
     ?>

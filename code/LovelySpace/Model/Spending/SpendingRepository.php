@@ -29,6 +29,26 @@ class SpendingRepository
         return $models;
     }
 
+    /**
+     * @param null $dateFrom
+     * @param null $dateTo
+     *
+     * @return Spending[]
+     */
+    public function getListWithinDate($dateFrom = null, $dateTo = null)
+    {
+        /** @var \LovelySpace\Model\Resource\Spending\Spending $resource */
+        $resource = ClassCreator::get(\LovelySpace\Model\Resource\Spending\Spending::class);
+        $modelsArray = $resource->getModelsArrayWithInDate($dateFrom, $dateTo);
+
+        $models = [];
+        foreach ($modelsArray as $modelArray) {
+            $models[] = ClassCreator::get(Spending::class, $modelArray);
+        }
+
+        return $models;
+    }
+
     public function save($data)
     {
         /** @var Spending $model */

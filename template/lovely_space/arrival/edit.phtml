@@ -76,12 +76,6 @@ $lastCosts = [];
         </tr>
         </thead>
     </table>
-    <div id="shipment">
-        <label class="required" for="shipment_cost"><span>Вартість доставки:<span></label>
-        <input type="number" id="shipment_cost" name="shipment_cost" value="<?= $arrival->getShipment(); ?>"
-               required>
-        <input type="number" id="id" name="id" value="<?= $arrival->getId(); ?>" style="display: none">
-    </div>
     <div id="shop">
         <label class="required" for="shop"><span>Магазин:<span></label>
         <select class="select2" id="shop" name="shop">

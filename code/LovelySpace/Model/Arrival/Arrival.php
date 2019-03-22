@@ -5,9 +5,7 @@ namespace LovelySpace\Model\Arrival;
 /**
  * @method int getId()
  * @method int getTotal()
- * @method int getGrandTotal()
  * @method string getDate()
- * @method int getShipment()
  * @method int getShopId()
  */
 class Arrival extends \LovelySpace\Model\AbstractModel
