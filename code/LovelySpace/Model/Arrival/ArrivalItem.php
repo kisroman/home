@@ -24,12 +24,17 @@ class ArrivalItem extends \LovelySpace\Model\AbstractModel
 
     /**
      * @return \LovelySpace\Model\Arrival\Arrival|null
+     * @throws \Exception
      */
     public function getArrival()
     {
         /** @var \LovelySpace\Model\Arrival\ArrivalRepository $arrivalRepository */
         $arrivalRepository = \ClassCreator::get(\LovelySpace\Model\Arrival\ArrivalRepository::class);
-        $arrival = $arrivalRepository->get($this->getArrivalId());
+        if ($this->getArrivalId()) {
+            $arrival = $arrivalRepository->get($this->getArrivalId());
+        } else {
+            throw new \Exception('Arrival id is' . $this->getArrivalId() . '. Треба перевірити код');
+        }
 
         return $arrival->getId() ? $arrival : null;
     }

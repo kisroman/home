@@ -5,9 +5,11 @@ try {
     include 'template/index.phtml';
 
 } catch (\Error $e) {
-    $res = file_put_contents('log/exception.log', $e->getMessage());
+    file_put_contents('log/exception.log', $e->getMessage() . "\n", FILE_APPEND);
+    file_put_contents('log/exception.log', $e->getTraceAsString() . "\n", FILE_APPEND);
     echo 'EXCEPTION!!! See logs';
 } catch (\Exception $e) {
-    file_put_contents('log/exception.log', $e->getMessage());
+    file_put_contents('log/exception.log', $e->getMessage() . "\n", FILE_APPEND);
+    file_put_contents('log/exception.log', $e->getTraceAsString() . "\n", FILE_APPEND);
     echo 'EXCEPTION!!! See logs';
 }

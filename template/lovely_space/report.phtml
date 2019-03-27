@@ -1,151 +1,38 @@
-<?php
 
-if (isset($_POST['from_date'])) {
-    $_SESSION['from_date'] = $_POST['from_date'];
-}
-if (isset($_POST['to_date'])) {
-    $_SESSION['to_date'] = $_POST['to_date'];
-}
-if (isset($_POST['client_id'])) {
-    $_SESSION['client_id'] = $_POST['client_id'];
-}
+<div class="tab">
+    <button class="tablinks half active" onclick="openTab(event, 'order')">Замовлення</button>
+    <button class="tablinks half" onclick="openTab(event, 'stock')">Наявність</button>
+</div>
 
-if (!empty($_POST)) {
-    header("Location: " . "http://" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-}
 
-$fromDate = isset($_SESSION['from_date']) ? $_SESSION['from_date'] : '';
-$toDate = isset($_SESSION['to_date']) ? $_SESSION['to_date'] : '';
-$clientId = isset($_SESSION['client_id']) ? $_SESSION['client_id'] : '';
+<div id="order" class="tabcontent" style="display: block;">
+    <?php include_once('report/order.phtml'); ?>
+</div>
 
-/** @var \LovelySpace\Model\Order\OrderRepository $orderRepository */
-$orderRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderRepository::class);
-$orders = $orderRepository->getListWithinDate($fromDate, $toDate);
+<div id="stock" class="tabcontent half">
+    <h3>Stock</h3>
+    <p>Paris is the capital of France.</p>
+</div>
 
-/** @var \LovelySpace\Model\Order\OrderItemRepository $orderItemRepository */
-$orderItemRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderItemRepository::class);
-/** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
+<script>
+    function openTab(evt, cityName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
 
-/** @var \LovelySpace\Model\Earning\EarningRepository $earningRepository */
-$earningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
-$reportOrderItems = $earningRepository->getList();
-
-/** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
-$clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
-$clients = $clientRepository->getList();
-
-/** @var \LovelySpace\Model\Spending\SpendingRepository $spendingRepository */
-$spendingRepository = \ClassCreator::get(\LovelySpace\Model\Spending\SpendingRepository::class);
-$spendingModels = $spendingRepository->getListWithinDate($fromDate, $toDate);
-$spendings = 0;
-
-foreach ($spendingModels as $spendingModel) {
-    $spendings += $spendingModel->getSum();
-}
-?>
-
-<form class="filter" action="" method="post">
-    <div class="full-with-margin">
-        <label for="from_date"><span>Дата з:<span></label>
-    </div>
-    <div class="full-with-margin">
-        <input type="text" class="datepicker" id="from_date" name="from_date" value="<?= $fromDate ?>">
-    </div>
-
-    <div class="full-with-margin">
-        <label for="to_date"><span>Дата по:<span></label>
-    </div>
-    <div class="full-with-margin">
-        <input type="text" class="datepicker" id="to_date" name="to_date" value="<?= $toDate ?>">
-    </div>
-
-    <div id="choose-client">
-        <label for="client_id"><span>Оберіть клієнта<span></label>
-        <select class="select2" id="client_id" name="client_id">
-            <option value=""></option>
-            <?php
-            /** @var \LovelySpace\Model\Client\Client $client */
-            foreach ($clients as $client):
-                $selected = $client->getId() == $clientId ? 'selected' : '' ?>
-                <option <?= $selected ?> value="<?= $client->getId(); ?>"><?= $client->getName(); ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
-
-    <div class="full">
-        <button type="submit" class="full" id="make-filter">Фільтрувати</button>
-    </div>
-</form>
-<table class="full-part">
-    <thead>
-    <tr>
-        <th>Ім'я клієнта</th>
-        <th>Дата</th>
-        <th>Продані продукти</th>
-    </tr>
-    </thead>
-    <?php
-    /** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
-    $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
-    $earnings = 0;
-    /** @var \LovelySpace\Model\Order\Order $order */
-    foreach ($orders as $order) {
-        if ($clientId && $order->getClientId() != $clientId) {
-            continue;
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName('tabcontent');
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = 'none';
         }
-        /** @var \LovelySpace\Model\Client\Client $client */
-        $client = $clientRepository->get($order->getClientId());
-        list($productNames, $earning) = $orderItemRepository->getProductNamesByOrderId($order->getId(), $reportOrderItems);
-        $earnings += $earning;
-        echo '<tr class="clickable-row" data-href="'. $orderUrl . '/edit?id=' . $order->getId() . '">';
-        echo '<td style="display: none">';
-        echo $order->getId();
-        echo '</td>';
-        echo '<td>';
-        echo $client->getName();
-        echo '</td>';
-        echo '<td>';
-        echo $order->getDate();
-        echo '</td>';
-        echo '<td>';
-        echo $productNames;
-        echo '</br>';
-        echo '<b>Загальний заробіток: ' . $earning . '</b>';
-        echo '</td>';
-        echo '</tr>';
+
+        // Get all elements with class='tablinks' and remove the class 'active'
+        tablinks = document.getElementsByClassName('tablinks');
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(' active', '');
+        }
+
+        // Show the current tab, and add an 'active' class to the button that opened the tab
+        document.getElementById(cityName).style.display = 'block';
+        evt.currentTarget.className += ' active';
     }
-
-    echo '<tr>';
-    echo '<td>';
-    echo '</td>';
-    echo '<td>';
-    echo 'Заробіток:';
-    echo '</td>';
-    echo '<td>';
-    echo $earnings . ' грн';
-    echo '</td>';
-    echo '</tr>';
-
-    echo '<tr>';
-    echo '<td>';
-    echo '</td>';
-    echo '<td>';
-    echo 'Інші витрати:';
-    echo '</td>';
-    echo '<td>';
-    echo $spendings . ' грн';
-    echo '</td>';
-    echo '</tr>';
-    echo '<tr>';
-    echo '<td>';
-    echo '</td>';
-    echo '<td>';
-    echo 'Підсумок:';
-    echo '</td>';
-    echo '<td>';
-    echo $earnings - $spendings . ' грн';
-    echo '</td>';
-    echo '</tr>';
-    ?>
-</table>
+</script>

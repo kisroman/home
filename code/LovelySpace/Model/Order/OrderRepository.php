@@ -3,6 +3,7 @@ namespace LovelySpace\Model\Order;
 
 use ClassCreator;
 use Framework\Db\Connection;
+use Framework\MessageManager;
 
 class OrderRepository
 {
@@ -49,6 +50,13 @@ class OrderRepository
     {
         $itemsArray = [];
         $total = 0;
+        if (!isset($data['name'])) {
+            MessageManager::addMessage(
+                'НЕ ЗБЕРЕЖЕНО. Потрібно додати продукт до находження.',
+                MessageManager::TYPE_ERROR
+            );
+            return;
+        }
         foreach ($data['name'] as $productId => $name) {
             $itemsArray[$productId]['product_id'] = $productId;
             $itemsArray[$productId]['product_name'] = $name;

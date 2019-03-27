@@ -54,7 +54,7 @@ class Connection
         $db = "sweet-home";
         $username = "root";
         $password = "root";
-//        $db = 'home';
+        $db = 'finance_home';
 //        $db = 'home_test';
 //        $db = 'lovely_space';
         $db = 'lovely_test';
@@ -183,6 +183,15 @@ class Connection
         if ($size !== null) {
             $query .= '(' . $size . ')';
         }
+
+        $this->connection->query($query);
+
+        return $this;
+    }
+
+    public function dropColumn($table, $column)
+    {
+        $query = 'ALTER TABLE ' . $table . ' DROP COLUMN ' . $column . ';';
 
         $this->connection->query($query);
 

@@ -36,7 +36,10 @@ $clients = $clientRepository->getList()
 
 <div id="add-product-to-order">
     <div id="add-product" class="full">
+        <div class="full-with-margin">
         <label for="products"><span>Оберіть продукт<span></label>
+        </div>
+        <div class="full-with-margin">
         <select class="select2" id="products" name="products">
             <?php
             /** @var \LovelySpace\Model\Product\Product $product */
@@ -45,6 +48,7 @@ $clients = $clientRepository->getList()
                         value="<?= $product->getId(); ?>"><?= $product->getName(); ?></option>
             <?php endforeach; ?>
         </select>
+        </div>
     </div>
     <div class="full">
         <button id="add-product-button" class="near-select full">Додати</button>
@@ -79,7 +83,10 @@ $clients = $clientRepository->getList()
         <input type="number" id="id" name="id" value="<?= $order->getId(); ?>" style="display: none">
     </div>
     <div id="choose-client">
+        <div class="full-with-margin">
         <label for="client_id"><span>Оберіть клієнта<span></label>
+        </div>
+        <div class="full-with-margin">
         <select class="select2" id="client_id" name="client_id">
         <?php
             /** @var \LovelySpace\Model\Client\Client $client */
@@ -88,6 +95,7 @@ $clients = $clientRepository->getList()
                 <option <?= $selected ?> value="<?= $client->getId(); ?>"><?= $client->getName(); ?></option>
             <?php endforeach; ?>
         </select>
+        </div>
     </div>
 </form>
 <div>

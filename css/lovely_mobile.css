@@ -107,15 +107,6 @@
     color: var(--main-color-lovely);
 }
 
-#lovely-space #shipment {
-    padding-top: 20px;
-    padding-bottom: 5px;
-}
-
-#lovely-space #shipment input {
-    width: 8%;
-}
-
 #lovely-space tr:nth-child(even) {
     background-color: #f2f2f2;
 }
@@ -149,7 +140,7 @@
 }
 
 #lovely-space .select2.select2-container {
-    width: 60%;
+    width: 98%;
 }
 
 #lovely-space .select2.select2-container .select2-selection {
@@ -159,6 +150,10 @@
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: 50px;
+}
+
+.select2-container--bootstrap .select2-results > .select2-results__options {
+    max-height: 700px;
 }
 
 .select2-container .select2-results__options li,
@@ -258,7 +253,7 @@ div#add-product {
     padding: 30px 0 30px 0;
 }
 
-form div.full-with-margin {
+div.full-with-margin {
     text-align: center;
     padding-bottom: 20px;
     padding-top: 20px;
@@ -304,4 +299,26 @@ form div#shop {
 
 div#shop {
     padding-top: 20px;
+}
+
+div.error-message, div.success-message {
+    text-align: center;
+    margin: 0 0 2rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+div.error-message {
+    background: #ffcccc;
+}
+
+div.success-message {
+    background: #fffbbb;
+}
+#lovely-space .tabcontent {
+    display: none;
+}
+
+#lovely-space button.active {
+    background: #ba1a33;
 }

@@ -2,6 +2,9 @@
 <div class="main">
     <div class="container">
         <?php
+        echo \Framework\MessageManager::getMessagesHtml();
+        ?>
+        <?php
 
         if ($_SERVER['REQUEST_URI'] != '/') {
             if ($isLovelySpace) {

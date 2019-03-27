@@ -12,7 +12,9 @@
             window.location = $(this).data("href");
         });
 
-        $('.select2').select2();
+        $('.select2').select2({
+            theme: 'bootstrap'
+        });
 
         $(function () {
             $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });

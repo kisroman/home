@@ -2,7 +2,7 @@
 namespace LovelySpace\Model\Arrival;
 
 use ClassCreator;
-use Framework\Db\Connection;
+use Framework\MessageManager;
 
 class ArrivalRepository
 {
@@ -35,6 +35,13 @@ class ArrivalRepository
     {
         $itemsArray = [];
         $total = 0;
+        if (!isset($data['name'])) {
+            MessageManager::addMessage(
+                'НЕ ЗБЕРЕЖЕНО. Потрібно додати продукт до находження.',
+                MessageManager::TYPE_ERROR
+            );
+            return;
+        }
         foreach ($data['name'] as $productId => $name) {
             $itemsArray[$productId]['product_id'] = $productId;
             $itemsArray[$productId]['product_name'] = $name;
@@ -47,13 +54,11 @@ class ArrivalRepository
             $total += $qty * $data['cost'][$productId];
         }
         $arrivalArray['id'] = isset($data['id']) ? $data['id'] : null;
-        $arrivalArray['shipment'] = $data['shipment_cost'];
         $arrivalArray['shop_id'] = $data['shop'];
         if (!$arrivalArray['id']) {
             $arrivalArray['date'] = date('Y-m-d');
         }
         $arrivalArray['total'] = $total;
-        $arrivalArray['grand_total'] = $total + $data['shipment_cost'];
 
         /** @var Arrival $arrival */
         $arrival = ClassCreator::get(Arrival::class, $arrivalArray);
