@@ -9,9 +9,9 @@ $orderItemRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderItemRepo
 $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 
 
-/** @var \LovelySpace\Model\Earning\EarningRepository $EarningRepository */
-$EarningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
-$reportOrderItems = $EarningRepository->getList();
+/** @var \LovelySpace\Model\Earning\EarningRepository $earningRepository */
+$earningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
+list($reportOrderItems, $temp) = $earningRepository->getList();
 ?>
 
 <div id="jsGrid"></div>

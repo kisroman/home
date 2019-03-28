@@ -1,4 +1,9 @@
 
+<?php
+/** @var \LovelySpace\Model\Earning\EarningRepository $earningRepository */
+$earningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
+list($reportOrderItems, $reportArrivals) = $earningRepository->getList();
+?>
 <div class="tab">
     <button class="tablinks half active" onclick="openTab(event, 'order')">Замовлення</button>
     <button class="tablinks half" onclick="openTab(event, 'stock')">Наявність</button>
@@ -9,9 +14,8 @@
     <?php include_once('report/order.phtml'); ?>
 </div>
 
-<div id="stock" class="tabcontent half">
-    <h3>Stock</h3>
-    <p>Paris is the capital of France.</p>
+<div id="stock" class="tabcontent">
+    <?php include_once('report/product.phtml'); ?>
 </div>
 
 <script>

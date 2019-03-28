@@ -26,10 +26,6 @@ $orderItemRepository = \ClassCreator::get(\LovelySpace\Model\Order\OrderItemRepo
 /** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
 $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 
-/** @var \LovelySpace\Model\Earning\EarningRepository $earningRepository */
-$earningRepository = \ClassCreator::get(\LovelySpace\Model\Earning\EarningRepository::class);
-$reportOrderItems = $earningRepository->getList();
-
 /** @var \LovelySpace\Model\Client\ClientRepository $clientRepository */
 $clientRepository = \ClassCreator::get(\LovelySpace\Model\Client\ClientRepository::class);
 $clients = $clientRepository->getList();
@@ -99,7 +95,7 @@ $spendings += $spendingModel->getSum();
         }
         /** @var \LovelySpace\Model\Client\Client $client */
         $client = $clientRepository->get($order->getClientId());
-        list($productNames, $earning) = $orderItemRepository->getProductNamesByOrderId($order->getId(), $reportOrderItems);
+        list($productNames, $earning) = $orderItemRepository->getProductNamesWithDiffByOrderId($order->getId(), $reportOrderItems);
         $earnings += $earning;
         echo '<tr class="clickable-row" data-href="'. $orderUrl . '/edit?id=' . $order->getId() . '">';
         echo '<td style="display: none">';

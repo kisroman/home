@@ -53,9 +53,39 @@ class OrderItemRepository
 
         /** @var OrderItem $orderItem */
         foreach ($ordersItems as $orderItem) {
-            $earn = isset($reportOrderItems[$orderItem->getId()]) ? $reportOrderItems[$orderItem->getId()] : 'Проблема ';
+            if (isset($reportOrderItems[$orderItem->getId()])) {
+                $earn = $reportOrderItems[$orderItem->getId()]->getPrice()
+                - $reportOrderItems[$orderItem->getId()]->getCost();
+            } else {
+                $earn = 'Проблема';
+            }
             $productNames .= $orderItem->getProductName() . '(' . $earn . 'грн)</br>';
             $earns += (int)$earn;
+        }
+        $productNames = substr($productNames, 0, -5);
+
+        return [$productNames, $earns];
+    }
+
+    public function getProductNamesWithDiffByOrderId($orderId, $reportOrderItems)
+    {
+        $ordersItems = $this->getListByOrderId($orderId);
+        $productNames = '';
+        $earns = 0;
+
+        /** @var OrderItem $orderItem */
+        foreach ($ordersItems as $orderItem) {
+            if (isset($reportOrderItems[$orderItem->getId()])) {
+                $diff = $reportOrderItems[$orderItem->getId()]->getPrice()
+                    - $reportOrderItems[$orderItem->getId()]->getCost();
+                $earn = $reportOrderItems[$orderItem->getId()]->getPrice() . ' - '
+                    . $reportOrderItems[$orderItem->getId()]->getCost() . ' = ' . $diff;
+            } else {
+                $earn = 'Проблема';
+                $diff = 'Проблема';
+            }
+            $productNames .= $orderItem->getProductName() . '(' . $earn . 'грн)</br>';
+            $earns += (int)$diff;
         }
         $productNames = substr($productNames, 0, -5);
 

@@ -322,3 +322,7 @@ div.success-message {
 #lovely-space button.active {
     background: #ba1a33;
 }
+
+#lovely-space div.tab {
+    padding-bottom: 20px;
+}

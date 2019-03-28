@@ -59,7 +59,11 @@ class EarningRepository
 
                 foreach ($arrivalItemsByDate as $date => $arrivalItemByDate) {
                     foreach ($arrivalItemByDate as $cost => $qty) {
-                        $reportOrders[$orderItem->getId()] = $orderItem->getPrice() - $cost;
+                        /** @var Earning $earning */
+                        $earning = ClassCreator::get(Earning::class);
+                        $earning->setPrice($orderItem->getPrice());
+                        $earning->setCost($cost);
+                        $reportOrders[$orderItem->getId()] = $earning;
                         $qty--;
                         if ($qty == 0) {
                             unset($reportArrivals[$orderItem->getProductId()][$date][$cost]);
@@ -76,6 +80,25 @@ class EarningRepository
             }
         }
 
-        return $reportOrders;
+        return [$reportOrders, $reportArrivals];
+    }
+
+    public function getCostLineByReportAndProductId($reportArrivals, $productId)
+    {
+        $costLine = '';
+        $costs = 0;
+
+        if (isset($reportArrivals[$productId])) {
+            foreach ($reportArrivals[$productId] as $reportByDate) {
+                foreach ($reportByDate as $cost => $qty) {
+                    $costIncludeQty = $cost * $qty;
+                    $costLine .= $cost . '*' . $qty . '=' . $costIncludeQty . '</br>';
+                    $costs += $costIncludeQty;
+                }
+            }
+            $costLine .= '</br>Сума:' . $costs . '</br>';
+        }
+
+        return [$costLine ?: 'Нема в наявності', $costs];
     }
 }
