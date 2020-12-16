@@ -80,4 +80,11 @@ class ArrivalRepository
             $arrivalsItem->save();
         }
     }
+
+    public function delete($id)
+    {
+        /** @var \LovelySpace\Model\Resource\Arrival\Arrival $arrivalResource */
+        $arrivalResource = ClassCreator::get(\LovelySpace\Model\Resource\Arrival\Arrival::class);
+        $arrivalResource->delete($id);
+    }
 }

@@ -11,7 +11,11 @@ $shops = $shopRepository->getList();
 $arrivalRepository = \ClassCreator::get(\LovelySpace\Model\Arrival\ArrivalRepository::class);
 
 if (!empty($_POST)) {
-    $arrivalRepository->save($_POST);
+    if (isset($_POST['delete']) && (bool)$_POST['delete'] === true) {
+        $arrivalRepository->delete($_POST['id']);
+    } else {
+        $arrivalRepository->save($_POST);
+    }
 
     header('Location: '. $serverUrl . '/lovely_space/arrival');
     die;
@@ -77,9 +81,11 @@ $lastCosts = [];
                     </td>
                 </tr>
             <?php endforeach; ?>
-        </tr>
         </thead>
     </table>
+    <div>
+        <input type="number" id="id" name="id" value="<?= $arrival->getId(); ?>" style="display: none">
+    </div>
     <div id="shop">
         <div class="full-with-margin">
             <label class="required" for="shop"><span>Магазин:<span></label>
@@ -100,6 +106,13 @@ $lastCosts = [];
     <button class="half" onclick="location.href = '<?= $_SERVER['HTTP_REFERER']?>'" id="back-button">Назад</button>
     <button class="half" form="edit" type="submit" id="save-arrival-button">Зберегти</button>
 </div>
+<?php if (null !== $arrivalId): ?>
+<form action="" onsubmit="return confirm('Ви впевнені? Повернути дану дію буде неможливо.')" method="post" id="delete">
+    <input type="number" id="delete" name="delete" value="1" style="display: none">
+    <input type="number" id="id" name="id" value="<?= $arrival->getId(); ?>" style="display: none">
+    <button class="full" id="delete">Видалити замовлення</button>
+</form>
+<?php endif; ?>
 
 <script>
     var serverUrl = '<?= $serverUrl ?>',
@@ -138,4 +151,5 @@ $lastCosts = [];
             e.toElement.parentElement.parentElement.parentElement.remove();
         });
     });
+
 </script>

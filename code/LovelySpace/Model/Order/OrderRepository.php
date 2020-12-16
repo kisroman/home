@@ -70,7 +70,11 @@ class OrderRepository
         }
 
         $orderArray['id'] = isset($data['id']) ? $data['id'] : null;
-        $orderArray['date'] = date('Y-m-d');
+
+        if (!$orderArray['id']) {
+            $orderArray['date'] = date('Y-m-d');
+        }
+
         $orderArray['total'] = $total;
         $orderArray['client_id'] = isset($data['client_id']) ? $data['client_id'] : null;;
 

@@ -19,4 +19,13 @@ class Arrival extends AbstractModel
 
         return $arrivalsArray;
     }
+
+    public function delete($modelId)
+    {
+        parent::delete($modelId);
+
+        /** @var ArrivalItem $arrivalItem */
+        $arrivalItem = ClassCreator::get(ArrivalItem::class);
+        $arrivalItem->deleteByArrivalId($modelId);
+    }
 }

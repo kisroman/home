@@ -63,4 +63,13 @@ abstract class AbstractModel
 
         return $result;
     }
+
+    public function delete($modelId)
+    {
+        /** @var Connection $connection */
+        $connection = ClassCreator::get(Connection::class);
+        $result = $connection->delete(static::TABLE_NAME, $this->idField . '=' . $modelId);
+
+        return $result;
+    }
 }

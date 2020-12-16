@@ -54,10 +54,10 @@ class Connection
         $db = "sweet-home";
         $username = "root";
         $password = "root";
-        $db = 'finance_home';
+        $db = 'finance';
 //        $db = 'home_test';
 //        $db = 'lovely_space';
-        $db = 'lovely_test';
+        //$db = 'lovely_test';
 
         $this->connection = mysqli_connect($serverName, $username, $password, $db);
 

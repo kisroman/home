@@ -20,4 +20,13 @@
             $(".datepicker").datepicker({ dateFormat: 'yy-mm-dd' });
         });
     });
+    <?php if ($isLovelySpace): ?>
+    (function() {
+        var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+        link.type = 'image/x-icon';
+        link.rel = 'shortcut icon';
+        link.href = '<?php echo $serverUrl;?>/media/lovely-logo.png';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    })();
+    <?php endif; ?>
 </script>
