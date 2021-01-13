@@ -1,0 +1,126 @@
+<?php
+    $logoUrl = '/media/cool-monkey.jpeg';
+    $menuPoints =
+        [
+            [
+                'url' => $serverUrl . '/finance',
+                'label' => 'Finances',
+            ],
+            [
+                'url' => $serverUrl . '/rates',
+                'label' => 'Rates',
+            ],
+            [
+                'url' => $serverUrl . '/finance_details',
+                'label' => 'Details add',
+            ],
+            [
+                'url' => $serverUrl . '/diagrams',
+                'label' => 'Diagrams',
+            ],
+        ];
+
+foreach ($menuPoints as $key => $value) {
+    if ((strpos($value['url'], $requestUrl) !== false && $requestUrl !== '/')
+        || ($requestUrl === '/' && $value['label'] === 'Продукти')
+    ) {
+        $menuPoints[$key]['class'] = 'menu-chosen';
+    } else {
+        $menuPoints[$key]['class'] = '';
+    }
+}
+?>
+<head>
+    <link href="<?php echo $serverUrl; ?>/css/select2.min.css" rel="stylesheet" />
+    <link href="<?php echo $serverUrl; ?>/css/styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="<?php echo $serverUrl; ?>/js/lib/select2.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="<?php echo $serverUrl; ?>/css/jsgrid.css" />
+
+    <script type="text/javascript" src="<?php echo $serverUrl; ?>/js/lib/jsgrid.js"></script>
+    <title>Finance</title>
+</head>
+<header>
+    <div class="container">
+        <a href="/" class="logo">
+            <img src="<?php echo $serverUrl . $logoUrl; ?>" alt="Cool Monkey" width="150px">
+        </a>
+        <div id="menu">
+            <nav>
+                <ul>
+                    <?php foreach ($menuPoints as $menuPoint): ?>
+                        <li><a class="<?=$menuPoint['class'] ?>" href="<?php echo $menuPoint['url']; ?>"><?php echo $menuPoint['label'];
+                        ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<script>
+    var shipments = [];
+    var shipment = {
+        from:{
+            name: 'John Doe',
+            company: 'Acme Labs',
+            country: 'US',
+            address1: '111 8th Ave',
+            address2: '',
+            zipCode: '10011',
+            city: 'New York',
+            state: 'NY',
+            phone: '1234567890',
+            email: 'john@acmelabs.com'
+        },
+        to:{
+            name: 'Ned Flanders',
+            company: 'Simpsons Labs',
+            country: 'US',
+            address1: '300 Post St',
+            address2: 'Suite 152',
+            zipCode: '94108',
+            city: 'San Francisco',
+            state: 'CA',
+            phone: '1234567890',
+            email: 'ned@simpsons.com'
+        },
+        referenceNumber: '44553377 Rule',
+        packagingType: 'your_packaging',
+        packages: [{
+            weight: 10,
+            weightUnits: 'lbs'
+        },
+            {
+                weight: 12,
+                weightUnits: 'lbs',
+                width: 12,
+                length: 12,
+                height: 12,
+                dimensionUnits: 'in'
+            }]
+    }
+    shipments.push(shipment);
+    jQuery.post({
+        url: "https://shipnerd.com/api/1.0/create_labels",
+        headers: {
+            'Authorization': 'JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9' +
+                '.eyJ0aW1lc3RhbXAiOiIyMDE5LTA1LTIzVDEzOjIxOjMwLjE3NloiLCJ1c2VySWQiOiI1Y2U2OWUxNzhlYmFkMzAwMTFmMDI2OTEiLCJlbWFpbCI6InJva2lzc0BpLnVhIiwiaWF0IjoxNTU4NjE3NjkwLCJleHAiOjE1NTkyMjI0OTB9.TJFQKpyyzygjOEj7Eb_tzWUq_UWPqckVylKlAJ_YQG4',
+            'Access-Control-Allow-Origin': 'https://shipnerd.com',
+            'Access-Control-Allow-Credentials': true
+        },
+        body: {
+            shipments: shipments
+        },
+        json: true
+    }, function(err, response, body){
+        if (err){
+        }
+        else{
+
+        }
+    })
+</script>

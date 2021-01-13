@@ -1,0 +1,98 @@
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+<?php
+
+/** @var \FinanceManagement\Model\Finance $finance */
+$finance = \ClassCreator::get(\FinanceManagement\Model\Finance::class);
+$finances = $finance->getFinances();
+
+/** @var \FinanceManagement\Model\Rate $rate */
+$rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
+?>
+
+<div id="UahContainer" style="height: 300px; width: 100%;"></div>
+<div id="UsdContainer" style="height: 300px; width: 100%;"></div>
+
+<script type="text/javascript">
+    window.onload = function () {
+        var chartUah = new CanvasJS.Chart("UahContainer",
+            {
+                title:{
+                    text: "Diagram UAH"
+                },
+                axisX:{
+                    valueFormatString: "MMM"
+                },
+                data: [
+                    {
+                        type: "line",
+                        dataPoints: [
+                            <?php
+                            foreach ($finances as $date => $data):
+                            $year = date('y', strtotime($date));
+                            $month = '0' . date('m', strtotime($date)) - 1;
+                            $day = date('d', strtotime($date));
+                            echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
+                                . $data['activeSumUah'] . '},'; ?>
+                            <?php endforeach; ?>
+                        ]
+                    },
+                    {
+                        type: "line",
+                        dataPoints: [
+                            <?php
+                            foreach ($finances as $date => $data):
+                            $year = date('y', strtotime($date));
+                            $month = '0' . date('m', strtotime($date)) - 1;
+                            $day = date('d', strtotime($date));
+                            echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
+                                . $data['sumUah'] . '},'; ?>
+                            <?php endforeach; ?>
+                        ]
+                    }
+                ]
+            });
+
+        chartUah.render();
+
+        var chartUsd = new CanvasJS.Chart("UsdContainer",
+            {
+                title:{
+                    text: "Diagram USD"
+                },
+                axisX:{
+                    valueFormatString: "MMM"
+                },
+                data: [
+                    {
+                        type: "line",
+                        dataPoints: [
+                            <?php
+                            foreach ($finances as $date => $data):
+                            $year = date('y', strtotime($date));
+                            $month = '0' . date('m', strtotime($date)) - 1;
+                            $day = date('d', strtotime($date));
+                            echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
+                                . $rate->getUsdSumByCurrency($data['activeSumUah'], 'UAH') . '},'; ?>
+                            <?php endforeach; ?>
+                        ]
+                    },
+                    {
+                        type: "line",
+                        dataPoints: [
+                            <?php
+                            foreach ($finances as $date => $data):
+                            $year = date('y', strtotime($date));
+                            $month = '0' . date('m', strtotime($date)) - 1;
+                            $day = date('d', strtotime($date));
+                            echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
+                                . $rate->getUsdSumByCurrency($data['sumUah'], 'UAH') . '},'; ?>
+                            <?php endforeach; ?>
+                        ]
+                    }
+                ]
+            });
+
+        chartUsd.render();
+    }
+</script>

@@ -1,0 +1,18 @@
+<body>
+<div class="main">
+    <div class="container">
+        <?php
+        echo \Framework\MessageManager::getMessagesHtml();
+        ?>
+        <?php
+
+        if ($_SERVER['REQUEST_URI'] != '/') {
+
+                include 'template/finance_management' . $requestUrl . '.phtml';
+        } else {
+            include 'template/finance_management/finance.phtml';
+        }
+        ?>
+    </div>
+</div>
+</body>

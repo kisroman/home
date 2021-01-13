@@ -1,0 +1,4 @@
+<?php
+$financesLimit = 10;
+
+?>
