@@ -5,6 +5,7 @@
 /** @var \FinanceManagement\Model\Finance $finance */
 $finance = \ClassCreator::get(\FinanceManagement\Model\Finance::class);
 $finances = $finance->getFinances();
+$finances = $finance->getFinancesByYearAndMonth();
 
 /** @var \FinanceManagement\Model\Rate $rate */
 $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
@@ -31,7 +32,7 @@ $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
                             foreach ($finances as $date => $data):
                             $year = date('y', strtotime($date));
                             $month = '0' . date('m', strtotime($date)) - 1;
-                            $day = date('d', strtotime($date));
+                            $day = date('t', strtotime($date));
                             echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
                                 . $data['activeSumUah'] . '},'; ?>
                             <?php endforeach; ?>
@@ -44,7 +45,7 @@ $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
                             foreach ($finances as $date => $data):
                             $year = date('y', strtotime($date));
                             $month = '0' . date('m', strtotime($date)) - 1;
-                            $day = date('d', strtotime($date));
+                            $day = date('t', strtotime($date));
                             echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
                                 . $data['sumUah'] . '},'; ?>
                             <?php endforeach; ?>
@@ -71,7 +72,7 @@ $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
                             foreach ($finances as $date => $data):
                             $year = date('y', strtotime($date));
                             $month = '0' . date('m', strtotime($date)) - 1;
-                            $day = date('d', strtotime($date));
+                            $day = date('t', strtotime($date));
                             echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
                                 . $rate->getUsdSumByCurrency($data['activeSumUah'], 'UAH') . '},'; ?>
                             <?php endforeach; ?>
@@ -84,7 +85,7 @@ $rate = \ClassCreator::get(\FinanceManagement\Model\Rate::class);
                             foreach ($finances as $date => $data):
                             $year = date('y', strtotime($date));
                             $month = '0' . date('m', strtotime($date)) - 1;
-                            $day = date('d', strtotime($date));
+                            $day = date('t', strtotime($date));
                             echo '{ x: new Date(' . $year . ', ' . $month . ', ' . $day . '), y: '
                                 . $rate->getUsdSumByCurrency($data['sumUah'], 'UAH') . '},'; ?>
                             <?php endforeach; ?>

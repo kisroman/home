@@ -31,29 +31,19 @@ class Finance
         return $infoByDate;
     }
 
-    public function getFinancesByMonth()
+    public function getFinancesByYearAndMonth()
     {
-        $financesByMonth = [];
+        $financesByYearAndMonth = [];
         $financesByDate = $this->getFinances();
 
         foreach ($financesByDate as $date => $finance) {
             $month = date('m', strtotime($date));
-            if (!isset($financesByMonth[$month]))
-            {
-                $financesByMonth[$month] = [
-                    'min' => $finance,
-                    'max' => $finance
-                ];
-            } else {
-                if ($financesByMonth[$month]['min']['sumUah'] > $finance['sumUah']) {
-                    $financesByMonth[$month]['min'] = $finance;
-                }
-                if ($financesByMonth[$month]['max']['sumUah'] < $finance['sumUah']) {
-                    $financesByMonth[$month]['max'] = $finance;
-                }
-            }
+            $year = date('Y', strtotime($date));
+            $key = (string)$year . '-' . (string)$month;
+
+            $financesByYearAndMonth[$key] = $finance;
         }
 
-        return $financesByMonth;
+        return $financesByYearAndMonth;
     }
 }
